@@ -10,15 +10,15 @@ class Problem(BaseModel):
     description: str = Field(min_length=1)
     input_description: str = Field(min_length=1)
     output_description: str = Field(min_length=1)
-    samples: list[dict[str, str | None]]
+    samples: list[dict[str, str]]
     constraints: str = Field(min_length=1)
-    testcases: list[dict[str, str | None]]
+    testcases: list[dict[str, str]]
 
     # optional elements
-    hint: str | None = None
-    source: str | None = None
+    hint: str = ""
+    source: str = ""
     tags: list[str] = []
-    time_limit: str = '1s'
-    memory_limit: str = '256MB'
-    author: str | None = None
+    time_limit: float = 1.0
+    memory_limit: int = 256
+    author: str = ""
     difficulty: str = '中等'

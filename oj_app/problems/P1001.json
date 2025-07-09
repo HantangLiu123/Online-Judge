@@ -20,8 +20,8 @@
   "hint": "有负数哦！",
   "source": "洛谷",
   "tags": ["基础题"],
-  "time_limit": "1s",
-  "memory_limit": "128MB",
+  "time_limit": 1.0,
+  "memory_limit": 128,
   "author": "Luogu",
   "difficulty": "入门"
 }

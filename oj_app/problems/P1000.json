@@ -13,17 +13,17 @@
     "constraints": "无",
     "testcases": [
         {
-            "input": null,
+            "input": "",
             "output": "Hello World"
         }
     ],
-    "hint": null,
-    "source": null,
+    "hint": "",
+    "source": "",
     "tags": [
         "基础题"
     ],
-    "time_limit": "1s",
-    "memory_limit": "128MB",
-    "author": null,
+    "time_limit": 1.0,
+    "memory_limit": 128,
+    "author": "",
     "difficulty": "入门"
 }
