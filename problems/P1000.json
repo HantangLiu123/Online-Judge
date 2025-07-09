@@ -1,0 +1,29 @@
+{
+    "id": "P1000",
+    "title": "Hello World",
+    "description": "输出'Hello World'",
+    "input_description": "无",
+    "output_description": "输出'Hello World'",
+    "samples": [
+        {
+            "input": "无",
+            "output": "Hello World"
+        }
+    ],
+    "constraints": "无",
+    "testcases": [
+        {
+            "input": null,
+            "output": "Hello World"
+        }
+    ],
+    "hint": null,
+    "source": null,
+    "tags": [
+        "基础题"
+    ],
+    "time_limit": "1s",
+    "memory_limit": "128MB",
+    "author": null,
+    "difficulty": "入门"
+}
