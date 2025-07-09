@@ -1,34 +1,12 @@
-from fastapi import FastAPI, status, Response
-from pydantic import BaseModel, Field, ValidationError
+from fastapi import status, Response, APIRouter
+from pydantic import ValidationError
+from oj_app.models.schemas import Problem
 import os
 import json
 import aiofiles
 import asyncio
 
-app = FastAPI()
-
-class Problem(BaseModel):
-
-    """a base model for a problem in this online judge system"""
-
-    # required elements, the min_length is for checking blank strings
-    id: str = Field(min_length=1, max_length=50)
-    title: str = Field(min_length=1, max_length=50)
-    description: str = Field(min_length=1)
-    input_description: str = Field(min_length=1)
-    output_description: str = Field(min_length=1)
-    samples: list[dict[str, str | None]]
-    constraints: str = Field(min_length=1)
-    testcases: list[dict[str, str | None]]
-
-    # optional elements
-    hint: str | None = None
-    source: str | None = None
-    tags: list[str] = []
-    time_limit: str = '1s'
-    memory_limit: str = '256MB'
-    author: str | None = None
-    difficulty: str = '中等'
+router = APIRouter(prefix='/problems')
 
 PROBLEMS_PATH = os.path.join(os.curdir, "problems")
 
@@ -62,7 +40,16 @@ async def store_problem(problem: Problem, path: str) -> None:
     async with aiofiles.open(path, 'w', encoding='utf-8') as f:
         await f.write(json.dumps(problem_dict, indent=4, ensure_ascii=False))
 
-@app.get("/api/problems/")
+async def get_problem_data(path: str) -> dict:
+
+    """return the data of a problem by the path"""
+
+    async with aiofiles.open(path, "r", encoding='utf-8') as f:
+        content = await f.read()
+    problem = json.loads(content)
+    return problem
+
+@router.get("/")
 async def get_problems_list() -> dict:
 
     """get the problem list from the local folders.
@@ -82,7 +69,7 @@ async def get_problems_list() -> dict:
         'data': problems,
     }
 
-@app.post("/api/problems/")
+@router.post("/")
 async def create_problem(problem_data: dict, response: Response) -> dict:
 
     """create a problem.
@@ -131,3 +118,38 @@ async def create_problem(problem_data: dict, response: Response) -> dict:
             'msg': 'add success',
             'data': {'id': problem.id},
         }
+    
+@router.get('/{problem_id}')
+async def get_problem(problem_id: str, response: Response) -> dict:
+
+    """get a problem.
+    
+    This function enables users to get a problem with its id. If the
+    id is not found in the problems folder, it will return 404. If it
+    exists, it will return 200 and a dictionary of the problem.
+
+    Args:
+        problem_id(str): the id of the problem
+        response(Response): the response to the get request
+
+    Returns:
+        problem(dict): the problem dict with the status code and message
+    """
+
+    # the problem file's name is in the format of "{id}.json"
+    problem_ids = [file_name[:len('.json')] for file_name in os.listdir(PROBLEMS_PATH)]
+    if problem_id not in problem_ids:
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return {
+            'code': status.HTTP_404_NOT_FOUND,
+            'msg': "can't find the question",
+        }
+    
+    # get the problem
+    problem_file_name = f"{problem_id}.json"
+    problem = await get_problem_data(os.path.join(PROBLEMS_PATH, problem_file_name))
+    return {
+        "code": status.HTTP_200_OK,
+        'msg': 'success',
+        'data': problem,
+    }
