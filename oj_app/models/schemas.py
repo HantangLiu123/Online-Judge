@@ -22,3 +22,10 @@ class Problem(BaseModel):
     memory_limit: int = 256
     author: str = ""
     difficulty: str = '中等'
+
+class User(BaseModel):
+
+    """a base model for a user to log in/sign in"""
+
+    username: str = Field(min_length=3, max_length=20)
+    password: str = Field(min_length=6)
