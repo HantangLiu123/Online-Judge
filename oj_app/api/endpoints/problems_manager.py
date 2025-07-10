@@ -99,6 +99,7 @@ async def create_problem(problem_data: dict, response: Response) -> dict:
         return {
             'code': status.HTTP_400_BAD_REQUEST,
             'msg': 'incomplet body/wrong format',
+            'data': None,
         }
     else:
         # the problem file's name is in the format of "{id}.json"
@@ -108,6 +109,7 @@ async def create_problem(problem_data: dict, response: Response) -> dict:
             return {
                 'code': status.HTTP_409_CONFLICT,
                 'msg': 'the id already existed',
+                'data': None,
             }
         
         # store the problem locally
@@ -143,6 +145,7 @@ async def get_problem(problem_id: str, response: Response) -> dict:
         return {
             'code': status.HTTP_404_NOT_FOUND,
             'msg': "can't find the question",
+            'data': None,
         }
     
     # get the problem

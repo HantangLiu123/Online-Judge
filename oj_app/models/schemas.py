@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from typing import Literal
 
 class Problem(BaseModel):
 
@@ -18,14 +19,21 @@ class Problem(BaseModel):
     hint: str = ""
     source: str = ""
     tags: list[str] = []
-    time_limit: float = 1.0
-    memory_limit: int = 256
+    time_limit: float = Field(default=1.0, ge=0)
+    memory_limit: int = Field(default=256, ge=0)
     author: str = ""
     difficulty: str = '中等'
 
 class User(BaseModel):
 
-    """a base model for a user to log in/sign in"""
+    """a base model for the sign in process"""
 
-    username: str = Field(min_length=3, max_length=20)
-    password: str = Field(min_length=6)
+    username: str = Field(min_length=3, max_length=40)
+    password: str = Field(min_length=5)
+    role: Literal['user', 'admin', 'banned'] = 'user'
+
+class NewRole(BaseModel):
+
+    """a base model for setting an user to a new role"""
+
+    role: Literal['user', 'admin', 'banned']
