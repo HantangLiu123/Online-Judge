@@ -3,16 +3,19 @@
 # platform: win-64
 # created-by: conda 25.5.1
 aiofiles=24.1.0=pyhd8ed1ab_1
+aiosqlite=0.20.0=pyhaa4b35c_1
 annotated-types=0.7.0=pyhd8ed1ab_1
 anyio=4.9.0=pyh29332c3_0
+bcrypt=4.3.0=py310hed05c55_1
 brotli-python=1.1.0=py310h9e98ed7_3
 bzip2=1.0.8=h2466b09_7
-ca-certificates=2025.6.15=h4c7d964_0
-certifi=2025.6.15=pyhd8ed1ab_0
+ca-certificates=2025.7.9=h4c7d964_0
+certifi=2025.7.9=pyhd8ed1ab_0
 cffi=1.17.1=py310ha8f682b_0
 charset-normalizer=3.4.2=pyhd8ed1ab_0
 click=8.2.1=pyh7428d3b_0
 colorama=0.4.6=pyhd8ed1ab_1
+cryptography=45.0.5=py310he482ccc_0
 dnspython=2.7.0=pyhff2d567_1
 email-validator=2.2.0=pyhd8ed1ab_1
 email_validator=2.2.0=hd8ed1ab_1
@@ -27,6 +30,7 @@ httptools=0.6.4=py310ha8f682b_0
 httpx=0.28.1=pyhd8ed1ab_0
 hyperframe=6.1.0=pyhd8ed1ab_0
 idna=3.10=pyhd8ed1ab_1
+itsdangerous=2.2.0=pyhd8ed1ab_1
 jinja2=3.1.6=pyhd8ed1ab_0
 libffi=3.4.6=h537db12_1
 liblzma=5.8.1=h2466b09_2
