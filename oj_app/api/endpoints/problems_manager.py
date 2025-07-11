@@ -1,10 +1,12 @@
-from fastapi import status, Response, APIRouter, Request
+from fastapi import status, Response, APIRouter, Request, BackgroundTasks
 from pydantic import ValidationError
 from oj_app.models.schemas import Problem
 from oj_app.dependencies import common
+from oj_app.core.config import logs
 import os
 import json
 import aiofiles
+import aiofiles.os
 import asyncio
 
 router = APIRouter(prefix='/problems')
@@ -71,7 +73,12 @@ async def get_problems_list() -> dict:
     }
 
 @router.post("/")
-async def create_problem(problem_data: dict, response: Response) -> dict:
+async def create_problem(
+    problem_data: dict,
+    request: Request,
+    response: Response,
+    background_task: BackgroundTasks
+) -> dict:
 
     """create a problem.
     
@@ -103,24 +110,41 @@ async def create_problem(problem_data: dict, response: Response) -> dict:
             'data': None,
         }
     else:
-        # the problem file's name is in the format of "{id}.json"
-        problem_ids = [file_name[:len('.json')] for file_name in os.listdir(PROBLEMS_PATH)]
-        if problem.id in problem_ids:
-            response.status_code = status.HTTP_409_CONFLICT
+
+        try:
+            current_user = common.get_current_user(request)
+        except common.AuthenticationError:
+            # the user has not logged in
+            response.status_code = status.HTTP_403_FORBIDDEN
             return {
-                'code': status.HTTP_409_CONFLICT,
-                'msg': 'the id already existed',
+                'code': status.HTTP_403_FORBIDDEN,
+                'msg': 'user has not logged in',
                 'data': None,
             }
-        
-        # store the problem locally
-        file_name = f"{problem.id}.json"
-        await store_problem(problem, os.path.join(PROBLEMS_PATH, file_name))
-        return {
-            'code': status.HTTP_200_OK,
-            'msg': 'add success',
-            'data': {'id': problem.id},
-        }
+        else:
+
+            # the problem file's name is in the format of "{id}.json"
+            problem_ids = [file_name[:len('.json')] for file_name in os.listdir(PROBLEMS_PATH)]
+            if problem.id in problem_ids:
+                response.status_code = status.HTTP_409_CONFLICT
+                return {
+                    'code': status.HTTP_409_CONFLICT,
+                    'msg': 'the id already existed',
+                    'data': None,
+                }
+            
+            # store the problem locally
+            file_name = f"{problem.id}.json"
+            await store_problem(problem, os.path.join(PROBLEMS_PATH, file_name))
+
+            # log and return
+            message = f"user {current_user['username']} (id: {current_user['user_id']}, role: {current_user['role']}) added problem {problem.id}"
+            background_task.add_task(logs.write_problem_management_log, message)
+            return {
+                'code': status.HTTP_200_OK,
+                'msg': 'add success',
+                'data': {'id': problem.id},
+            }
     
 @router.get('/{problem_id}')
 async def get_problem(problem_id: str, response: Response) -> dict:
@@ -159,7 +183,12 @@ async def get_problem(problem_id: str, response: Response) -> dict:
     }
 
 @router.delete('/{problem_id}')
-async def delete_problem(request: Request, response: Response, problem_id: str) -> dict:
+async def delete_problem(
+    request: Request,
+    response: Response,
+    problem_id: str,
+    background_task: BackgroundTasks
+) -> dict:
 
     """delete a problem by its id, only available for admins"""
 
@@ -196,7 +225,9 @@ async def delete_problem(request: Request, response: Response, problem_id: str) 
         
         # can be deleted
         problem_file_name = f'{problem_id}.json'
-        os.remove(os.path.join(PROBLEMS_PATH, problem_file_name))
+        message = f"admin {current_user['username']} (id: {current_user['user_id']}) deleted problem {problem_id}"
+        background_task.add_task(logs.write_problem_management_log, message)
+        await aiofiles.os.remove(os.path.join(PROBLEMS_PATH, problem_file_name))
         return {
             'code': status.HTTP_200_OK,
             'msg': 'delete success',

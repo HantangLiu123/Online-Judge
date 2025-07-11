@@ -36,10 +36,24 @@ class Logs:
         self.user_management_logger.addHandler(user_management_handler)
         self.user_management_logger.propagate = False
 
+        # log about problem management
+        self.problem_management_logger = logging.getLogger('problem_management')
+        self.problem_management_logger.setLevel(logging.INFO)
+        problem_management_handler = logging.FileHandler(os.path.join(self.LOG_DIR, 'problem_management.log'))
+        problem_management_handler.setFormatter(logging.Formatter('%(asctime)s - %(message)s'))
+        self.problem_management_logger.addHandler(problem_management_handler)
+        self.problem_management_logger.propagate = False
+
     def write_user_management_log(self, message: str) -> None:
 
         """use for backgroundtasks"""
 
         self.user_management_logger.info(message)
+
+    def write_problem_management_log(self, message: str) -> None:
+
+        """usr for backgroundtasks"""
+
+        self.problem_management_logger.info(message)
 
 logs = Logs()
