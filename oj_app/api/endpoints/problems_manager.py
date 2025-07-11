@@ -1,6 +1,7 @@
-from fastapi import status, Response, APIRouter
+from fastapi import status, Response, APIRouter, Request
 from pydantic import ValidationError
 from oj_app.models.schemas import Problem
+from oj_app.dependencies import common
 import os
 import json
 import aiofiles
@@ -156,3 +157,48 @@ async def get_problem(problem_id: str, response: Response) -> dict:
         'msg': 'success',
         'data': problem,
     }
+
+@router.delete('/{problem_id}')
+async def delete_problem(request: Request, response: Response, problem_id: str) -> dict:
+
+    """delete a problem by its id, only available for admins"""
+
+    # get the current user
+    try:
+        current_user = common.get_current_user(request)
+    except common.AuthenticationError:
+        # the user has not logged in
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return {
+            'code': status.HTTP_403_FORBIDDEN,
+            'msg': 'the user has not logged in',
+            'data': None,
+        }
+    else:
+        if current_user['role'] != 'admin':
+            # the user has no authority
+            response.status_code = status.HTTP_403_FORBIDDEN
+            return {
+                'code': status.HTTP_403_FORBIDDEN,
+                'msg': 'the user has no authority',
+                'data': None,
+            }
+        
+        # if the problem id is wrong
+        problem_ids = [file_name[:len('.json')] for file_name in os.listdir(PROBLEMS_PATH)]
+        if problem_id not in problem_ids:
+            response.status_code = status.HTTP_404_NOT_FOUND
+            return {
+                'code': status.HTTP_404_NOT_FOUND,
+                'msg': 'cannot find the problem',
+                'data': None,
+            }
+        
+        # can be deleted
+        problem_file_name = f'{problem_id}.json'
+        os.remove(os.path.join(PROBLEMS_PATH, problem_file_name))
+        return {
+            'code': status.HTTP_200_OK,
+            'msg': 'delete success',
+            'data': {'id': problem_id},
+        }
