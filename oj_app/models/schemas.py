@@ -37,3 +37,11 @@ class NewRole(BaseModel):
     """a base model for setting an user to a new role"""
 
     role: Literal['user', 'admin', 'banned']
+
+class ProblemSubmission(BaseModel):
+
+    """a model for a submission of a problem"""
+
+    problem_id: str = Field(min_length=1)
+    language: str = Field(min_length=1)
+    code: str = Field(min_length=1)
