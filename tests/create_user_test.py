@@ -1,4 +1,4 @@
-from .user_test_functions import User
+from user_test_functions import User
 
 USERNAME = 'test_user'
 PASSWORD = 'qneiofn1248gbueqr'
