@@ -15,3 +15,7 @@
 2025-07-11 11:01:15,053 - User chris (id: 2) logged in
 2025-07-11 11:03:33,670 - User chris (id: 2) logged off
 2025-07-12 20:38:51,139 - User created. Username: test_user. User_id: 3.
+2025-07-13 07:25:51,227 - User admin (id: 1) logged in
+2025-07-13 07:25:51,229 - User test_user (id: 3) logged in
+2025-07-13 07:25:51,232 - User admin (id: 1) logged off
+2025-07-13 07:25:51,233 - User test_user (id: 3) logged off
