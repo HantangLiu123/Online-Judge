@@ -19,3 +19,7 @@
 2025-07-13 07:25:51,229 - User test_user (id: 3) logged in
 2025-07-13 07:25:51,232 - User admin (id: 1) logged off
 2025-07-13 07:25:51,233 - User test_user (id: 3) logged off
+2025-07-14 12:26:24,173 - User admin (id: 1) logged in
+2025-07-14 12:26:24,174 - User test_user (id: 3) logged in
+2025-07-14 12:26:24,177 - User test_user (id: 3) logged off
+2025-07-14 12:26:24,180 - User admin (id: 1) logged off
