@@ -1,7 +1,7 @@
 name: OJ_Judging
 channels:
-  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
   - pytorch
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
   - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
   - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
   - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
@@ -18,11 +18,6 @@ dependencies:
   - chardet=5.2.0=pyhd8ed1ab_3
   - cpuonly=2.0=0
   - cpython=3.13.5=py313hd8ed1ab_102
-  - cuda-cudart=12.9.79=h5888daf_0
-  - cuda-cudart_linux-64=12.9.79=h3f2d84a_0
-  - cuda-nvrtc=12.9.86=h5888daf_0
-  - cuda-nvtx=12.9.79=h5888daf_0
-  - cuda-version=12.9=h4f385c5_3
   - cudnn=9.10.1.4=h7646684_0
   - dav1d=1.2.1=hd590300_0
   - ffmpeg=6.1.2=gpl_hdfc89ed_706
@@ -118,7 +113,7 @@ dependencies:
   - libstdcxx-ng=15.1.0=h4852527_3
   - libsystemd0=257.7=h4e0b6ca_0
   - libtiff=4.7.0=hf01ce69_5
-  - libtorch=2.5.1=cuda126_generic_h7544ecd_207
+  - libtorch=2.5.1
   - libudev1=257.7=hbe16f8c_0
   - libuuid=2.38.1=h0b41bf4_0
   - libuv=1.51.0=hb9d3cd8_0
@@ -154,7 +149,7 @@ dependencies:
   - python-dateutil=2.9.0=pyhd8ed1ab_0
   - python-tzdata=2025.2=pyhd8ed1ab_0
   - python_abi=3.13=7_cp313
-  - pytorch=2.5.1=cuda126_generic_py313_h4999197_207
+  - pytorch=2.5.1
   - pytorch-mutex=1.0=cpu
   - pytz=2025.2=pyhd8ed1ab_0
   - rav1e=0.6.6=he8a937b_2
@@ -171,8 +166,8 @@ dependencies:
   - tbb=2022.1.0=h4ce085d_0
   - threadpoolctl=3.6.0=pyhecae5ae_0
   - tk=8.6.13=noxft_hd72426e_102
-  - torchaudio=2.5.1=cuda124py313h08417ff_100
-  - torchvision=0.20.1=cuda126_py313_h5e7a580_6
+  - torchaudio=2.5.1
+  - torchvision=0.20.1
   - typing_extensions=4.12.2=pyha770c72_1
   - tzdata=2025b=h78e105d_0
   - wayland=1.24.0=h3e06ad9_0
