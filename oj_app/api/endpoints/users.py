@@ -54,8 +54,23 @@ async def create_admin(request: Request, response: Response, user: dict, backgro
     """create an admin user, only another admin can do this"""
 
     try:
+        # parse the admin to User type
         new_admin = User(**user)
         new_admin.role = 'admin'
+
+        # get info of the current user
+        current_user = common.get_current_user(request)
+        if current_user['role'] != 'admin':
+            # the user has no authority
+            response.status_code = status.HTTP_403_FORBIDDEN
+            return {
+                'code': status.HTTP_403_FORBIDDEN,
+                'msg': 'user has no authority',
+                'data': None,
+            }
+        
+        # create the new admin
+        new_id = await userManager.create_user(new_admin)
     except ValidationError:
         # can't parse the input to User, format is wrong
         response.status_code = status.HTTP_400_BAD_REQUEST
@@ -64,55 +79,34 @@ async def create_admin(request: Request, response: Response, user: dict, backgro
             'msg': 'wrong parameters',
             'data': None,
         }
+    except AuthenticationError:
+        # the user is not logged in
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return {
+            'code': status.HTTP_403_FORBIDDEN,
+            'msg': 'user has not logged in',
+            'data': None,
+        }
+    except ValueError:
+        # the username is already existed
+        response.status_code = status.HTTP_400_BAD_REQUEST
+        return {
+            'code': status.HTTP_400_BAD_REQUEST,
+            'msg': 'the username is already existed',
+            'data': None,
+        }
     else:
-        # check if the current user is an admin
-        try:
-            current_user = common.get_current_user(request)
-        except AuthenticationError:
-            # the user is not logged in
-            response.status_code = status.HTTP_403_FORBIDDEN
-            return {
-                'code': status.HTTP_403_FORBIDDEN,
-                'msg': 'user has not logged in',
-                'data': None,
+        # log and create
+        message = f"Admin user created by {current_user['username']} (id: {current_user['user_id']}). Username: {new_admin.username}. User_id: {new_id}."
+        background_tasks.add_task(logs.write_user_management_log, message)
+        return {
+            'code': status.HTTP_200_OK,
+            'msg': 'success',
+            'data': {
+                'user_id': new_id,
+                'username': new_admin.username,
             }
-        else:
-            if current_user['role'] != 'admin':
-                # the user has no authority
-                response.status_code = status.HTTP_403_FORBIDDEN
-                return {
-                    'code': status.HTTP_403_FORBIDDEN,
-                    'msg': 'user has no authority',
-                    'data': None,
-                }
-            
-            # create the new admin
-            try:
-                new_id = await userManager.create_user(new_admin)
-            except ValueError:
-                # the username is already existed
-                response.status_code = status.HTTP_400_BAD_REQUEST
-                return {
-                    'code': status.HTTP_400_BAD_REQUEST,
-                    'msg': 'the username is already existed',
-                    'data': None,
-                }
-            else:
-                if new_id is None:
-                    # facing somg unexpected error
-                    raise common.UnexpectedError
-                
-                # log and create
-                message = f"Admin user created by {current_user['username']} (id: {current_user['user_id']}). Username: {new_admin.username}. User_id: {new_id}."
-                background_tasks.add_task(logs.write_user_management_log, message)
-                return {
-                    'code': status.HTTP_200_OK,
-                    'msg': 'success',
-                    'data': {
-                        'user_id': new_id,
-                        'username': new_admin.username,
-                    }
-                }
+        }
 
 @router.get('/{user_id}')
 async def get_user_info(request: Request, response: Response, user_id: int) -> dict:
