@@ -109,42 +109,40 @@ async def create_problem(
             'msg': 'incomplet body/wrong format',
             'data': None,
         }
-    else:
+    
+    try:
+        current_user = common.get_current_user(request)
+    except common.AuthenticationError:
+        # the user has not logged in
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return {
+            'code': status.HTTP_403_FORBIDDEN,
+            'msg': 'user has not logged in',
+            'data': None,
+        }
+    
+    # the problem file's name is in the format of "{id}.json"
+    problem_ids = [file_name[:len('.json')] for file_name in os.listdir(PROBLEMS_PATH)]
+    if problem.id in problem_ids:
+        response.status_code = status.HTTP_409_CONFLICT
+        return {
+            'code': status.HTTP_409_CONFLICT,
+            'msg': 'the id already existed',
+            'data': None,
+        }
+    
+    # store the problem locally
+    file_name = f"{problem.id}.json"
+    await store_problem(problem, os.path.join(PROBLEMS_PATH, file_name))
 
-        try:
-            current_user = common.get_current_user(request)
-        except common.AuthenticationError:
-            # the user has not logged in
-            response.status_code = status.HTTP_403_FORBIDDEN
-            return {
-                'code': status.HTTP_403_FORBIDDEN,
-                'msg': 'user has not logged in',
-                'data': None,
-            }
-        else:
-
-            # the problem file's name is in the format of "{id}.json"
-            problem_ids = [file_name[:len('.json')] for file_name in os.listdir(PROBLEMS_PATH)]
-            if problem.id in problem_ids:
-                response.status_code = status.HTTP_409_CONFLICT
-                return {
-                    'code': status.HTTP_409_CONFLICT,
-                    'msg': 'the id already existed',
-                    'data': None,
-                }
-            
-            # store the problem locally
-            file_name = f"{problem.id}.json"
-            await store_problem(problem, os.path.join(PROBLEMS_PATH, file_name))
-
-            # log and return
-            message = f"user {current_user['username']} (id: {current_user['user_id']}, role: {current_user['role']}) added problem {problem.id}"
-            background_task.add_task(logs.write_problem_management_log, message)
-            return {
-                'code': status.HTTP_200_OK,
-                'msg': 'add success',
-                'data': {'id': problem.id},
-            }
+    # log and return
+    message = f"user {current_user['username']} (id: {current_user['user_id']}, role: {current_user['role']}) added problem {problem.id}"
+    background_task.add_task(logs.write_problem_management_log, message)
+    return {
+        'code': status.HTTP_200_OK,
+        'msg': 'add success',
+        'data': {'id': problem.id},
+    }
     
 @router.get('/{problem_id}')
 async def get_problem(problem_id: str, response: Response) -> dict:
