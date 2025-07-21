@@ -5,6 +5,7 @@ LOGOUT_URL = 'http://localhost:8000/api/auth/logout'
 SIGNIN_URL = 'http://localhost:8000/api/users'
 USER_INFO_PREFIX = 'http://localhost:8000/api/users/'
 USER_LIST_URL = 'http://localhost:8000/api/users'
+ADMIN_CREATE_URL = 'http://localhost:8000/api/users/admin'
 
 class User:
 
@@ -31,6 +32,16 @@ class User:
     def sign_in_new_user(username: str, password: str) -> requests.Response:
         response = requests.post(
             url=SIGNIN_URL,
+            json={
+                'username': username,
+                'password': password,
+            },
+        )
+        return response
+    
+    def create_admin(self, username: str, password: str) -> requests.Response:
+        response = self.session.post(
+            url=ADMIN_CREATE_URL,
             json={
                 'username': username,
                 'password': password,

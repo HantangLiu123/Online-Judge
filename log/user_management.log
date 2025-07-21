@@ -23,3 +23,8 @@
 2025-07-14 12:26:24,174 - User test_user (id: 3) logged in
 2025-07-14 12:26:24,177 - User test_user (id: 3) logged off
 2025-07-14 12:26:24,180 - User admin (id: 1) logged off
+2025-07-22 07:16:49,321 - User test_user (id: 3) logged in
+2025-07-22 07:16:49,466 - User admin (id: 1) logged in
+2025-07-22 07:16:49,624 - Admin user created by admin (id: 1). Username: test_admin. User_id: 4.
+2025-07-22 07:16:49,625 - User test_user (id: 3) logged off
+2025-07-22 07:16:49,626 - User admin (id: 1) logged off
