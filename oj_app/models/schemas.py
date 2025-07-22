@@ -1,5 +1,5 @@
-from pydantic import BaseModel, Field
-from typing import Literal
+from pydantic import BaseModel, Field, StringConstraints
+from typing import Literal, Annotated
 
 class Problem(BaseModel):
 
@@ -19,8 +19,8 @@ class Problem(BaseModel):
     hint: str = ""
     source: str = ""
     tags: list[str] = []
-    time_limit: float = Field(default=1.0, ge=0)
-    memory_limit: int = Field(default=256, ge=0)
+    time_limit: float | None = Field(default=None, ge=0)
+    memory_limit: int | None = Field(default=None, ge=0)
     author: str = ""
     difficulty: str = '中等'
 
@@ -45,3 +45,14 @@ class ProblemSubmission(BaseModel):
     problem_id: str = Field(min_length=1)
     language: str = Field(min_length=1)
     code: str = Field(min_length=1)
+
+class Language(BaseModel):
+
+    """a model for a coding language supported by this OJ app"""
+
+    name: str = Field(min_length=1)
+    file_ext: str = Field(min_length=1)
+    compiled_cmd: Annotated[str | None, StringConstraints(min_length=1)] = None
+    run_cmd: str = Field(min_length=1)
+    time_limit: float = Field(default=1.0, ge=0)
+    memory_limit: int = Field(default=128, ge=0)
