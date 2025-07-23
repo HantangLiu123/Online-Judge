@@ -6,6 +6,7 @@ SIGNIN_URL = 'http://localhost:8000/api/users'
 USER_INFO_PREFIX = 'http://localhost:8000/api/users/'
 USER_LIST_URL = 'http://localhost:8000/api/users'
 ADMIN_CREATE_URL = 'http://localhost:8000/api/users/admin'
+LANGUAGE_URL = 'http://localhost:8000/api/languages'
 
 class User:
 
@@ -59,4 +60,37 @@ class User:
     
     def get_user_list(self) -> requests.Response:
         response = self.session.get(USER_LIST_URL)
+        return response
+    
+    def add_change_language(
+        self,
+        name: str,
+        file_ext: str,
+        run_cmd: str,
+        compiled_cmd: str | None = None,
+        time_limit: float | None = None,
+        memory_limit: int | None = None,
+    ) -> requests.Response:
+        lan_dict = {
+            'name': name,
+            'file_ext': file_ext,
+            'compiled_cmd': compiled_cmd,
+            'run_cmd': run_cmd,
+            'time_limit': time_limit,
+            'memory_limit': memory_limit,
+        }
+        if compiled_cmd is None:
+            del lan_dict['compiled_cmd']
+        if time_limit is None:
+            del lan_dict['time_limit']
+        if memory_limit is None:
+            del lan_dict['memory_limit']
+        response = self.session.post(
+            url=LANGUAGE_URL,
+            json=lan_dict,
+        )
+        return response
+
+    def get_languages(self) -> requests.Response:
+        response = self.session.get(LANGUAGE_URL)
         return response
