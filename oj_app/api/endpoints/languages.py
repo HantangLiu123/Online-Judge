@@ -56,8 +56,9 @@ async def sign_up_language(
     
     # store the language
     file_name = f"{new_language.name}.json"
+    lan_dict = new_language.model_dump()
     async with aiofiles.open(os.path.join(LANGUAGES_DIR, file_name), 'w', encoding='utf-8') as f:
-        await f.write(json.dumps(new_language))
+        await f.write(json.dumps(lan_dict, indent=4, ensure_ascii=False))
 
     # record in log
     message = f"admin {current_user['username']} (id: {current_user['user_id']}) create/change the configuration for the language {new_language.name}"
@@ -73,7 +74,7 @@ async def get_languages():
 
     """gets all available languages in the system"""
 
-    languages = [file[:len(file) - len('.json')] for file in LANGUAGES_DIR]
+    languages = [file[:len(file) - len('.json')] for file in os.listdir(LANGUAGES_DIR)]
     return {
         'code': status.HTTP_200_OK,
         'msg': 'success',
