@@ -1,7 +1,8 @@
-from fastapi import status, APIRouter, Response, Request
+from fastapi import status, APIRouter, Response, Request, BackgroundTasks
 from pydantic import ValidationError
 from oj_app.models.schemas import Language
 from oj_app.dependencies import common
+from oj_app.core.config import logs
 import os
 import json
 import aiofiles
@@ -11,7 +12,12 @@ router = APIRouter(prefix='/languages')
 LANGUAGES_DIR = os.path.join(os.curdir, "languages")
 
 @router.post('/')
-async def sign_up_language(language_data: dict, request: Request, response: Response):
+async def sign_up_language(
+    language_data: dict,
+    request: Request,
+    response: Response,
+    background_tasks: BackgroundTasks,
+):
 
     """sign up a new language"""
 
@@ -53,6 +59,9 @@ async def sign_up_language(language_data: dict, request: Request, response: Resp
     async with aiofiles.open(os.path.join(LANGUAGES_DIR, file_name), 'w', encoding='utf-8') as f:
         await f.write(json.dumps(new_language))
 
+    # record in log
+    message = f"admin {current_user['username']} (id: {current_user['user_id']}) create/change the configuration for the language {new_language.name}"
+    background_tasks.add_task(logs.write_language_log, message)
     return {
         'code': status.HTTP_200_OK,
         'msg': 'success',

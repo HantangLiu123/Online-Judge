@@ -44,6 +44,14 @@ class Logs:
         self.problem_management_logger.addHandler(problem_management_handler)
         self.problem_management_logger.propagate = False
 
+        # log about supported languages
+        self.language_logger = logging.getLogger('langauge')
+        self.language_logger.setLevel(logging.INFO)
+        language_handler = logging.FileHandler(os.path.join(self.LOG_DIR, 'language.log'))
+        language_handler.setFormatter(logging.Formatter('%(asctime)s - %(message)s'))
+        self.language_logger.addHandler(language_handler)
+        self.language_logger.propagate = False
+
     def write_user_management_log(self, message: str) -> None:
 
         """use for backgroundtasks"""
@@ -52,8 +60,14 @@ class Logs:
 
     def write_problem_management_log(self, message: str) -> None:
 
-        """usr for backgroundtasks"""
+        """use for backgroundtasks"""
 
         self.problem_management_logger.info(message)
+
+    def write_language_log(self, message: str) -> None:
+
+        """use for background tasks"""
+
+        self.language_logger.info(message)
 
 logs = Logs()
