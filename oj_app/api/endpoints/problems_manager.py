@@ -122,7 +122,7 @@ async def create_problem(
         }
     
     # the problem file's name is in the format of "{id}.json"
-    problem_ids = [file_name[:len('.json')] for file_name in os.listdir(PROBLEMS_PATH)]
+    problem_ids = [file_name[:len(file_name) - len('.json')] for file_name in os.listdir(PROBLEMS_PATH)]
     if problem.id in problem_ids:
         response.status_code = status.HTTP_409_CONFLICT
         return {
@@ -162,7 +162,7 @@ async def get_problem(problem_id: str, response: Response) -> dict:
     """
 
     # the problem file's name is in the format of "{id}.json"
-    problem_ids = [file_name[:len('.json')] for file_name in os.listdir(PROBLEMS_PATH)]
+    problem_ids = [file_name[:len(file_name) - len('.json')] for file_name in os.listdir(PROBLEMS_PATH)]
     if problem_id not in problem_ids:
         response.status_code = status.HTTP_404_NOT_FOUND
         return {
@@ -212,7 +212,7 @@ async def delete_problem(
             }
         
         # if the problem id is wrong
-        problem_ids = [file_name[:len('.json')] for file_name in os.listdir(PROBLEMS_PATH)]
+        problem_ids = [file_name[:len(file_name) - len('.json')] for file_name in os.listdir(PROBLEMS_PATH)]
         if problem_id not in problem_ids:
             response.status_code = status.HTTP_404_NOT_FOUND
             return {
