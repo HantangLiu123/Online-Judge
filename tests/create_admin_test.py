@@ -27,6 +27,7 @@ if __name__ == "__main__":
     print_response(normal_user.create_admin(NEW_ADMIN_NAME, NEW_ADMIN_PASSWORD))
 
     admin_user.login()
+    print_response(admin_user.create_admin(NEW_ADMIN_NAME, ILLEGAL_PASSWORD))
     print_response(admin_user.create_admin(ADMIN_USERNAME, NEW_ADMIN_PASSWORD))
     print_response(admin_user.create_admin(NEW_ADMIN_NAME, NEW_ADMIN_PASSWORD))
 
