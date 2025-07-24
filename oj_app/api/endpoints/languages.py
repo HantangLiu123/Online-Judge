@@ -20,18 +20,6 @@ async def sign_up_language(
 ):
 
     """sign up a new language"""
-
-    try:
-        # parse the language data into a Language model (pydantic)
-        new_language = Language(**language_data)
-    except ValidationError:
-        # the parameters are incorrect
-        response.status_code = status.HTTP_400_BAD_REQUEST
-        return {
-            'code': status.HTTP_400_BAD_REQUEST,
-            'msg': 'the parameters are incorrect',
-            'data': None,
-        }
     
     try:
         # get the user info
@@ -51,6 +39,18 @@ async def sign_up_language(
         return {
             'code': status.HTTP_403_FORBIDDEN,
             'msg': 'the user does not have enough authority',
+            'data': None,
+        }
+    
+    try:
+        # parse the language data into a Language model (pydantic)
+        new_language = Language(**language_data)
+    except ValidationError:
+        # the parameters are incorrect
+        response.status_code = status.HTTP_400_BAD_REQUEST
+        return {
+            'code': status.HTTP_400_BAD_REQUEST,
+            'msg': 'the parameters are incorrect',
             'data': None,
         }
     

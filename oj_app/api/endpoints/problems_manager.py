@@ -97,18 +97,6 @@ async def create_problem(
             a dictionary contains the status code, the message of the response, and the 
             id of the question (if added successfully)
     """
-
-    try:
-        # parse the problem_data into a problem model
-        problem = Problem(**problem_data)
-    except ValidationError:
-        # validation error mains the problem_data is not complete or in the wrong format
-        response.status_code = status.HTTP_400_BAD_REQUEST
-        return {
-            'code': status.HTTP_400_BAD_REQUEST,
-            'msg': 'incomplet body/wrong format',
-            'data': None,
-        }
     
     try:
         current_user = common.get_current_user(request)
@@ -118,6 +106,18 @@ async def create_problem(
         return {
             'code': status.HTTP_403_FORBIDDEN,
             'msg': 'user has not logged in',
+            'data': None,
+        }
+    
+    try:
+        # parse the problem_data into a problem model
+        problem = Problem(**problem_data)
+    except ValidationError:
+        # validation error mains the problem_data is not complete or in the wrong format
+        response.status_code = status.HTTP_400_BAD_REQUEST
+        return {
+            'code': status.HTTP_400_BAD_REQUEST,
+            'msg': 'incomplet body/wrong format',
             'data': None,
         }
     
@@ -195,9 +195,9 @@ async def delete_problem(
         current_user = common.get_current_user(request)
     except common.AuthenticationError:
         # the user has not logged in
-        response.status_code = status.HTTP_403_FORBIDDEN
+        response.status_code = status.HTTP_401_UNAUTHORIZED
         return {
-            'code': status.HTTP_403_FORBIDDEN,
+            'code': status.HTTP_401_UNAUTHORIZED,
             'msg': 'the user has not logged in',
             'data': None,
         }

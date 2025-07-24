@@ -24,30 +24,30 @@ async def user_sign_in(response: Response, user: dict, background_tasks: Backgro
             'msg': 'wrong parameters',
             'data': None,
         }
-    else:
-        try:
-            id = await userManager.create_user(new_user)
-        except ValueError:
-            # the username is already existed
-            response.status_code = status.HTTP_400_BAD_REQUEST
-            return {
-                'code': status.HTTP_400_BAD_REQUEST,
-                'msg': 'the username is already existed',
-                'data': None,
-            }
-        else:
-            if id is None:
-                # the user id should not be None at this point
-                raise common.UnexpectedError
-            
-            # log and return
-            message = f"User created. Username: {new_user.username}. User_id: {id}."
-            background_tasks.add_task(logs.write_user_management_log, message)
-            return {
-                'code': status.HTTP_200_OK,
-                'msg': 'register success',
-                'data': {'user_id': id},
-            }
+    
+    try:
+        id = await userManager.create_user(new_user)
+    except ValueError:
+        # the username is already existed
+        response.status_code = status.HTTP_400_BAD_REQUEST
+        return {
+            'code': status.HTTP_400_BAD_REQUEST,
+            'msg': 'the username is already existed',
+            'data': None,
+        }
+    
+    if id is None:
+        # the user id should not be None at this point
+        raise common.UnexpectedError
+    
+    # log and return
+    message = f"User created. Username: {new_user.username}. User_id: {id}."
+    background_tasks.add_task(logs.write_user_management_log, message)
+    return {
+        'code': status.HTTP_200_OK,
+        'msg': 'register success',
+        'data': {'user_id': id},
+    }
         
 @router.post('/admin')
 async def create_admin(request: Request, response: Response, user: dict, background_tasks: BackgroundTasks) -> dict:
@@ -55,10 +55,6 @@ async def create_admin(request: Request, response: Response, user: dict, backgro
     """create an admin user, only another admin can do this"""
 
     try:
-        # parse the admin to User type
-        new_admin = User(**user)
-        new_admin.role = 'admin'
-
         # get info of the current user
         current_user = common.get_current_user(request)
         if current_user['role'] != 'admin':
@@ -70,22 +66,26 @@ async def create_admin(request: Request, response: Response, user: dict, backgro
                 'data': None,
             }
         
+        # parse the admin to User type
+        new_admin = User(**user)
+        new_admin.role = 'admin'
+        
         # create the new admin
         new_id = await userManager.create_user(new_admin)
+    except AuthenticationError:
+        # the user is not logged in
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+        return {
+            'code': status.HTTP_401_UNAUTHORIZED,
+            'msg': 'user has not logged in',
+            'data': None,
+        }
     except ValidationError:
         # can't parse the input to User, format is wrong
         response.status_code = status.HTTP_400_BAD_REQUEST
         return {
             'code': status.HTTP_400_BAD_REQUEST,
             'msg': 'wrong parameters',
-            'data': None,
-        }
-    except AuthenticationError:
-        # the user is not logged in
-        response.status_code = status.HTTP_403_FORBIDDEN
-        return {
-            'code': status.HTTP_403_FORBIDDEN,
-            'msg': 'user has not logged in',
             'data': None,
         }
     except ValueError:
@@ -118,9 +118,9 @@ async def get_user_info(request: Request, response: Response, user_id: int) -> d
         current_user = common.get_current_user(request)
     except AuthenticationError:
         # the user is not logged in
-        response.status_code = status.HTTP_403_FORBIDDEN
+        response.status_code = status.HTTP_401_UNAUTHORIZED
         return {
-            'code': status.HTTP_403_FORBIDDEN,
+            'code': status.HTTP_401_UNAUTHORIZED,
             'msg': 'user has not logged in',
             'data': None,
         }
@@ -178,9 +178,9 @@ async def change_role_of_user(
     try:
         current_user = common.get_current_user(request)
     except AuthenticationError:
-        response.status_code = status.HTTP_403_FORBIDDEN
+        response.status_code = status.HTTP_401_UNAUTHORIZED
         return {
-            'code': status.HTTP_403_FORBIDDEN,
+            'code': status.HTTP_401_UNAUTHORIZED,
             'msg': 'user not logged in',
             'data': None,
         }
@@ -223,9 +223,9 @@ async def get_user_list(
     try:
         current_user = common.get_current_user(request)
     except AuthenticationError:
-        response.status_code = status.HTTP_403_FORBIDDEN
+        response.status_code = status.HTTP_401_UNAUTHORIZED
         return {
-            'code': status.HTTP_403_FORBIDDEN,
+            'code': status.HTTP_401_UNAUTHORIZED,
             'msg': 'user not logged in',
             'data': None,
         }
