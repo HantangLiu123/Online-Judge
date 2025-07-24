@@ -58,8 +58,19 @@ class User:
         response = self.session.get(info_url)
         return response
     
-    def get_user_list(self) -> requests.Response:
-        response = self.session.get(USER_LIST_URL)
+    def get_user_list(self, page: int | None = None, page_size: int | None = None) -> requests.Response:
+        params = {
+            'page': page,
+            'page_size': page_size,
+        }
+        if not page:
+            del(params['page'])
+        if not page_size:
+            del(params['page_size'])
+        response = self.session.get(
+            url=USER_LIST_URL,
+            params=params
+        )
         return response
     
     def add_change_language(
