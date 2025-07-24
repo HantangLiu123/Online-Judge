@@ -1,4 +1,5 @@
 from fastapi import status, Response, APIRouter, Request, BackgroundTasks, Query
+from fastapi_cache.decorator import cache
 from pydantic import ValidationError
 from oj_app.models.schemas import User, NewRole
 from oj_app.core.security.UserManager import userManager
@@ -208,6 +209,7 @@ async def change_role_of_user(
             }
         
 @router.get('/')
+@cache(expire=120) # cache for 2 minutes
 async def get_user_list(
         request: Request,
         response: Response,
@@ -227,37 +229,32 @@ async def get_user_list(
             'msg': 'user not logged in',
             'data': None,
         }
-    else:
-        if current_user['role'] != 'admin':
-            # the user is not an admin
-            response.status_code = status.HTTP_403_FORBIDDEN
-            return {
-                'code': status.HTTP_403_FORBIDDEN,
-                'msg': 'user has no authority',
-                'data': None,
-            }
-        else:
-            # get the list
-            user_list = await userManager.get_all_users()
-            
-            # check if the page number is larger than maximum page
-            max_page_num = len(user_list) // page_size + 1
-            if page > max_page_num:
-                response.status_code = status.HTTP_404_NOT_FOUND
-                return {
-                    'code': status.HTTP_404_NOT_FOUND,
-                    'msg': 'the page number exceeds the max page number',
-                    'data': None,
-                }
-            
-            # return the list segment
-
-            return_list = user_list[page_size * (page - 1):page_size * page]
-            return {
-                'code': status.HTTP_200_OK,
-                'msg': 'success',
-                'data': {
-                    'total': len(return_list),
-                    'users': return_list,
-                },
-            }
+    
+    if current_user['role'] != 'admin':
+        # the user is not an admin
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return {
+            'code': status.HTTP_403_FORBIDDEN,
+            'msg': 'user has no authority',
+            'data': None,
+        }
+    
+    try:
+        total, user_list = await userManager.get_users(page, page_size)
+    except ValueError:
+        # the page is too large
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return {
+            'code': status.HTTP_404_NOT_FOUND,
+            'msg': 'the page exceeds the maximum page number',
+            'data': None,
+        }
+    
+    return {
+        'code': status.HTTP_200_OK,
+        'msg': 'success',
+        'data': {
+            'total': total,
+            'users': user_list,
+        },
+    }

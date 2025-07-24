@@ -3,7 +3,7 @@ from ..config import settings
 import bcrypt
 from datetime import date
 from oj_app.models.schemas import User
-import asyncio
+import math
 
 class UserManager:
 
@@ -156,21 +156,36 @@ class UserManager:
 
             return user_id, user['resolve_count'] + 1
         
-    async def get_all_users(self) -> list:
+    async def get_users(self, page: int, page_size: int) -> tuple[int, list]:
 
-        """get all user information"""
+        """get user information according to the page and the page size"""
 
         async with aiosqlite.connect(self.db_path) as db:
-            cursor = await db.execute("SELECT id, username, join_time, submit_count, resolve_count FROM users")
-            users = await cursor.fetchall()
 
-            # if there is no users
-            if not users:
-                return []
+            # getting the total number of users
+            cursor = await db.execute('SELECT COUNT(*) FROM users')
+            res = await cursor.fetchone()
+            assert res is not None # there should be at least one default admin
+            total = res[0]
+
+            # see if the page num exceeds the max page
+            total_pages = math.ceil(total / page_size)
+            if page > total_pages:
+                raise ValueError('the page number exceeds the max page')
             
-            # change the users to list of dict
+            # get the user list
+            offset = (page - 1) * page_size
+            cursor = await db.execute("""
+                SELECT id, username, join_time, submit_count, resolve_count FROM users
+                ORDER BY id LIMIT ? OFFSET ?
+            """, 
+            (page_size, offset))
+            user_list = await cursor.fetchall()
+
+            if not user_list:
+                return total, []
             columns = [col[0] for col in cursor.description]
-            return [dict(zip(columns, user)) for user in users]
+            return total, [dict(zip(columns, user)) for user in user_list]
         
 # initailyze a UserManager instance
 userManager = UserManager()

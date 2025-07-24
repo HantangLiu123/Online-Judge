@@ -1,4 +1,7 @@
 from fastapi import FastAPI
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
+from redis import asyncio as aioredis
 from starlette.middleware.sessions import SessionMiddleware
 from .core.config import settings
 from .core.security.UserManager import userManager
@@ -9,14 +12,19 @@ from .models.schemas import User
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     
-    """initalize database and the default admim user"""
+    """initalize user system and cache system"""
 
+    # user system init
     await userManager.create_user_table()
     admin = User(username='admin', password='admin', role='admin')
     try:
         await userManager.create_user(admin)
     except ValueError:
         print("Default admin already created")
+
+    # cache system (redis)
+    redis = aioredis.from_url('redis://localhost')
+    FastAPICache.init(RedisBackend(redis), prefix='fastapi-cache')
     yield
 
     print('shutting down')
