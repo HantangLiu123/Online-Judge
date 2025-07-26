@@ -13,7 +13,7 @@ if __name__ == "__main__":
         name='cpp',
         file_ext='cpp',
         run_cmd='{exe}',
-        compiled_cmd='g++ {src} -o {exe}',
+        compile_cmd='g++ {src} -o {exe}',
     ))
 
     # get available langauges

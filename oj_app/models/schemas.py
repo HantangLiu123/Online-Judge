@@ -52,7 +52,7 @@ class Language(BaseModel):
 
     name: str = Field(min_length=1)
     file_ext: str = Field(min_length=1)
-    compiled_cmd: Annotated[str | None, StringConstraints(min_length=1)] = None
+    compile_cmd: Annotated[str | None, StringConstraints(min_length=1)] = None
     run_cmd: str = Field(min_length=1)
     time_limit: float = Field(default=1.0, ge=0)
     memory_limit: int = Field(default=128, ge=0)

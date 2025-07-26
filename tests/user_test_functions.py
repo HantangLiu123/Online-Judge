@@ -78,20 +78,20 @@ class User:
         name: str,
         file_ext: str,
         run_cmd: str,
-        compiled_cmd: str | None = None,
+        compile_cmd: str | None = None,
         time_limit: float | None = None,
         memory_limit: int | None = None,
     ) -> requests.Response:
         lan_dict = {
             'name': name,
             'file_ext': file_ext,
-            'compiled_cmd': compiled_cmd,
+            'compile_cmd': compile_cmd,
             'run_cmd': run_cmd,
             'time_limit': time_limit,
             'memory_limit': memory_limit,
         }
-        if compiled_cmd is None:
-            del lan_dict['compiled_cmd']
+        if compile_cmd is None:
+            del lan_dict['compile_cmd']
         if time_limit is None:
             del lan_dict['time_limit']
         if memory_limit is None:
