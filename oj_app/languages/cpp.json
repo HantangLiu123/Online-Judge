@@ -1,0 +1,8 @@
+{
+    "name": "cpp",
+    "file_ext": "cpp",
+    "compiled_cmd": "g++ {src} -o {exe}",
+    "run_cmd": "{exe}",
+    "time_limit": 1.0,
+    "memory_limit": 128
+}
