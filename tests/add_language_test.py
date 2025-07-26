@@ -22,7 +22,7 @@ if __name__ == "__main__":
     helper.print_response(user.add_change_language(
         name='python',
         file_ext='py',
-        run_cmd='/home/chris/miniconda3/envs/Online_Judge/bin/python {exe}',
+        run_cmd='/home/chris/miniconda3/envs/Online_Judge/bin/python {src}',
     ))
 
     # authority is not enough
@@ -30,7 +30,7 @@ if __name__ == "__main__":
     helper.print_response(user.add_change_language(
         name='python',
         file_ext='py',
-        run_cmd='/home/chris/miniconda3/envs/Online_Judge/bin/python {exe}',
+        run_cmd='/home/chris/miniconda3/envs/Online_Judge/bin/python {src}',
     ))
 
     # success
@@ -38,7 +38,7 @@ if __name__ == "__main__":
     helper.print_response(admin.add_change_language(
         name='python',
         file_ext='py',
-        run_cmd='/home/chris/miniconda3/envs/Online_Judge/bin/python {exe}',
+        run_cmd='/home/chris/miniconda3/envs/Online_Judge/bin/python {src}',
     ))
 
     # get available langauges
