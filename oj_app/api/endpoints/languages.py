@@ -71,11 +71,11 @@ async def sign_up_language(
     }
 
 @router.get('/')
-async def get_languages():
+async def get_languages(request: Request):
 
     """gets all available languages in the system"""
 
-    languages = [file[:len(file) - len('.json')] for file in os.listdir(LANGUAGES_DIR)]
+    languages = [language for language in request.app.state.languages]
     return {
         'code': status.HTTP_200_OK,
         'msg': 'success',
