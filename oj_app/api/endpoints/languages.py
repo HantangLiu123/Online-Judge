@@ -75,7 +75,7 @@ async def get_languages(request: Request):
 
     """gets all available languages in the system"""
 
-    languages = [language for language in request.app.state.languages]
+    languages = list(request.app.state.languages.keys())
     return {
         'code': status.HTTP_200_OK,
         'msg': 'success',
