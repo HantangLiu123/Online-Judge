@@ -11,13 +11,14 @@ class Settings:
 
         # getting all the settings either from dotenv or using a default value
         self.app_name = os.getenv("APP_NAME", "api")
-        self.debug = os.getenv("DEBUG", "False").lower == "true"
+        self.debug = os.getenv("DEBUG", "False").lower() == "true"
         self.secret_key = os.getenv("SECRET_KEY")
         self.session_max_age = int(os.getenv("SESSION_MAX_AGE", "7200")) # max age in seconds
         self.same_site = os.getenv("SAME_SITE", "lax")
         self.session_https_only = os.getenv("SESSION_HTTPS_ONLY", "False").lower() == "true"
         self.database_path = os.getenv("DATABASE_PATH", os.path.join(os.pardir, "db.sqlite3"))
         self.log_path = os.getenv("LOG_PATH", os.path.join(os.pardir, "log"))
+        self.redis_url = os.getenv("REDIS_URL", "redis://localhost")
 
         if not self.secret_key:
             raise ValueError("Please set your session secret key")

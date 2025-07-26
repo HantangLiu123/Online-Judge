@@ -23,7 +23,7 @@ async def lifespan(app: FastAPI):
         print("Default admin already created")
 
     # cache system (redis)
-    redis = aioredis.from_url('redis://localhost')
+    redis = aioredis.from_url(settings.redis_url)
     FastAPICache.init(RedisBackend(redis), prefix='fastapi-cache')
     yield
 
