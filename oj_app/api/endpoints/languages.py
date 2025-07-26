@@ -1,7 +1,7 @@
 from fastapi import status, APIRouter, Response, Request, BackgroundTasks
 from pydantic import ValidationError
 from oj_app.models.schemas import Language
-from oj_app.dependencies import common
+from oj_app.dependencies import common, language
 from oj_app.core.config import logs
 import os
 import json
@@ -54,11 +54,12 @@ async def sign_up_language(
             'data': None,
         }
     
-    # store the language
+    # store the language and change the state
     file_name = f"{new_language.name}.json"
     lan_dict = new_language.model_dump()
     async with aiofiles.open(os.path.join(LANGUAGES_DIR, file_name), 'w', encoding='utf-8') as f:
         await f.write(json.dumps(lan_dict, indent=4, ensure_ascii=False))
+    request.app.state.languages[new_language.name] = lan_dict
 
     # record in log
     message = f"admin {current_user['username']} (id: {current_user['user_id']}) create/change the configuration for the language {new_language.name}"

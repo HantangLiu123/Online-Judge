@@ -8,6 +8,7 @@ from .core.security.UserManager import userManager
 from .api.api import router as api_router
 from contextlib import asynccontextmanager
 from .models.schemas import User
+from .dependencies import language
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -25,6 +26,10 @@ async def lifespan(app: FastAPI):
     # cache system (redis)
     redis = aioredis.from_url(settings.redis_url)
     FastAPICache.init(RedisBackend(redis), prefix='fastapi-cache')
+
+    # init the languages
+    app.state.languages = await language.init_language()
+
     yield
 
     print('shutting down')
