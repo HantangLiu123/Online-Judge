@@ -56,3 +56,14 @@ class Language(BaseModel):
     run_cmd: str = Field(min_length=1)
     time_limit: float = Field(default=1.0, ge=0)
     memory_limit: int = Field(default=128, ge=0)
+
+class SubmissionResult(BaseModel):
+
+    """a model for a submission result"""
+
+    submission_id: str
+    user_id: int
+    problem_id: int
+    status: str
+    score: int
+    counts: int
