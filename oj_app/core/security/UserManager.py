@@ -135,6 +135,7 @@ class UserManager:
                 "UPDATE users SET submit_count = ? WHERE id = ?",
                 (user['submit_count'] + 1, user_id)
             )
+            await db.commit()
 
             return user_id, user['submit_count'] + 1
         
@@ -153,6 +154,7 @@ class UserManager:
                 "UPDATE users SET submit_count = ? WHERE id = ?",
                 (user['resolve_count'] + 1, user_id)
             )
+            await db.commit()
 
             return user_id, user['resolve_count'] + 1
         
