@@ -109,3 +109,6 @@ class TestLogManager:
                     ),
                 )
             await db.commit()
+
+# create the instance
+testLogManager = TestLogManager()
