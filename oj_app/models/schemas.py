@@ -67,3 +67,4 @@ class SubmissionResult(BaseModel):
     status: str
     score: int
     counts: int
+    code: str

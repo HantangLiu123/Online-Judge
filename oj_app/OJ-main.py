@@ -5,6 +5,7 @@ from redis import asyncio as aioredis
 from starlette.middleware.sessions import SessionMiddleware
 from .core.config import settings
 from .core.security.UserManager import userManager
+from .core.submission.SubmissionResManager import submissionResultManager
 from .api.api import router as api_router
 from contextlib import asynccontextmanager
 from .models.schemas import User
@@ -13,7 +14,7 @@ from .dependencies import language
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     
-    """initalize user system and cache system"""
+    """initalize the api"""
 
     # user system init
     await userManager.create_user_table()
@@ -22,6 +23,9 @@ async def lifespan(app: FastAPI):
         await userManager.create_user(admin)
     except ValueError:
         print("Default admin already created")
+
+    # submission system init
+    await submissionResultManager.create_submission_table()
 
     # cache system (redis)
     redis = aioredis.from_url(settings.redis_url)
