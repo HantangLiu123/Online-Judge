@@ -1,6 +1,5 @@
 import aiosqlite
 import math
-from datetime import datetime
 from ..config import settings
 from oj_app.models.schemas import SubmissionResult
 
