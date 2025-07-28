@@ -172,7 +172,7 @@ class UserManager:
 
             # see if the page num exceeds the max page
             total_pages = math.ceil(total / page_size)
-            if page > total_pages:
+            if page > total_pages and total_pages != 0:
                 raise ValueError('the page number exceeds the max page')
             
             # get the user list
