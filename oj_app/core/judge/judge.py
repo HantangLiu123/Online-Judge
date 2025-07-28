@@ -248,16 +248,18 @@ async def judge_code(
     async with aiofiles.open(os.path.join(TMP_JUDGE_DIR, file_name), 'w', encoding='utf-8') as f:
         await f.write(code)
 
+    # get the problem
+    problem = await get_problem(problem_id)
+    samples: list[dict] = problem['samples']
+
     # compile the code
     compile_retuncode = await compile(request, submission_id, language)
     if compile_retuncode != 0:
         # compile error, remove the source file
         os.remove(os.path.join(TMP_JUDGE_DIR, file_name))
-        return [('CE', 0.0, 0)]
+        return [('CE', 0.0, 0)] * len(samples)
     
     # judge the code
-    problem = await get_problem(problem_id)
-    samples: list[dict] = problem['samples']
     if problem.get('time_limit') is not None:
         time_limit = problem['time_limit']
     else:
