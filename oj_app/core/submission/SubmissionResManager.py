@@ -60,7 +60,7 @@ class SubmissionResManager:
                 """,
                 (
                     result.submission_id,
-                    datetime.now(),
+                    result.submission_time,
                     result.user_id,
                     result.problem_id,
                     result.language,

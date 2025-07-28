@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field, StringConstraints
 from typing import Literal, Annotated
+from datetime import datetime
 
 class Problem(BaseModel):
 
@@ -62,6 +63,7 @@ class SubmissionResult(BaseModel):
     """a model for a submission result"""
 
     submission_id: str
+    submission_time: datetime
     user_id: int
     problem_id: int
     language: str
