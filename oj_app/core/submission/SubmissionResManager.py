@@ -22,6 +22,7 @@ class SubmissionResManager:
                     submission_time DATETIME NOT NULL,
                     user_id INTEGER NOT NULL,
                     problem_id TEXT NOT NULL,
+                    language TEXT NOT NULL,
                     status TEXT NOT NULL,
                     score INTEGER,
                     counts INTEGER NOT NULL,
@@ -54,14 +55,15 @@ class SubmissionResManager:
             try:
                 await db.execute("""
                     INSERT INTO submissions 
-                    (id, submission_time, user_id, problem_id, status, score, counts, code)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    (id, submission_time, user_id, problem_id, language, status, score, counts, code)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     result.submission_id,
                     datetime.now(),
                     result.user_id,
                     result.problem_id,
+                    result.language,
                     result.status,
                     result.score,
                     result.counts,

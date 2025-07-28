@@ -64,6 +64,7 @@ class SubmissionResult(BaseModel):
     submission_id: str
     user_id: int
     problem_id: int
+    language: str
     status: str
     score: int
     counts: int
