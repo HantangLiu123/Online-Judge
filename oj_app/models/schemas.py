@@ -81,3 +81,11 @@ class SubmissionTestDetail(BaseModel):
     time: float
     memory: int
 
+class SubmissionPostModel(BaseModel):
+
+    """a model for a user to submit with a post request"""
+
+    problem_id: str = Field(min_length=1)
+    language: str = Field(min_length=1)
+    code: str = Field(min_length=1)
+    

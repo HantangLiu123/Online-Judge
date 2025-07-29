@@ -53,6 +53,14 @@ class Logs:
         self.language_logger.addHandler(language_handler)
         self.language_logger.propagate = False
 
+        # log about the task queue
+        self.queue_logger = logging.getLogger('queue')
+        self.queue_logger.setLevel(logging.INFO)
+        queue_handler = logging.FileHandler(os.path.join(self.LOG_DIR, 'queue.log'))
+        queue_handler.setFormatter(logging.Formatter('%(asctime)s - %(message)s'))
+        self.queue_logger.addHandler(queue_handler)
+        self.queue_logger.propagate = False
+
     def write_user_management_log(self, message: str) -> None:
 
         """use for backgroundtasks"""
@@ -70,5 +78,17 @@ class Logs:
         """use for background tasks"""
 
         self.language_logger.info(message)
+
+    def queue_info_log(self, message: str) -> None:
+
+        """record info in queue log"""
+
+        self.queue_logger.info(message)
+
+    def queue_error_log(self, message: str) -> None:
+
+        """record error in queue log"""
+
+        self.queue_logger.error(message)
 
 logs = Logs()

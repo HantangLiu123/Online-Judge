@@ -6,8 +6,8 @@ import os
 import time
 import signal
 import aiofiles
-from fastapi import Request
 from typing import Any
+from oj_app.models.schemas import SubmissionTestDetail
 
 TMP_JUDGE_DIR = os.path.join(os.curdir, 'tmp')
 
@@ -289,3 +289,23 @@ async def judge_code(
         os.remove(os.path.join(TMP_JUDGE_DIR, f'code{submission_id}'))
 
     return status_list
+
+def get_score_counts_logs(results: list[tuple[str, float, int]]) -> tuple[int, int, list[SubmissionTestDetail]]:
+
+    """get the score, counts, and logs from the result list"""
+
+    counts = 10 * len(results)
+    score = 0
+    submission_logs = []
+    for i in range(len(results)):
+        submission_logs.append(
+            SubmissionTestDetail(
+                sample_id=i + 1,
+                result=results[i][0],
+                time=results[i][1],
+                memory=results[i][2],
+            )
+        )
+        if results[i][0] == 'AC':
+            score += 10
+    return score, counts, submission_logs
