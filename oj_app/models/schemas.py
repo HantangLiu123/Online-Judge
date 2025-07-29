@@ -68,8 +68,8 @@ class SubmissionResult(BaseModel):
     problem_id: str
     language: str
     status: str
-    score: int
-    counts: int
+    score: int | None = None
+    counts: int | None = None
     code: str
 
 class SubmissionTestDetail(BaseModel):
@@ -80,3 +80,4 @@ class SubmissionTestDetail(BaseModel):
     result: str
     time: float
     memory: int
+

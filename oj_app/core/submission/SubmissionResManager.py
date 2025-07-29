@@ -24,7 +24,7 @@ class SubmissionResManager:
                     language TEXT NOT NULL,
                     status TEXT NOT NULL,
                     score INTEGER,
-                    counts INTEGER NOT NULL,
+                    counts INTEGER,
                     code TEXT NOT NULL
                 )
             """)
