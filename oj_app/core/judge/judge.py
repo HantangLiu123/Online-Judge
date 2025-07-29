@@ -148,9 +148,9 @@ async def run_with_limit(
     This function creates the run code subprocess with time and memory limit.
 
     Args:
-        request (Request): the request from the user
         submission_id (str): the id of the submission
         language (str): the language used in this submission
+        lan_config (dict): the language configuration of the language
         input (str): the input of the corresponding test case
         output (str): the output of the corresponding test case
         time_limit (float): the time limit of the problem (in seconds)
