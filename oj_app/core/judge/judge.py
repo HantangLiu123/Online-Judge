@@ -7,6 +7,7 @@ import time
 import signal
 import aiofiles
 from fastapi import Request
+from typing import Any
 
 TMP_JUDGE_DIR = os.path.join(os.curdir, 'tmp')
 
@@ -43,11 +44,13 @@ def judge_process_limits(time_limit: float, memory_limit: int):
 
     return limit_judge_resources
 
-async def compile(request: Request, submission_id: str, language: str) -> int:
+async def compile(
+    submission_id: str,
+    lan_config: dict,
+) -> int:
 
     """compile the source code to executable and return the returncode for the process"""
 
-    lan_config: dict = request.app.state.languages[language]
     compile_cmd = lan_config.get('compile_cmd')
     if not compile_cmd:
         # this language does not need to be compiled
@@ -131,9 +134,9 @@ async def get_problem(problem_id: str) -> dict:
     return prob_dict
 
 async def run_with_limit(
-    request: Request,
     submission_id: str,
     language: str,
+    lan_config: dict,
     input: str,
     output: str, 
     time_limit: float, 
@@ -160,7 +163,6 @@ async def run_with_limit(
     """
 
     # set the run command
-    lan_config: dict = request.app.state.languages[language]
     if language == 'python':
         ext = lan_config['file_ext']
         run_cmd = lan_config['run_cmd']
@@ -232,9 +234,9 @@ async def run_with_limit(
         return status, duration, max_memory
     
 async def judge_code(
-    request: Request,
     submission_id: str,
     language: str,
+    languages: dict[str, Any],
     problem_id: str,
     code: str,
 ) -> list[tuple[str, float, int]]:
@@ -242,7 +244,7 @@ async def judge_code(
     """a function judges the code"""
 
     # create the tmp file for judge
-    lan_config = request.app.state.languages[language]
+    lan_config = languages[language]
     ext = lan_config['file_ext']
     file_name = f'code{submission_id}.{ext}'
     async with aiofiles.open(os.path.join(TMP_JUDGE_DIR, file_name), 'w', encoding='utf-8') as f:
@@ -253,7 +255,7 @@ async def judge_code(
     samples: list[dict] = problem['samples']
 
     # compile the code
-    compile_retuncode = await compile(request, submission_id, language)
+    compile_retuncode = await compile(submission_id, lan_config)
     if compile_retuncode != 0:
         # compile error, remove the source file
         os.remove(os.path.join(TMP_JUDGE_DIR, file_name))
@@ -263,17 +265,17 @@ async def judge_code(
     if problem.get('time_limit') is not None:
         time_limit = problem['time_limit']
     else:
-        time_limit = request.app.state.languages['time_limit']
+        time_limit = languages['time_limit']
     if problem.get('memory_limit') is not None:
         memory_limit = problem['memory_limit']
     else:
-        memory_limit = request.app.state.languages['memory_limit']
+        memory_limit = languages['memory_limit']
     status_list = []
     for sample in samples:
         status = await run_with_limit(
-            request=request,
             submission_id=submission_id,
             language=language,
+            lan_config=lan_config,
             input=sample['input'],
             output=sample['output'],
             time_limit=time_limit,
