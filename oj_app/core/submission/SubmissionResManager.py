@@ -74,27 +74,27 @@ class SubmissionResManager:
             await db.commit()
         return True
     
-    async def update_submission(self, result: SubmissionResult) -> None:
+    async def update_submission(
+        self,
+        submission_id: str,
+        status: str,
+        score: int | None,
+        counts: int | None
+    ) -> None:
 
-        """update the submission according to the result"""
+        """update the submission according to the parameters"""
 
-        submission = await self.get_submission_by_id(result.submission_id)
+        submission = await self.get_submission_by_id(submission_id)
         if submission is None:
             raise ValueError('The submission does not exist')
-        
-        # these should not happen
-        assert submission['user_id'] == result.user_id
-        assert submission['problem_id'] == result.problem_id
-        assert submission['counts'] == result.counts
-        assert submission['code'] == result.code
         
         # update the submission
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute("""
                 UPDATE submissions
-                SET status = ?, score = ?
+                SET status = ?, score = ?, counts = ?
                 WHERE id = ? 
-            """, (result.status, result.score, result.submission_id))
+            """, (status, score, counts, submission_id))
             await db.commit()
 
     def where_clause_submission_list(
