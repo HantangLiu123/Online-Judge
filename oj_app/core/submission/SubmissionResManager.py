@@ -78,8 +78,8 @@ class SubmissionResManager:
         self,
         submission_id: str,
         status: str,
-        score: int | None,
-        counts: int | None
+        score: int | None = None,
+        counts: int | None = None,
     ) -> None:
 
         """update the submission according to the parameters"""
