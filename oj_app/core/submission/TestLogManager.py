@@ -71,7 +71,7 @@ class TestLogManager:
                         """
                         INSERT INTO tests
                         (submission_id, id, result, time, memory)
-                        VALUES(?, ?, ?, ?, ?)
+                        VALUES (?, ?, ?, ?, ?)
                         """,
                         (
                             submission_id,
