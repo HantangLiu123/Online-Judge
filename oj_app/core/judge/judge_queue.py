@@ -7,6 +7,8 @@ from redis import asyncio as aioredis
 from oj_app.models.schemas import SubmissionPostModel, SubmissionResult
 from ..submission.SubmissionResManager import submissionResultManager
 from ..submission.TestLogManager import testLogManager
+from ..submission.ResolveManager import resolveManager
+from ..security.UserManager import userManager
 from ..config import logs
 import judge
 
@@ -56,6 +58,7 @@ class JudgeQueue:
             'type': 'judge',
             'submission_id': submission_id,
             'problem_id': judge_data.problem_id,
+            'user_id': str(user_id),
             'language': judge_data.language,
             'code': judge_data.code,
         }
@@ -123,6 +126,12 @@ class JudgeQueue:
                 submission_id=task_id,
                 test_logs=submission_logs,
             )
+            await self._update_resolve_relation(
+                user_id=int(task['user_id']),
+                problem_id=task_id,
+                score=score,
+                counts=counts,
+            )
             message = f'completing judging submission{task_id} and storing it into the database'
             logs.queue_info_log(message)
         except Exception as e:
@@ -149,6 +158,7 @@ class JudgeQueue:
             'type': 'rejudge',
             'submission_id': submission_id,
             'problem_id': old_submission['problem_id'],
+            'user_id': str(old_submission['user_id']),
             'language': old_submission['language'],
             'code': old_submission['code'],
         }
@@ -191,6 +201,12 @@ class JudgeQueue:
                 score=score,
                 counts=counts,
             )
+            await self._update_resolve_relation(
+                user_id=int(task['user_id']),
+                problem_id=task_id,
+                score=score,
+                counts=counts,
+            )
             if await testLogManager.get_log(task_id, 1) is None:
                 # the old submission result does not have logs due to some reasons
                 await testLogManager.insert_logs(
@@ -216,6 +232,35 @@ class JudgeQueue:
         finally:
             if task_id in self.running_tasks:
                 del self.running_tasks[task_id]
+
+    async def _update_resolve_relation(
+        self,
+        user_id: int,
+        problem_id: str,
+        score: int,
+        counts: int,
+    ) -> None:
+        
+        """update the resolve relation according to the score, counts, and past relation"""
+
+        past_rel = await resolveManager.find_resolve_relation(problem_id, user_id)
+        if past_rel:
+            # already resolved, nothing to update
+            return
+        elif past_rel is None:
+            # no records
+            new_status = score == counts
+            await resolveManager.insert_relation(problem_id, user_id, new_status)
+        else:
+            # need to update the relation
+            new_status = score == counts
+            if not new_status:
+                # still not resolved
+                return
+            else:
+                await resolveManager.update_relation(problem_id, user_id, new_status)
+                # adding the resolve count for the user
+                await userManager.add_resolve_count(user_id)
 
     async def _get_next_task(self) -> dict[str, str] | None:
 
