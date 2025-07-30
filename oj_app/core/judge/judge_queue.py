@@ -232,8 +232,8 @@ class JudgeQueue:
                 submission_id=task_id,
                 status='error',
             )
-            tb = traceback.extract_tb(e.__traceback__)[-1]
-            message = f'Catching the exception: {str(e)} when judging submission{task_id}. Happened in {tb.filename} at line {tb.lineno}'
+            tb_str = traceback.format_exc()
+            message = f'Catching the exception: {str(e)} when judging submission{task_id}. Traceback: {tb_str}'
             logs.queue_error_log(message)
         finally:
             if task_id in self.running_tasks:
