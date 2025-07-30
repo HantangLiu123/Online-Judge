@@ -1,7 +1,7 @@
 import asyncio
 import json
 import uuid
-import time
+import traceback
 from datetime import datetime, timedelta
 from redis import asyncio as aioredis
 from oj_app.models.schemas import SubmissionPostModel, SubmissionResult
@@ -10,7 +10,7 @@ from ..submission.TestLogManager import testLogManager
 from ..submission.ResolveManager import resolveManager
 from ..security.UserManager import userManager
 from ..config import logs
-import judge
+from . import judge
 
 class JudgeQueue:
 
@@ -34,7 +34,7 @@ class JudgeQueue:
         self,
         judge_data: SubmissionPostModel,
         user_id: int,
-    ) -> None:
+    ) -> str:
         
         """put the new judge task into the queue"""
 
@@ -74,11 +74,15 @@ class JudgeQueue:
         message = f'task/submission{submission_id} created and moved into queue'
         logs.queue_info_log(message)
 
-    def _within_a_minute(self, now: datetime, past: str) -> bool:
+        return submission_id
+
+    def _within_a_minute(self, now: datetime, past: bytes | None) -> bool:
 
         """helper funciton for allow_to_submit to calculate the condition of within a minute"""
 
-        return now - datetime.fromisoformat(past) < timedelta(minutes=1)
+        if past is None:
+            return True
+        return now - datetime.fromisoformat(past.decode()) < timedelta(minutes=1)
 
     async def allow_to_submit(self, user_id: int) -> bool:
 
@@ -140,7 +144,8 @@ class JudgeQueue:
                 submission_id=task_id,
                 status='error',
             )
-            message = f'Catching the exception: {str(e)} when judging submission{task_id}'
+            tb_str = traceback.format_exc()
+            message = f'Catching the exception: {str(e)} when judging submission{task_id}. Traceback: {tb_str}'
             logs.queue_error_log(message)
         finally:
             if task_id in self.running_tasks:
@@ -227,7 +232,8 @@ class JudgeQueue:
                 submission_id=task_id,
                 status='error',
             )
-            message = f'Catching the exception: {str(e)} when judging submission{task_id}'
+            tb = traceback.extract_tb(e.__traceback__)[-1]
+            message = f'Catching the exception: {str(e)} when judging submission{task_id}. Happened in {tb.filename} at line {tb.lineno}'
             logs.queue_error_log(message)
         finally:
             if task_id in self.running_tasks:
@@ -251,6 +257,9 @@ class JudgeQueue:
             # no records
             new_status = score == counts
             await resolveManager.insert_relation(problem_id, user_id, new_status)
+            if new_status:
+                # the problem is resolved
+                await userManager.add_resolve_count(user_id)
         else:
             # need to update the relation
             new_status = score == counts

@@ -1,0 +1,11 @@
+2025-07-30 16:44:16,258 - Starting queue with max 5 concurrent tasks
+2025-07-30 16:44:27,884 - task/submission4ee2e21a-c26c-4625-8529-ef2cb09a0353 created and moved into queue
+2025-07-30 16:44:28,334 - worker_3 is judging on submission4ee2e21a-c26c-4625-8529-ef2cb09a0353
+2025-07-30 16:44:28,337 - tmp now have code4ee2e21a-c26c-4625-8529-ef2cb09a0353.py
+2025-07-30 16:44:28,337 - running cmd /home/chris/miniconda3/envs/OJ_Judging/bin/python ./code4ee2e21a-c26c-4625-8529-ef2cb09a0353.py
+2025-07-30 16:44:28,453 - completing judging submission4ee2e21a-c26c-4625-8529-ef2cb09a0353 and storing it into the database
+2025-07-30 16:44:28,954 - Closed the queue
+2025-07-30 16:44:30,246 - Starting queue with max 5 concurrent tasks
+2025-07-30 16:46:30,093 - Closed the queue
+2025-07-30 16:46:31,552 - Starting queue with max 5 concurrent tasks
+2025-07-30 16:46:34,067 - Closed the queue

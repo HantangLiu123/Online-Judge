@@ -19,6 +19,7 @@ class Settings:
         self.database_path = os.getenv("DATABASE_PATH", os.path.join(os.pardir, "db.sqlite3"))
         self.log_path = os.getenv("LOG_PATH", os.path.join(os.pardir, "log"))
         self.redis_url = os.getenv("REDIS_URL", "redis://localhost")
+        self.max_workers = int(os.getenv("MAX_WORKERS", 5))
 
         if not self.secret_key:
             raise ValueError("Please set your session secret key")

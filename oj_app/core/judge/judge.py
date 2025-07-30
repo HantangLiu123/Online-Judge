@@ -8,6 +8,7 @@ import signal
 import aiofiles
 from typing import Any
 from oj_app.models.schemas import SubmissionTestDetail
+from oj_app.core.config import logs
 
 TMP_JUDGE_DIR = os.path.join(os.curdir, 'tmp')
 
@@ -60,7 +61,8 @@ async def compile(
     ext = lan_config['file_ext']
     src = f'./code{submission_id}.{ext}'
     exe = f'./code{submission_id}'
-    cmd = [compile_cmd.format(src=src, exe=exe)]
+    cmd_str = compile_cmd.format(src=src, exe=exe)
+    cmd = cmd_str.split()
     compile_process = await asyncio.create_subprocess_exec(
         *cmd,
         stdin=asyncio.subprocess.PIPE,
@@ -166,13 +168,17 @@ async def run_with_limit(
     if language == 'python':
         ext = lan_config['file_ext']
         run_cmd = lan_config['run_cmd']
-        exe = f'./code{submission_id}.{ext}'
-        cmd = [run_cmd.format(exe=exe)]
+        src = f'./code{submission_id}.{ext}'
+        cmd_str = run_cmd.format(src=src)
     else:
         exe = f'./code{submission_id}'
         run_cmd = lan_config['run_cmd']
-        cmd = [run_cmd.format(exe=exe)]
+        cmd_str = run_cmd.format(exe=exe)
 
+    files = ', '.join(os.listdir(TMP_JUDGE_DIR))
+    logs.queue_info_log(f'tmp now have {files}')
+    logs.queue_info_log(f'running cmd {cmd_str}')
+    cmd = cmd_str.split()
     # create the subprocess
     judge_process = await asyncio.create_subprocess_exec(
         *cmd,
@@ -231,7 +237,7 @@ async def run_with_limit(
         assert returncode is not None # needs the return code for judging
         assert duration is not None # needs the duration for the log
         status = analyze_run_results(output, returncode, stdout, stderr)
-        return status, duration, max_memory
+        return status, duration, int(max_memory)
     
 async def judge_code(
     submission_id: str,

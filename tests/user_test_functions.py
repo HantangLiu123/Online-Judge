@@ -7,6 +7,7 @@ USER_INFO_PREFIX = 'http://localhost:8000/api/users/'
 USER_LIST_URL = 'http://localhost:8000/api/users'
 ADMIN_CREATE_URL = 'http://localhost:8000/api/users/admin'
 LANGUAGE_URL = 'http://localhost:8000/api/languages'
+POST_SUBMISSION_URL = 'http://localhost:8000/api/submissions/'
 
 class User:
 
@@ -104,4 +105,33 @@ class User:
 
     def get_languages(self) -> requests.Response:
         response = self.session.get(LANGUAGE_URL)
+        return response
+    
+    def submit_code(
+        self,
+        problem_id: str,
+        language: str,
+        code: str,
+    ):
+        response = self.session.post(
+            url=POST_SUBMISSION_URL,
+            json={
+                'problem_id': problem_id,
+                'language': language,
+                'code': code,
+            },
+        )
+        response_data = response.json()
+        return response, response_data['data']['submission_id']
+    
+    def get_submission(self, submission_id: str):
+        response = self.session.get(
+            url=f'http://localhost:8000/api/submissions/{submission_id}'
+        )
+        return response
+    
+    def get_submission_detail(self, submission_id: str):
+        response = self.session.get(
+            url=f'http://localhost:8000/api/submissions/{submission_id}/log'
+        )
         return response
