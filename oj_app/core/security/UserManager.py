@@ -151,7 +151,7 @@ class UserManager:
         async with aiosqlite.connect(self.db_path) as db:
             # update the resolve count
             await db.execute(
-                "UPDATE users SET submit_count = ? WHERE id = ?",
+                "UPDATE users SET resolve_count = ? WHERE id = ?",
                 (user['resolve_count'] + 1, user_id)
             )
             await db.commit()
