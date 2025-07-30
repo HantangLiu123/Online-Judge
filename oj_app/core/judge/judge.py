@@ -249,6 +249,10 @@ async def judge_code(
     
     """a function judges the code"""
 
+    # create the judge directory if needed
+    if not os.path.exists(TMP_JUDGE_DIR):
+        os.mkdir(TMP_JUDGE_DIR)
+
     # create the tmp file for judge
     lan_config = languages[language]
     ext = lan_config['file_ext']
