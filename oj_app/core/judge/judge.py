@@ -104,7 +104,8 @@ def analyze_run_results(
             status = 'AC'
         else:
             status =  'WA'
-    elif returncode == signal.SIGHUP or sig_num == signal.SIGSEGV:
+    elif returncode == signal.SIGHUP or sig_num == signal.SIGSEGV \
+        or sig_num == signal.SIGFPE:
         # determine RE or MLE by stderr
         if stderr and stderr.decode().find('MemoryError') != -1: # python's memory allocation failure
             status = 'MLE'
