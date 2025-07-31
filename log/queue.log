@@ -9,3 +9,29 @@
 2025-07-30 16:46:30,093 - Closed the queue
 2025-07-30 16:46:31,552 - Starting queue with max 5 concurrent tasks
 2025-07-30 16:46:34,067 - Closed the queue
+2025-07-31 09:14:01,095 - Starting queue with max 5 concurrent tasks
+2025-07-31 09:14:14,350 - task/submissionff94794a-fa22-4910-9a9a-f54755fcfef7 created and moved into queue
+2025-07-31 09:14:14,785 - worker_1 is judging on submissionff94794a-fa22-4910-9a9a-f54755fcfef7
+2025-07-31 09:14:14,898 - completing judging submissionff94794a-fa22-4910-9a9a-f54755fcfef7 and storing it into the database
+2025-07-31 09:16:19,142 - task/submissionc91b0f72-98ad-4c22-b97f-fdbb52ec999f created and moved into queue
+2025-07-31 09:16:19,607 - worker_6 is judging on submissionc91b0f72-98ad-4c22-b97f-fdbb52ec999f
+2025-07-31 09:16:20,491 - tmp now have codec91b0f72-98ad-4c22-b97f-fdbb52ec999f.cpp, codec91b0f72-98ad-4c22-b97f-fdbb52ec999f
+2025-07-31 09:16:20,491 - running cmd ./codec91b0f72-98ad-4c22-b97f-fdbb52ec999f
+2025-07-31 09:16:20,586 - completing judging submissionc91b0f72-98ad-4c22-b97f-fdbb52ec999f and storing it into the database
+2025-07-31 09:18:02,619 - task/submission0a3cd3fa-3f58-416d-af2b-eba9a29595a8 created and moved into queue
+2025-07-31 09:18:02,774 - worker_6 is judging on submission0a3cd3fa-3f58-416d-af2b-eba9a29595a8
+2025-07-31 09:18:03,401 - tmp now have code0a3cd3fa-3f58-416d-af2b-eba9a29595a8, code0a3cd3fa-3f58-416d-af2b-eba9a29595a8.cpp
+2025-07-31 09:18:03,401 - running cmd ./code0a3cd3fa-3f58-416d-af2b-eba9a29595a8
+2025-07-31 09:18:03,518 - completing judging submission0a3cd3fa-3f58-416d-af2b-eba9a29595a8 and storing it into the database
+2025-07-31 09:22:16,193 - Closed the queue
+2025-07-31 09:39:17,007 - Starting queue with max 5 concurrent tasks
+2025-07-31 09:39:29,207 - task/submissionf913fe65-e345-4c61-81ea-5425336c3b6a created and moved into queue
+2025-07-31 09:39:29,654 - worker_5 is judging on submissionf913fe65-e345-4c61-81ea-5425336c3b6a
+2025-07-31 09:39:29,664 - tmp now have codef913fe65-e345-4c61-81ea-5425336c3b6a.py
+2025-07-31 09:39:29,664 - running cmd /home/chris/miniconda3/envs/OJ_Judging/bin/python ./codef913fe65-e345-4c61-81ea-5425336c3b6a.py
+2025-07-31 09:39:29,834 - completing judging submissionf913fe65-e345-4c61-81ea-5425336c3b6a and storing it into the database
+2025-07-31 09:39:45,620 - task/submission273a55e3-be63-4738-b3d1-b49fbd096e3d created and moved into queue
+2025-07-31 09:39:45,686 - worker_4 is judging on submission273a55e3-be63-4738-b3d1-b49fbd096e3d
+2025-07-31 09:39:46,752 - tmp now have code273a55e3-be63-4738-b3d1-b49fbd096e3d, code273a55e3-be63-4738-b3d1-b49fbd096e3d.cpp
+2025-07-31 09:39:46,753 - running cmd ./code273a55e3-be63-4738-b3d1-b49fbd096e3d
+2025-07-31 09:39:46,844 - completing judging submission273a55e3-be63-4738-b3d1-b49fbd096e3d and storing it into the database
