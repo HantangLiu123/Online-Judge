@@ -133,6 +133,7 @@ class JudgeQueue:
             await self._update_resolve_relation(
                 user_id=int(task['user_id']),
                 problem_id=task_id,
+                language=task['language'],
                 score=score,
                 counts=counts,
             )
@@ -209,6 +210,7 @@ class JudgeQueue:
             await self._update_resolve_relation(
                 user_id=int(task['user_id']),
                 problem_id=task_id,
+                language=task['language'],
                 score=score,
                 counts=counts,
             )
@@ -243,20 +245,21 @@ class JudgeQueue:
         self,
         user_id: int,
         problem_id: str,
+        language: str,
         score: int,
         counts: int,
     ) -> None:
         
         """update the resolve relation according to the score, counts, and past relation"""
 
-        past_rel = await resolveManager.find_resolve_relation(problem_id, user_id)
+        past_rel = await resolveManager.find_resolve_relation(problem_id, user_id, language)
         if past_rel:
             # already resolved, nothing to update
             return
         elif past_rel is None:
             # no records
             new_status = score == counts
-            await resolveManager.insert_relation(problem_id, user_id, new_status)
+            await resolveManager.insert_relation(problem_id, user_id, language, new_status)
             if new_status:
                 # the problem is resolved
                 await userManager.add_resolve_count(user_id)
@@ -267,7 +270,7 @@ class JudgeQueue:
                 # still not resolved
                 return
             else:
-                await resolveManager.update_relation(problem_id, user_id, new_status)
+                await resolveManager.update_relation(problem_id, user_id, language, new_status)
                 # adding the resolve count for the user
                 await userManager.add_resolve_count(user_id)
 
