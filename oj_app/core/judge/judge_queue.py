@@ -97,7 +97,7 @@ class JudgeQueue:
             await self.redis.lindex(f'user_submission_timestamp:{user_id}', -1), # type: ignore
         ):
             await self.redis.rpop(f'user_submission_timestamp:{user_id}') # type: ignore
-        return await self.redis.llen(f'user_submission_timestamp:{user_id}') <= 3 # type: ignore
+        return await self.redis.llen(f'user_submission_timestamp:{user_id}') < 3 # type: ignore
     
     async def _process_judge(self, task: dict[str, str], worker_name: str) -> None:
 
