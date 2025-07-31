@@ -10,7 +10,7 @@ from typing import Any
 from oj_app.models.schemas import SubmissionTestDetail
 from oj_app.core.config import logs
 
-TMP_JUDGE_DIR = os.path.join(os.curdir, 'tmp')
+TMP_JUDGE_DIR = '/tmp'
 
 def compile_process_limits():
 
