@@ -122,7 +122,10 @@ class User:
             },
         )
         response_data = response.json()
-        return response, response_data['data']['submission_id']
+        if response_data['data']:
+            return response, response_data['data']['submission_id']
+        else:
+            return response, None
     
     def get_submission(self, submission_id: str):
         response = self.session.get(
