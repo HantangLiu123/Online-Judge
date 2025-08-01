@@ -331,3 +331,7 @@
 2025-07-31 11:17:43,272 - running cmd /home/chris/miniconda3/envs/OJ_Judging/bin/python ./code0643ddb8-5748-43ab-92af-062afd6c2a53.py
 2025-07-31 11:17:43,395 - completing judging submission0643ddb8-5748-43ab-92af-062afd6c2a53 and storing it into the database
 2025-07-31 11:17:54,474 - Closed the queue
+2025-08-01 11:20:10,022 - Starting queue with max 5 concurrent tasks
+2025-08-01 11:21:48,440 - Closed the queue
+2025-08-01 11:22:55,583 - Starting queue with max 5 concurrent tasks
+2025-08-01 11:28:11,853 - Closed the queue

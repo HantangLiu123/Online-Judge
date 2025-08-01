@@ -1,0 +1,812 @@
+{
+    "code": 200,
+    "msg": "success",
+    "data": {
+        "users": [
+            {
+                "id": 2,
+                "username": "chris",
+                "password": "$2b$12$b9ws6ajJWyHB93iilEL2/OOj26gZgYUnVaiI6tYftxhmgvemIhgE6",
+                "role": "user",
+                "join_time": "2025-07-10",
+                "submit_count": 0,
+                "resolve_count": 0
+            },
+            {
+                "id": 3,
+                "username": "test_user",
+                "password": "$2b$12$DBow45D7Og/jeQn1EJEJ6O/FVb1AousGoZFYqXE6aZhZJTQrrbLtS",
+                "role": "user",
+                "join_time": "2025-07-12",
+                "submit_count": 7,
+                "resolve_count": 4
+            },
+            {
+                "id": 4,
+                "username": "test_admin",
+                "password": "$2b$12$ISZXjtQ6SiwjhUDS9YK/re8W6aK3m2F2q0z2CyYA1petwt3Z6wkey",
+                "role": "admin",
+                "join_time": "2025-07-22",
+                "submit_count": 0,
+                "resolve_count": 0
+            }
+        ],
+        "submissions": [
+            {
+                "id": "01c8a4ea-ba1e-4e4f-b9af-4601798e517e",
+                "submission_time": "2025-07-31 11:03:48.517640",
+                "user_id": 1,
+                "problem_id": "P1000",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "print(\"Hello World\")",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.021201372146606445,
+                        "memory": 3
+                    }
+                ]
+            },
+            {
+                "id": "01fa69a0-5674-416e-b8aa-01b867e42d73",
+                "submission_time": "2025-07-31 10:36:20.857601",
+                "user_id": 3,
+                "problem_id": "P1003",
+                "language": "cpp",
+                "status": "success",
+                "score": 20,
+                "counts": 20,
+                "code": "\n#include <iostream>\n#include <vector>\n#include <unordered_map>\n\nusing namespace std;\n\nint main() {\n    int n, target;\n    cin >> n >> target;\n    vector<int> nums(n);\n    for (int i = 0; i < n; ++i) {\n        cin >> nums[i];\n    }\n    \n    unordered_map<int, int> num_map;\n    for (int i = 0; i < n; ++i) {\n        int complement = target - nums[i];\n        if (num_map.count(complement)) {\n            cout << num_map[complement] << \" \" << i << endl;\n            return 0;\n        }\n        num_map[nums[i]] = i;\n    }\n    \n    return 0;\n}\n",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.002170562744140625,
+                        "memory": 3
+                    },
+                    {
+                        "id": 2,
+                        "result": "AC",
+                        "time": 0.0022819042205810547,
+                        "memory": 3
+                    }
+                ]
+            },
+            {
+                "id": "0345ff06-1bcd-414f-af9a-a2bbf317a45b",
+                "submission_time": "2025-07-31 10:34:50.572995",
+                "user_id": 3,
+                "problem_id": "P1003",
+                "language": "cpp",
+                "status": "success",
+                "score": 0,
+                "counts": 20,
+                "code": "\n#include <iostream>\n#include <vector>\n\nusing namespace std\n// one less semicolomn\nint main() {\n    int n, target;\n    cin >> n >> target;\n    vector<int> nums(n);\n    for (int i = 0; i < n; ++i) {\n        cin >> nums[i];\n    }\n    \n    for (int i = 0; i < n; ++i) {\n        for (int j = i + 1; j < n; ++j) {\n            if (nums[i] + nums[j] == target) {\n                cout << i << \" \" << j << endl;\n                return 0;\n            }\n        }\n    }\n    \n    return 0;\n}\n",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "CE",
+                        "time": 0.0,
+                        "memory": 0
+                    },
+                    {
+                        "id": 2,
+                        "result": "CE",
+                        "time": 0.0,
+                        "memory": 0
+                    }
+                ]
+            },
+            {
+                "id": "0643ddb8-5748-43ab-92af-062afd6c2a53",
+                "submission_time": "2025-07-31 11:17:43.047443",
+                "user_id": 1,
+                "problem_id": "P1000",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "print(\"Hello World\")",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.03200483322143555,
+                        "memory": 2
+                    }
+                ]
+            },
+            {
+                "id": "0a3cd3fa-3f58-416d-af2b-eba9a29595a8",
+                "submission_time": "2025-07-31 09:18:02.590257",
+                "user_id": 3,
+                "problem_id": "P1000",
+                "language": "cpp",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "\n#include <iostream>\n\nint main() {\n    std::cout << \"Hello World\" << std::endl;\n    return 0;\n}\n",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.0024297237396240234,
+                        "memory": 1
+                    }
+                ]
+            },
+            {
+                "id": "11437c2e-308a-4999-8182-541a56eaf582",
+                "submission_time": "2025-07-31 11:17:41.949243",
+                "user_id": 1,
+                "problem_id": "P1000",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "print(\"Hello World\")",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.02075648307800293,
+                        "memory": 2
+                    }
+                ]
+            },
+            {
+                "id": "17d0cbb5-56fc-470b-bb79-5d381935d93b",
+                "submission_time": "2025-07-31 10:35:20.678429",
+                "user_id": 3,
+                "problem_id": "P1003",
+                "language": "cpp",
+                "status": "success",
+                "score": 20,
+                "counts": 20,
+                "code": "\n#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    int n, target;\n    cin >> n >> target;\n    vector<int> nums(n);\n    for (int i = 0; i < n; ++i) {\n        cin >> nums[i];\n    }\n    \n    for (int i = 0; i < n; ++i) {\n        for (int j = i + 1; j < n; ++j) {\n            // useless code for long time\n            for (int k = 0; k < 1000000; ++k) {\n                if (nums[i] + nums[j] == target) {\n                    continue;\n                }\n            }\n            if (nums[i] + nums[j] == target) {\n                cout << i << \" \" << j << endl;\n                return 0;\n            }\n        }\n    }\n    \n    return 0;\n}\n",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.0076444149017333984,
+                        "memory": 3
+                    },
+                    {
+                        "id": 2,
+                        "result": "AC",
+                        "time": 0.018566608428955078,
+                        "memory": 3
+                    }
+                ]
+            },
+            {
+                "id": "273a55e3-be63-4738-b3d1-b49fbd096e3d",
+                "submission_time": "2025-07-31 09:39:45.602468",
+                "user_id": 3,
+                "problem_id": "P1001",
+                "language": "cpp",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "\n#include <iostream>\n\nint main() {\n    int num1, num2;\n    std::cin >> num1;\n    std::cin >> num2;\n    std::cout << (num1 + num2) << std::endl;\n    return 0;\n}\n",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.0021600723266601562,
+                        "memory": 1
+                    }
+                ]
+            },
+            {
+                "id": "316d2100-f876-4fed-9d46-58e50f986c40",
+                "submission_time": "2025-07-31 10:35:50.776692",
+                "user_id": 3,
+                "problem_id": "P1003",
+                "language": "cpp",
+                "status": "success",
+                "score": 0,
+                "counts": 20,
+                "code": "\n#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    int n, target;\n    cin >> n >> target;\n    \n    // big array\n    vector<vector<int>> huge_array(1000000, vector<int>(1000000, 0));\n    \n    vector<int> nums(n);\n    for (int i = 0; i < n; ++i) {\n        cin >> nums[i];\n    }\n    \n    for (int i = 0; i < n; ++i) {\n        for (int j = i + 1; j < n; ++j) {\n            if (nums[i] + nums[j] == target) {\n                cout << i << \" \" << j << endl;\n                return 0;\n            }\n        }\n    }\n    \n    return 0;\n}\n",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "MLE",
+                        "time": 0.6389293670654297,
+                        "memory": 264
+                    },
+                    {
+                        "id": 2,
+                        "result": "MLE",
+                        "time": 0.4296095371246338,
+                        "memory": 275
+                    }
+                ]
+            },
+            {
+                "id": "4ee2e21a-c26c-4625-8529-ef2cb09a0353",
+                "submission_time": "2025-07-30 16:44:27.854320",
+                "user_id": 3,
+                "problem_id": "P1001",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "\ninputs = input().split()\nnum1, num2 = [int(num) for num in inputs]\nprint(num1 + num2)\n",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.029407501220703125,
+                        "memory": 0
+                    }
+                ]
+            },
+            {
+                "id": "4f2faa67-d622-4082-b9b3-b4a6087271bf",
+                "submission_time": "2025-07-31 11:13:56.873117",
+                "user_id": 1,
+                "problem_id": "P1000",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "print(\"Hello World\")",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.023878097534179688,
+                        "memory": 1
+                    }
+                ]
+            },
+            {
+                "id": "597f0885-d32f-4eb8-a92e-71fa8ba9753c",
+                "submission_time": "2025-07-31 11:03:46.112832",
+                "user_id": 1,
+                "problem_id": "P1000",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "print(\"Hello World\")",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.05970454216003418,
+                        "memory": 8
+                    }
+                ]
+            },
+            {
+                "id": "73d0cb53-44f0-4d83-8d47-2f7b8946e03b",
+                "submission_time": "2025-07-31 11:03:48.606095",
+                "user_id": 1,
+                "problem_id": "P1000",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "print(\"Hello World\")",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.003954887390136719,
+                        "memory": 8
+                    }
+                ]
+            },
+            {
+                "id": "76b99041-0fcb-4a4c-9daf-61d06645a797",
+                "submission_time": "2025-07-31 11:13:58.129407",
+                "user_id": 1,
+                "problem_id": "P1000",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "print(\"Hello World\")",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.022980451583862305,
+                        "memory": 1
+                    }
+                ]
+            },
+            {
+                "id": "79ae9ccc-2669-43de-80ba-23fd84f873b3",
+                "submission_time": "2025-07-31 11:10:13.202754",
+                "user_id": 1,
+                "problem_id": "P1000",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "print(\"Hello World\")",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.024873971939086914,
+                        "memory": 1
+                    }
+                ]
+            },
+            {
+                "id": "8956839b-7d36-467a-9feb-2cdf801e3c7a",
+                "submission_time": "2025-07-31 11:10:13.104609",
+                "user_id": 1,
+                "problem_id": "P1000",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "print(\"Hello World\")",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.03234267234802246,
+                        "memory": 3
+                    }
+                ]
+            },
+            {
+                "id": "b330222e-04db-43d3-8ba0-20c8bcf4b2c3",
+                "submission_time": "2025-07-31 11:13:57.928601",
+                "user_id": 1,
+                "problem_id": "P1000",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "print(\"Hello World\")",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.022945642471313477,
+                        "memory": 4
+                    }
+                ]
+            },
+            {
+                "id": "c91b0f72-98ad-4c22-b97f-fdbb52ec999f",
+                "submission_time": "2025-07-31 09:16:19.121994",
+                "user_id": 3,
+                "problem_id": "P1001",
+                "language": "cpp",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "\n#include <iostream>\n\nint main() {\n    int num1, num2;\n    std::cin >> num1;\n    std::cin >> num2;\n    std::cout << (num1 + num2) << std::endl;\n    return 0;\n}\n",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.008185625076293945,
+                        "memory": 3
+                    }
+                ]
+            },
+            {
+                "id": "d8897b1d-84c3-41a9-a471-4e721ddd788b",
+                "submission_time": "2025-07-31 11:03:48.560774",
+                "user_id": 1,
+                "problem_id": "P1000",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "print(\"Hello World\")",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.03096938133239746,
+                        "memory": 1
+                    }
+                ]
+            },
+            {
+                "id": "da51e897-d3a0-4cc5-ab5c-ebcb59bb4b94",
+                "submission_time": "2025-07-31 11:17:43.004379",
+                "user_id": 1,
+                "problem_id": "P1000",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "print(\"Hello World\")",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.06329894065856934,
+                        "memory": 8
+                    }
+                ]
+            },
+            {
+                "id": "dba13747-f6b9-493e-ac6d-989d84a4332f",
+                "submission_time": "2025-07-31 11:10:13.157049",
+                "user_id": 1,
+                "problem_id": "P1000",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "print(\"Hello World\")",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.018633365631103516,
+                        "memory": 7
+                    }
+                ]
+            },
+            {
+                "id": "eb077a0a-37a0-4731-b10c-55f529be41d3",
+                "submission_time": "2025-07-31 11:10:12.041422",
+                "user_id": 1,
+                "problem_id": "P1000",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "print(\"Hello World\")",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.02120804786682129,
+                        "memory": 1
+                    }
+                ]
+            },
+            {
+                "id": "ef1fa63e-3235-4963-89fa-99b8d406d99c",
+                "submission_time": "2025-07-31 11:13:57.986008",
+                "user_id": 1,
+                "problem_id": "P1000",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "print(\"Hello World\")",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.031075239181518555,
+                        "memory": 1
+                    }
+                ]
+            },
+            {
+                "id": "f19798e7-129b-4d26-a0a7-b106856afcea",
+                "submission_time": "2025-07-31 10:34:20.468561",
+                "user_id": 3,
+                "problem_id": "P1003",
+                "language": "cpp",
+                "status": "success",
+                "score": 0,
+                "counts": 20,
+                "code": "\n#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    int n, target;\n    cin >> n >> target;\n    vector<int> nums(n);\n    for (int i = 0; i < n; ++i) {\n        cin >> nums[i];\n    }\n    \n    // runtime error\n    int zero = 0;\n    cout << nums[0] / zero << endl;\n    \n    return 0;\n}\n",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "RE",
+                        "time": 0.018398761749267578,
+                        "memory": 3
+                    },
+                    {
+                        "id": 2,
+                        "result": "RE",
+                        "time": 0.01688218116760254,
+                        "memory": 1
+                    }
+                ]
+            },
+            {
+                "id": "f913fe65-e345-4c61-81ea-5425336c3b6a",
+                "submission_time": "2025-07-31 09:39:29.188206",
+                "user_id": 3,
+                "problem_id": "P1001",
+                "language": "python",
+                "status": "success",
+                "score": 10,
+                "counts": 10,
+                "code": "\ninputs = input().split()\nnum1, num2 = [int(num) for num in inputs]\nprint(num1 + num2)\n",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "AC",
+                        "time": 0.0870821475982666,
+                        "memory": 7
+                    }
+                ]
+            },
+            {
+                "id": "ff94794a-fa22-4910-9a9a-f54755fcfef7",
+                "submission_time": "2025-07-31 09:14:14.312898",
+                "user_id": 3,
+                "problem_id": "P1001",
+                "language": "cpp",
+                "status": "success",
+                "score": 0,
+                "counts": 10,
+                "code": "\ninclude <iostream>\n\nint main() {\n    int num1, num2;\n    std::cin >> num1;\n    std::cin >> num2;\n    std::cout << (num1 + num2) << std::endl;\n    return 0;\n}\n",
+                "details": [
+                    {
+                        "id": 1,
+                        "result": "CE",
+                        "time": 0.0,
+                        "memory": 0
+                    }
+                ]
+            }
+        ],
+        "resolves": [
+            {
+                "problem_id": "f913fe65-e345-4c61-81ea-5425336c3b6a",
+                "user_id": 3,
+                "language": "python",
+                "resolved": 1
+            },
+            {
+                "problem_id": "273a55e3-be63-4738-b3d1-b49fbd096e3d",
+                "user_id": 3,
+                "language": "cpp",
+                "resolved": 1
+            },
+            {
+                "problem_id": "f19798e7-129b-4d26-a0a7-b106856afcea",
+                "user_id": 3,
+                "language": "cpp",
+                "resolved": 0
+            },
+            {
+                "problem_id": "0345ff06-1bcd-414f-af9a-a2bbf317a45b",
+                "user_id": 3,
+                "language": "cpp",
+                "resolved": 0
+            },
+            {
+                "problem_id": "17d0cbb5-56fc-470b-bb79-5d381935d93b",
+                "user_id": 3,
+                "language": "cpp",
+                "resolved": 1
+            },
+            {
+                "problem_id": "316d2100-f876-4fed-9d46-58e50f986c40",
+                "user_id": 3,
+                "language": "cpp",
+                "resolved": 0
+            },
+            {
+                "problem_id": "01fa69a0-5674-416e-b8aa-01b867e42d73",
+                "user_id": 3,
+                "language": "cpp",
+                "resolved": 1
+            },
+            {
+                "problem_id": "597f0885-d32f-4eb8-a92e-71fa8ba9753c",
+                "user_id": 1,
+                "language": "python",
+                "resolved": 1
+            },
+            {
+                "problem_id": "73d0cb53-44f0-4d83-8d47-2f7b8946e03b",
+                "user_id": 1,
+                "language": "python",
+                "resolved": 1
+            },
+            {
+                "problem_id": "01c8a4ea-ba1e-4e4f-b9af-4601798e517e",
+                "user_id": 1,
+                "language": "python",
+                "resolved": 1
+            },
+            {
+                "problem_id": "d8897b1d-84c3-41a9-a471-4e721ddd788b",
+                "user_id": 1,
+                "language": "python",
+                "resolved": 1
+            },
+            {
+                "problem_id": "eb077a0a-37a0-4731-b10c-55f529be41d3",
+                "user_id": 1,
+                "language": "python",
+                "resolved": 1
+            },
+            {
+                "problem_id": "79ae9ccc-2669-43de-80ba-23fd84f873b3",
+                "user_id": 1,
+                "language": "python",
+                "resolved": 1
+            },
+            {
+                "problem_id": "dba13747-f6b9-493e-ac6d-989d84a4332f",
+                "user_id": 1,
+                "language": "python",
+                "resolved": 1
+            },
+            {
+                "problem_id": "8956839b-7d36-467a-9feb-2cdf801e3c7a",
+                "user_id": 1,
+                "language": "python",
+                "resolved": 1
+            },
+            {
+                "problem_id": "4f2faa67-d622-4082-b9b3-b4a6087271bf",
+                "user_id": 1,
+                "language": "python",
+                "resolved": 1
+            },
+            {
+                "problem_id": "b330222e-04db-43d3-8ba0-20c8bcf4b2c3",
+                "user_id": 1,
+                "language": "python",
+                "resolved": 1
+            },
+            {
+                "problem_id": "ef1fa63e-3235-4963-89fa-99b8d406d99c",
+                "user_id": 1,
+                "language": "python",
+                "resolved": 1
+            },
+            {
+                "problem_id": "76b99041-0fcb-4a4c-9daf-61d06645a797",
+                "user_id": 1,
+                "language": "python",
+                "resolved": 1
+            },
+            {
+                "problem_id": "11437c2e-308a-4999-8182-541a56eaf582",
+                "user_id": 1,
+                "language": "python",
+                "resolved": 1
+            },
+            {
+                "problem_id": "da51e897-d3a0-4cc5-ab5c-ebcb59bb4b94",
+                "user_id": 1,
+                "language": "python",
+                "resolved": 1
+            },
+            {
+                "problem_id": "0643ddb8-5748-43ab-92af-062afd6c2a53",
+                "user_id": 1,
+                "language": "python",
+                "resolved": 1
+            }
+        ],
+        "problems": [
+            {
+                "id": "P1001",
+                "title": "A+B Problem",
+                "description": "输入两个整数 a, b，输出它们的和（|a|,|b| <= 10^9）。",
+                "input_description": "输入两个整数 a 和 b。",
+                "output_description": "输出 a+b 的结果。",
+                "samples": [
+                    {
+                        "input": "1 2",
+                        "output": "3"
+                    }
+                ],
+                "constraints": "|a|,|b| <= 10^9",
+                "testcases": [
+                    {
+                        "input": "1 2",
+                        "output": "3"
+                    }
+                ],
+                "hint": "有负数哦！",
+                "source": "洛谷",
+                "tags": [
+                    "基础题"
+                ],
+                "time_limit": 1.0,
+                "memory_limit": 128,
+                "author": "Luogu",
+                "difficulty": "入门"
+            },
+            {
+                "id": "P1000",
+                "title": "Hello World",
+                "description": "输出'Hello World'",
+                "input_description": "无",
+                "output_description": "输出'Hello World'",
+                "samples": [
+                    {
+                        "input": "无",
+                        "output": "Hello World"
+                    }
+                ],
+                "constraints": "无",
+                "testcases": [
+                    {
+                        "input": "",
+                        "output": "Hello World"
+                    }
+                ],
+                "hint": "",
+                "source": "",
+                "tags": [
+                    "基础题"
+                ],
+                "time_limit": 1.0,
+                "memory_limit": 128,
+                "author": "",
+                "difficulty": "入门"
+            },
+            {
+                "id": "P1003",
+                "title": "两数之和",
+                "description": "给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那两个整数，并返回他们的数组下标。\n\n你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。",
+                "input_description": "第一行包含两个整数 n 和 target，分别表示数组长度和目标值。\n第二行包含 n 个整数，表示数组 nums 的元素。",
+                "output_description": "输出两个整数，表示两个数的下标（从0开始），用空格分隔。",
+                "samples": [
+                    {
+                        "input": "4 9\n2 7 11 15",
+                        "output": "0 1"
+                    },
+                    {
+                        "input": "3 6\n3 2 4",
+                        "output": "1 2"
+                    }
+                ],
+                "constraints": "2 <= n <= 10^4\n-10^9 <= nums[i] <= 10^9\n-10^9 <= target <= 10^9\n只会存在一个有效答案",
+                "testcases": [
+                    {
+                        "input": "4 9\n2 7 11 15",
+                        "output": "0 1"
+                    },
+                    {
+                        "input": "3 6\n3 2 4",
+                        "output": "1 2"
+                    },
+                    {
+                        "input": "2 6\n3 3",
+                        "output": "0 1"
+                    }
+                ],
+                "hint": "",
+                "source": "",
+                "tags": [],
+                "time_limit": 1.0,
+                "memory_limit": 256,
+                "author": "",
+                "difficulty": "中等"
+            }
+        ],
+        "languages": [
+            {
+                "name": "python",
+                "file_ext": "py",
+                "compile_cmd": null,
+                "run_cmd": "/home/chris/miniconda3/envs/OJ_Judging/bin/python {src}",
+                "time_limit": 1.0,
+                "memory_limit": 128
+            },
+            {
+                "name": "cpp",
+                "file_ext": "cpp",
+                "compile_cmd": "g++ {src} -o {exe}",
+                "run_cmd": "{exe}",
+                "time_limit": 1.0,
+                "memory_limit": 128
+            }
+        ]
+    }
+}
