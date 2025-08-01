@@ -9,6 +9,8 @@ ADMIN_CREATE_URL = 'http://localhost:8000/api/users/admin'
 LANGUAGE_URL = 'http://localhost:8000/api/languages'
 POST_SUBMISSION_URL = 'http://localhost:8000/api/submissions/'
 EXPORT_URL = 'http://localhost:8000/api/export/'
+RESET_URL = 'http://localhost:8000/api/reset/'
+IMPORT_URL = 'http://localhost:8000/api/import/'
 
 class User:
 
@@ -143,3 +145,15 @@ class User:
     def export_data(self):
         response = self.session.get(EXPORT_URL)
         return response
+    
+    def reset_data(self):
+        response = self.session.post(RESET_URL)
+        return response
+    
+    def import_data(self, data):
+        response = self.session.post(
+            url=IMPORT_URL,
+            json=data,
+        )
+        return response
+
