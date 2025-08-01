@@ -179,5 +179,19 @@ class SubmissionResManager:
             await db.execute('DELETE FROM submissions')
             await db.commit()
 
+    async def export_submissions(self) -> list[dict]:
+
+        """export submissions from the table"""
+
+        async with aiosqlite.connect(self.db_path) as db:
+            cursor = await db.execute('SELECT * FROM submissions ORDER BY id')
+            submissions = await cursor.fetchall()
+
+            if submissions is None:
+                return []
+            
+            columns = [col[0] for col in cursor.description]
+            return [dict(zip(columns, submission)) for submission in submissions]
+
 # create the instance
 submissionResultManager = SubmissionResManager()

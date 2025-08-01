@@ -197,6 +197,21 @@ class UserManager:
             # also reset the self increament id
             await db.execute('TRUNCATE TABLE users')
             await db.commit()
+
+    async def export_users(self) -> list[dict]:
+
+        """export all users' data except the default admin"""
+
+        async with aiosqlite.connect(self.db_path) as db:
+            cursor = await db.execute("""
+                SELECT * FROM users WHERE username != ? ORDER BY id
+            """, ('admin', ))
+            users = await cursor.fetchall()
+            if users is None:
+                return []
+            
+            columns = [col[0] for col in cursor.description]
+            return [dict(zip(columns, user)) for user in users]
         
 # initailyze a UserManager instance
 userManager = UserManager()

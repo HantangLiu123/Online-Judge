@@ -113,4 +113,17 @@ class ResolveManager:
             await db.execute('DELETE FROM resolves')
             await db.commit()
 
+    async def export_resolve_relation(self) -> list[dict]:
+
+        """export the relation data"""
+
+        async with aiosqlite.connect(self.db_path) as db:
+            cursor = await db.execute('SELECT * FROM resolves')
+            relations = await cursor.fetchall()
+            if relations is None:
+                return []
+            
+            columns = [col[0] for col in cursor.description]
+            return [dict(zip(columns, relation)) for relation in relations]
+
 resolveManager = ResolveManager()
