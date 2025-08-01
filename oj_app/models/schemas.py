@@ -76,7 +76,7 @@ class SubmissionTestDetail(BaseModel):
 
     """a model for recording a test detail"""
 
-    sample_id: int
+    id: int
     result: str
     time: float
     memory: int

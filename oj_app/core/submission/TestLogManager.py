@@ -76,7 +76,7 @@ class TestLogManager:
                         """,
                         (
                             submission_id,
-                            test_log.sample_id,
+                            test_log.id,
                             test_log.result,
                             test_log.time,
                             test_log.memory,
@@ -92,7 +92,7 @@ class TestLogManager:
 
         async with aiosqlite.connect(self.db_path) as db:
             for new_log in new_logs:
-                old_log = await self.get_log(submission_id, new_log.sample_id)
+                old_log = await self.get_log(submission_id, new_log.id)
                 if old_log is None:
                     raise ValueError('cannot change the log since it does not exist')
                 await db.execute(
@@ -106,7 +106,7 @@ class TestLogManager:
                         new_log.time,
                         new_log.memory,
                         submission_id,
-                        new_log.sample_id,
+                        new_log.id,
                     ),
                 )
             await db.commit()

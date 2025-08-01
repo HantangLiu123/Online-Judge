@@ -311,7 +311,7 @@ def get_score_counts_logs(results: list[tuple[str, float, int]]) -> tuple[int, i
     for i in range(len(results)):
         submission_logs.append(
             SubmissionTestDetail(
-                sample_id=i + 1,
+                id=i + 1,
                 result=results[i][0],
                 time=results[i][1],
                 memory=results[i][2],
