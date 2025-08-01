@@ -49,7 +49,7 @@ class TestLogManager:
 
         async with aiosqlite.connect(self.db_path) as db:
             cursor = await db.execute(
-                'SELECT * FROM tests WHERE submission_id = ?',
+                'SELECT id, result, time, memory FROM tests WHERE submission_id = ?',
                 (submission_id, ),
             )
             test_logs = await cursor.fetchall()
