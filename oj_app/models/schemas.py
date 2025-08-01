@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, StringConstraints
 from typing import Literal, Annotated
-from datetime import datetime
+from datetime import datetime, date
 
 class Problem(BaseModel):
 
@@ -88,4 +88,50 @@ class SubmissionPostModel(BaseModel):
     problem_id: str = Field(min_length=1)
     language: str = Field(min_length=1)
     code: str = Field(min_length=1)
+
+class UserData(BaseModel):
+
+    """the complete version of user (for importing data)"""
+
+    id: int = Field(ge=1)
+    username: str = Field(min_length=3, max_length=40)
+    password: str = Field(min_length=5) # hashed
+    role: Literal['user', 'admin', 'banned']
+    join_time: date
+    submit_count: int = Field(ge=0)
+    resolve_count: int = Field(ge=0)
+
+class SubmissionData(BaseModel):
+
+    """the export/import data version of a submission"""
+
+    id: str = Field(min_length=1)
+    submission_time: datetime
+    user_id: int = Field(ge=1)
+    problem_id: str = Field(min_length=1)
+    language: str = Field(min_length=1)
+    status: Literal['success', 'pending', 'error']
+    score: int | None = None
+    counts: int | None = None
+    code: str = Field(min_length=1)
+    details: list[SubmissionTestDetail]
+
+class ResolveData(BaseModel):
+
+    """the model for a line in the resolves table"""
+
+    problem_id: str = Field(min_length=1)
+    user_id: int = Field(ge=1)
+    language: str = Field(min_length=1)
+    resolved: bool
+
+class ImportData(BaseModel):
+
+    """the model for a standard importing data"""
+
+    users: list[UserData]
+    problems: list[Problem]
+    submissions: list[SubmissionData]
+    resolves: list[ResolveData]
+    languages: list[Language]
     

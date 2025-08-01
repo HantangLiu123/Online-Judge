@@ -1,5 +1,6 @@
 import aiosqlite
 from ..config import settings
+from oj_app.models.schemas import ResolveData
 
 class ResolveManager:
 
@@ -125,5 +126,25 @@ class ResolveManager:
             
             columns = [col[0] for col in cursor.description]
             return [dict(zip(columns, relation)) for relation in relations]
+
+    async def import_resolve_relation(self, resolve_list: list[ResolveData]) -> None:
+
+        """import all resolve relations into the database"""
+
+        data = [resolve.model_dump() for resolve in resolve_list]
+        async with aiosqlite.connect(self.db_path) as db:
+            try:
+                await db.executemany(
+                    """
+                    INSERT INTO resolves
+                    (problem_id, user_id, language, resolved)
+                    VALUES (:problem_id, :user_id, :language, :resolved)
+                    """,
+                    data,
+                )
+            except aiosqlite.IntegrityError:
+                await db.rollback()
+                raise ValueError('conflicts in the importing data or data in database on primary key')
+            await db.commit()
 
 resolveManager = ResolveManager()

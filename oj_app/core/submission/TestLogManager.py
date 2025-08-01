@@ -1,6 +1,7 @@
 import aiosqlite
 from ..config import settings
-from oj_app.models.schemas import SubmissionTestDetail
+from oj_app.models.schemas import SubmissionTestDetail, SubmissionData
+import asyncio
 
 class TestLogManager:
 
@@ -117,6 +118,13 @@ class TestLogManager:
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute('DELETE FROM tests')
             await db.commit()
+
+    async def import_logs(self, submission_list: list[SubmissionData]) -> None:
+
+        """import all logs in the database"""
+
+        import_tasks = [self.insert_logs(submission.id, submission.details) for submission in submission_list]
+        await asyncio.gather(*import_tasks)
 
 # create the instance
 testLogManager = TestLogManager()

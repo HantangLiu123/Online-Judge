@@ -2,7 +2,7 @@ import aiosqlite
 from ..config import settings
 import bcrypt
 from datetime import date
-from oj_app.models.schemas import User
+from oj_app.models.schemas import User, UserData
 import math
 
 class UserManager:
@@ -212,6 +212,26 @@ class UserManager:
             
             columns = [col[0] for col in cursor.description]
             return [dict(zip(columns, user)) for user in users]
+
+    async def import_users(self, user_list: list[UserData]) -> None:
+
+        """import all users in user list into the table"""
+
+        data = [user.model_dump() for user in user_list]
+        async with aiosqlite.connect(self.db_path) as db:
+            try:
+                await db.executemany(
+                    """
+                    INSERT INTO users 
+                    (id, username, password, role, join_time, submit_count, resolve_count) 
+                    VALUES (:id, :username, :password, :role, :join_time, :submit_count, :resolve_count)
+                    """,
+                    data,
+                )
+            except aiosqlite.IntegrityError:
+                await db.rollback()
+                raise ValueError('conflicts in the importing data or data in database on primary key')
+            await db.commit()
         
 # initailyze a UserManager instance
 userManager = UserManager()

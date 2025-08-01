@@ -1,7 +1,7 @@
 import aiosqlite
 import math
 from ..config import settings
-from oj_app.models.schemas import SubmissionResult
+from oj_app.models.schemas import SubmissionResult, SubmissionData
 
 class SubmissionResManager:
 
@@ -192,6 +192,39 @@ class SubmissionResManager:
             
             columns = [col[0] for col in cursor.description]
             return [dict(zip(columns, submission)) for submission in submissions]
+        
+    async def import_submissions(self, submission_list: list[SubmissionData]) -> None:
+
+        """import all data in the submission_list into the database"""
+
+        data = [
+            (
+                submission.id,
+                submission.submission_time,
+                submission.user_id,
+                submission.problem_id,
+                submission.language,
+                submission.status,
+                submission.score,
+                submission.counts,
+                submission.code,
+            )
+            for submission in submission_list
+        ]
+        async with aiosqlite.connect(self.db_path) as db:
+            try:
+                await db.executemany(
+                    """
+                    INSERT INTO submissions 
+                    (id, submission_id, user_id, problem_id, language, status, score, counts, code)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    data,
+                )
+            except aiosqlite.IntegrityError:
+                await db.rollback()
+                raise ValueError('conflicts in the importing data or data in database on primary key')
+            await db.commit()
 
 # create the instance
 submissionResultManager = SubmissionResManager()
