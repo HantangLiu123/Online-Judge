@@ -132,7 +132,7 @@ class JudgeQueue:
             )
             await self._update_resolve_relation(
                 user_id=int(task['user_id']),
-                problem_id=task_id,
+                problem_id=task['problem_id'],
                 language=task['language'],
                 score=score,
                 counts=counts,
@@ -209,7 +209,7 @@ class JudgeQueue:
             )
             await self._update_resolve_relation(
                 user_id=int(task['user_id']),
-                problem_id=task_id,
+                problem_id=task['problem_id'],
                 language=task['language'],
                 score=score,
                 counts=counts,
