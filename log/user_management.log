@@ -202,3 +202,11 @@
 2025-08-01 11:23:01,613 - User admin (id: 1) logged in
 2025-08-01 11:24:01,408 - User admin (id: 1) logged in
 2025-08-01 11:24:01,477 - User admin (id: 1) logged off
+2025-08-01 14:45:28,695 - User test_user (id: 3) logged in
+2025-08-01 14:47:56,759 - User test_user (id: 3) logged off
+2025-08-01 14:47:56,900 - User admin (id: 1) logged in
+2025-08-01 14:47:56,905 - User admin (id: 1) logged off
+2025-08-01 14:49:29,581 - User admin (id: 1) logged in
+2025-08-01 14:49:30,646 - User admin (id: 1) logged off
+2025-08-01 14:50:19,395 - User admin (id: 1) logged in
+2025-08-01 14:50:19,409 - User admin (id: 1) logged off

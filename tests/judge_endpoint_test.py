@@ -62,4 +62,6 @@ if __name__ == "__main__":
     )
     helper.print_response(response)
 
+    helper.print_response(admin.get_user_list())
+
     helper.print_response(admin.logout())
