@@ -195,7 +195,8 @@ class UserManager:
 
         async with aiosqlite.connect(self.db_path) as db:
             # also reset the self increament id
-            await db.execute('TRUNCATE TABLE users')
+            await db.execute('DELETE FROM users')
+            await db.execute('DELETE FROM sqlite_sequence WHERE name = "users"')
             await db.commit()
 
     async def export_users(self) -> list[dict]:
