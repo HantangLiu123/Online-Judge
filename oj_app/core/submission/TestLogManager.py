@@ -110,5 +110,13 @@ class TestLogManager:
                 )
             await db.commit()
 
+    async def delete_all_logs(self) -> None:
+
+        """delete all logs in the table"""
+
+        async with aiosqlite.connect(self.db_path) as db:
+            await db.execute('DELETE FROM tests')
+            await db.commit()
+
 # create the instance
 testLogManager = TestLogManager()

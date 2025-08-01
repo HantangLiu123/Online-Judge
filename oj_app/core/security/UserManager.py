@@ -189,6 +189,15 @@ class UserManager:
             columns = [col[0] for col in cursor.description]
             return total, [dict(zip(columns, user)) for user in user_list]
         
+    async def delete_all_users(self) -> None:
+
+        """delete all information in the user table"""
+
+        async with aiosqlite.connect(self.db_path) as db:
+            # also reset the self increament id
+            await db.execute('TRUNCATE TABLE users')
+            await db.commit()
+        
 # initailyze a UserManager instance
 userManager = UserManager()
     

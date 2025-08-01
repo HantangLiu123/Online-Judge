@@ -62,6 +62,14 @@ class Logs:
         self.queue_logger.addHandler(queue_handler)
         self.queue_logger.propagate = False
 
+        # log about data
+        self.data_logger = logging.getLogger('data')
+        self.data_logger.setLevel(logging.INFO)
+        data_handler = logging.FileHandler(os.path.join(self.LOG_DIR, 'data.log'))
+        data_handler.setFormatter(logging.Formatter('%(asctime)s - %(message)s'))
+        self.data_logger.addHandler(data_handler)
+        self.data_logger.propagate = False
+
     def write_user_management_log(self, message: str) -> None:
 
         """use for backgroundtasks"""
@@ -91,5 +99,15 @@ class Logs:
         """record error in queue log"""
 
         self.queue_logger.error(message)
+
+    def write_data_log(self, message: str) -> None:
+
+        """use for background tasks"""
+
+        self.data_logger.info(message)
+
+    def remove_all_log(self) -> None:
+        for file in os.listdir(self.LOG_DIR):
+            open(os.path.join(self.LOG_DIR, file), 'w').close()
 
 logs = Logs()

@@ -170,6 +170,14 @@ class SubmissionResManager:
             
             columns = [col[0] for col in cursor.description]
             return total, [dict(zip(columns, submission)) for submission in submission_list]
+        
+    async def delete_all_submissions(self) -> None:
+
+        """delete all submission information in the table"""
+
+        async with aiosqlite.connect(self.db_path) as db:
+            await db.execute('DELETE FROM submissions')
+            await db.commit()
 
 # create the instance
 submissionResultManager = SubmissionResManager()

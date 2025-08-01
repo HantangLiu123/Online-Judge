@@ -105,4 +105,12 @@ class ResolveManager:
             )
             await db.commit()
 
+    async def delete_all_relation(self) -> None:
+
+        """delete all relation in the table"""
+
+        async with aiosqlite.connect(self.db_path) as db:
+            await db.execute('DELETE FROM resolves')
+            await db.commit()
+
 resolveManager = ResolveManager()

@@ -325,3 +325,9 @@ class JudgeQueue:
         self.is_running = False
         await asyncio.gather(*self.workers)
         logs.queue_info_log(f'Closed the queue')
+
+    async def flush_redis(self):
+
+        """flush the redis database"""
+
+        await self.redis.flushdb()
