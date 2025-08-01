@@ -19,7 +19,7 @@ async def get_json(path: str):
 
     """gets the data in the json file according to the path"""
 
-    async with aiofiles.open(path, 'w', encoding='utf-8') as f:
+    async with aiofiles.open(path, 'r', encoding='utf-8') as f:
         content = await f.read()
     data = json.loads(content)
     return data
