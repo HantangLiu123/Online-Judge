@@ -324,6 +324,12 @@ class JudgeQueue:
         
         self.is_running = False
         await asyncio.gather(*self.workers)
+
+        # cancel all coroutines that refuce to close
+        for task in self.running_tasks:
+            worker_id = int(self.running_tasks[task][-1])
+            self.workers[worker_id].cancel()
+
         logs.queue_info_log(f'Closed the queue')
 
     async def flush_redis(self):
