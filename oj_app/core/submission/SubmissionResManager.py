@@ -216,7 +216,7 @@ class SubmissionResManager:
                 await db.executemany(
                     """
                     INSERT INTO submissions 
-                    (id, submission_id, user_id, problem_id, language, status, score, counts, code)
+                    (id, submission_time, user_id, problem_id, language, status, score, counts, code)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     data,
