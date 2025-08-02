@@ -23,7 +23,7 @@ class Problem(BaseModel):
     time_limit: float | None = Field(default=None, ge=0)
     memory_limit: int | None = Field(default=None, ge=0)
     author: str = ""
-    difficulty: str = '中等'
+    difficulty: str = 'medium'
 
 class User(BaseModel):
 
