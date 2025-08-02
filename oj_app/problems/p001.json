@@ -1,0 +1,42 @@
+{
+    "id": "p001",
+    "title": "Two Sum",
+    "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.",
+    "input_description": "The first line contains an integer n, the size of the array. The second line contains n space-separated integers. The third line contains the target integer.",
+    "output_description": "Output two space-separated integers representing the indices of the two numbers.",
+    "samples": [
+        {
+            "input": "4\n2 7 11 15\n9",
+            "output": "0 1"
+        },
+        {
+            "input": "3\n3 2 4\n6",
+            "output": "1 2"
+        }
+    ],
+    "constraints": "2 <= nums.length <= 10^4\n-10^9 <= nums[i] <= 10^9\n-10^9 <= target <= 10^9",
+    "testcases": [
+        {
+            "input": "4\n2 7 11 15\n9",
+            "output": "0 1"
+        },
+        {
+            "input": "3\n3 2 4\n6",
+            "output": "1 2"
+        },
+        {
+            "input": "2\n3 3\n6",
+            "output": "0 1"
+        }
+    ],
+    "hint": "You may want to use a hash map to store values and their indices.",
+    "source": "LeetCode",
+    "tags": [
+        "array",
+        "hash-table"
+    ],
+    "time_limit": 1.0,
+    "memory_limit": 256,
+    "author": "LeetCode",
+    "difficulty": "easy"
+}

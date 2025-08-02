@@ -1,0 +1,42 @@
+{
+    "id": "p017",
+    "title": "Remove Nth Node From End of List",
+    "description": "Given the head of a linked list, remove the nth node from the end of the list and return its head.",
+    "input_description": "The first line contains m, the number of elements in the linked list. The second line contains m space-separated integers. The third line contains n, the position from the end to remove.",
+    "output_description": "The linked list after removing the nth node from the end, as space-separated integers.",
+    "samples": [
+        {
+            "input": "5\n1 2 3 4 5\n2",
+            "output": "1 2 3 5"
+        },
+        {
+            "input": "1\n1\n1",
+            "output": ""
+        }
+    ],
+    "constraints": "The number of nodes in the list is sz.\n1 <= sz <= 30\n0 <= Node.val <= 100\n1 <= n <= sz",
+    "testcases": [
+        {
+            "input": "5\n1 2 3 4 5\n2",
+            "output": "1 2 3 5"
+        },
+        {
+            "input": "1\n1\n1",
+            "output": ""
+        },
+        {
+            "input": "2\n1 2\n1",
+            "output": "1"
+        }
+    ],
+    "hint": "Use two pointers with a gap of n nodes between them.",
+    "source": "LeetCode",
+    "tags": [
+        "linked-list",
+        "two-pointers"
+    ],
+    "time_limit": 1.0,
+    "memory_limit": 256,
+    "author": "LeetCode",
+    "difficulty": "medium"
+}

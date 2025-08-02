@@ -1,0 +1,42 @@
+{
+    "id": "p020",
+    "title": "Generate Parentheses",
+    "description": "Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.",
+    "input_description": "A single integer n.",
+    "output_description": "All combinations of well-formed parentheses, each on a separate line.",
+    "samples": [
+        {
+            "input": "3",
+            "output": "((()))\n(()())\n(())()\n()(())\n()()()"
+        },
+        {
+            "input": "1",
+            "output": "()"
+        }
+    ],
+    "constraints": "1 <= n <= 8",
+    "testcases": [
+        {
+            "input": "3",
+            "output": "((()))\n(()())\n(())()\n()(())\n()()()"
+        },
+        {
+            "input": "1",
+            "output": "()"
+        },
+        {
+            "input": "2",
+            "output": "(()) \n()()"
+        }
+    ],
+    "hint": "Use backtracking to generate valid combinations, keeping track of open and close counts.",
+    "source": "LeetCode",
+    "tags": [
+        "string",
+        "backtracking"
+    ],
+    "time_limit": 1.0,
+    "memory_limit": 256,
+    "author": "LeetCode",
+    "difficulty": "medium"
+}
