@@ -18,7 +18,7 @@ class Settings:
         self.session_https_only = os.getenv("SESSION_HTTPS_ONLY", "False").lower() == "true"
         self.database_path = os.getenv("DATABASE_PATH", os.path.join(os.pardir, "db.sqlite3"))
         self.log_path = os.getenv("LOG_PATH", os.path.join(os.pardir, "log"))
-        self.redis_url = os.getenv("REDIS_URL", "redis://localhost")
+        self.redis_url = os.getenv("REDIS_URL", "redis://localhost:6379/0")
         self.max_workers = int(os.getenv("MAX_WORKERS", 5))
 
         if not self.secret_key:
