@@ -1,5 +1,6 @@
 import aiosqlite
 from ..config import settings
+from .CacheManager import cacheManager
 import bcrypt
 from datetime import date
 from oj_app.models.schemas import User, UserData
@@ -98,7 +99,12 @@ class UserManager:
                 VALUES (?, ?, ?, ?)
             """, (new_user.username, hashed_password, new_user.role, join_date))
             await db.commit()
-            return cursor.lastrowid
+            user_id = cursor.lastrowid
+            if user_id:
+                # delete the cache
+                cache_deleter = cacheManager.task_funcs_map['user_list'].deleter
+                await cache_deleter(user_id)
+            return user_id
         
     async def change_user_role(self, user_id: int, new_role: str) -> tuple[int, str]:
 
@@ -116,6 +122,10 @@ class UserManager:
                 (new_role, user_id)
             )
             await db.commit()
+
+            # delete the cache
+            cache_deleter = cacheManager.task_funcs_map['user_list'].deleter
+            await cache_deleter(user_id)
 
             # return the id and the role
             return user_id, new_role
@@ -137,6 +147,10 @@ class UserManager:
             )
             await db.commit()
 
+            # delete the cache
+            cache_deleter = cacheManager.task_funcs_map['user_list'].deleter
+            await cache_deleter(user_id)
+
             return user_id, user['submit_count'] + 1
         
     async def add_resolve_count(self, user_id: int):
@@ -155,6 +169,10 @@ class UserManager:
                 (user['resolve_count'] + 1, user_id)
             )
             await db.commit()
+
+            # delete the cache
+            cache_deleter = cacheManager.task_funcs_map['user_list'].deleter
+            await cache_deleter(user_id)
 
             return user_id, user['resolve_count'] + 1
         

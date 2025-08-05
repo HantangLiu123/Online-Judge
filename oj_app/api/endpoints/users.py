@@ -3,6 +3,7 @@ from fastapi_cache.decorator import cache
 from pydantic import ValidationError
 from oj_app.models.schemas import User, NewRole
 from oj_app.core.security.UserManager import userManager
+from oj_app.core.security.CacheManager import cacheManager
 from oj_app.core.security.SessionManager import AuthenticationError
 from oj_app.dependencies import common
 from oj_app.core.config import logs
@@ -209,7 +210,10 @@ async def change_role_of_user(
             }
         
 @router.get('/')
-@cache(expire=120) # cache for 2 minutes
+@cache(
+    expire=120,
+    key_builder=cacheManager.task_funcs_map['user_list'].key_builder,
+) # cache for 2 minutes
 async def get_user_list(
         request: Request,
         response: Response,
@@ -217,7 +221,11 @@ async def get_user_list(
         page_size: int = Query(default=20, ge=1),
     ):
 
-    """get the user list, only an admin can do this"""
+    """get the user list, only an admin can do this
+    
+    This function returns the user list according to the parameters. The page_size
+    should be 10, 20, 50, or 100, and its default is 20.
+    """
 
     # get current user
     try:
@@ -236,6 +244,15 @@ async def get_user_list(
         return {
             'code': status.HTTP_403_FORBIDDEN,
             'msg': 'user has no authority',
+            'data': None,
+        }
+    
+    if page_size != 10 and page_size != 20 and page_size != 50 and page_size != 100:
+        # bad request
+        response.status_code = status.HTTP_400_BAD_REQUEST
+        return {
+            'code': status.HTTP_400_BAD_REQUEST,
+            'msg': 'the page size is not supported',
             'data': None,
         }
     
