@@ -8,6 +8,7 @@ USER_LIST_URL = 'http://localhost:8000/api/users'
 ADMIN_CREATE_URL = 'http://localhost:8000/api/users/admin'
 LANGUAGE_URL = 'http://localhost:8000/api/languages'
 POST_SUBMISSION_URL = 'http://localhost:8000/api/submissions/'
+GET_SUBMISSION_URL = 'http://localhost:8000/api/submissions/'
 EXPORT_URL = 'http://localhost:8000/api/export/'
 RESET_URL = 'http://localhost:8000/api/reset/'
 IMPORT_URL = 'http://localhost:8000/api/import/'
@@ -139,6 +140,16 @@ class User:
     def get_submission_detail(self, submission_id: str):
         response = self.session.get(
             url=f'http://localhost:8000/api/submissions/{submission_id}/log'
+        )
+        return response
+
+    def get_submission_list(
+        self, 
+        **kwargs,
+    ):
+        response = self.session.get(
+            url=GET_SUBMISSION_URL,
+            params=kwargs,
         )
         return response
     
