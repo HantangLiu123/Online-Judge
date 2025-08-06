@@ -1,6 +1,7 @@
 import aiosqlite
 import math
 from ..config import settings
+from ..security.CacheManager import cacheManager
 from oj_app.models.schemas import SubmissionResult, SubmissionData
 
 class SubmissionResManager:
@@ -71,6 +72,11 @@ class SubmissionResManager:
             except aiosqlite.IntegrityError:
                 # the id is not unique
                 return False
+            
+            # delete the related cache
+            cache_deleter = cacheManager.task_funcs_map['submission_list'].deleter
+            await cache_deleter(user_id=result.user_id, problem_id=result.problem_id)
+
             await db.commit()
         return True
     
@@ -96,6 +102,10 @@ class SubmissionResManager:
                 WHERE id = ? 
             """, (status, score, counts, submission_id))
             await db.commit()
+
+        # delete the related cache
+        cache_deleter = cacheManager.task_funcs_map['submission_list'].deleter
+        await cache_deleter(submission_id=submission_id)
 
     def where_clause_submission_list(
         self,
@@ -142,7 +152,10 @@ class SubmissionResManager:
         async with aiosqlite.connect(self.db_path) as db:
             # getting the total number of submissions
             where_clause, params = self.where_clause_submission_list(user_id, problem_id, status)
-            cursor = await db.execute(f'SELECT COUNT(*) FROM submissions WHERE {where_clause}')
+            cursor = await db.execute(
+                f'SELECT COUNT(*) FROM submissions WHERE {where_clause}',
+                (*params, ),
+            )
             res = await cursor.fetchone()
             if res is None:
                 return 0, []
@@ -161,7 +174,7 @@ class SubmissionResManager:
                 ORDER BY submission_time DESC
                 LIMIT ? OFFSET ?
             """
-            query_params = params + [page_size, offset]
+            query_params = (*params, page_size, offset)
             cursor = await db.execute(query, query_params)
             submission_list = await cursor.fetchall()
 

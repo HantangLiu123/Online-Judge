@@ -1,13 +1,15 @@
 from fastapi import status, Request, Response, APIRouter, Query
 from pydantic import ValidationError
 from typing import Optional
+from fastapi_cache.decorator import cache
 from oj_app.dependencies import common
 from oj_app.models.schemas import SubmissionPostModel
 from oj_app.core.submission.SubmissionResManager import submissionResultManager
 from oj_app.core.submission.TestLogManager import testLogManager
 from oj_app.core.security.UserManager import userManager
-import asyncio
+from oj_app.core.security.CacheManager import cacheManager
 import os
+import asyncio
 
 router = APIRouter(prefix='/submissions')
 
@@ -142,6 +144,10 @@ async def get_submission(request: Request, response: Response, submission_id: st
         }
     
 @router.get('/')
+@cache(
+    expire=120,
+    key_builder=cacheManager.task_funcs_map['submission_list'].key_builder,
+)
 async def get_submission_list(
     request: Request,
     response: Response,
@@ -183,6 +189,22 @@ async def get_submission_list(
         page=page,
         page_size=page_size,
     )
+
+    # map the cache
+    map_tasks = [
+        cacheManager.store_id_key_map(
+            id=submission['id'],
+            item_type='submission',
+            cache_type='submission_list',
+            expire=120,
+            user_id=user_id,
+            problem_id=problem_id,
+            submission_status=submission_status,
+            page=page,
+            page_size=page_size,
+        ) for submission in submissions
+    ]
+    await asyncio.gather(*map_tasks)
 
     return {
         'code': status.HTTP_200_OK,
