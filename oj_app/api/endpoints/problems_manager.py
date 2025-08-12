@@ -102,9 +102,9 @@ async def create_problem(
         current_user = common.get_current_user(request)
     except common.AuthenticationError:
         # the user has not logged in
-        response.status_code = status.HTTP_403_FORBIDDEN
+        response.status_code = status.HTTP_401_UNAUTHORIZED
         return {
-            'code': status.HTTP_403_FORBIDDEN,
+            'code': status.HTTP_401_UNAUTHORIZED,
             'msg': 'user has not logged in',
             'data': None,
         }
