@@ -114,16 +114,12 @@ async def submission_list_deleter(
         await asyncio.gather(*delete_tasks)
     else:
         # delete by filter
-        if problem_id is None:
-            patterns = [f'submission_list:{user_id}']
-        elif user_id is None:
-            patterns = [f'submission_list:*:{problem_id}']
-        else:
-            patterns = [
-                f'submission_list:{user_id}',
-                f'submission_list:*:{problem_id}',
-                f'submission_list:{user_id}:{problem_id}'
-            ]
+        patterns = []
+        if user_id is not None:
+            patterns.append(f'submission_list:{user_id}')
+        if problem_id is not None:
+            patterns.append(f'submission_list:*:{problem_id}')
+
         for pattern in patterns:
             await FastAPICache.clear(namespace=pattern)
 
