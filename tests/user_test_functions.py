@@ -12,6 +12,8 @@ GET_SUBMISSION_URL = 'http://localhost:8000/api/submissions/'
 EXPORT_URL = 'http://localhost:8000/api/export/'
 RESET_URL = 'http://localhost:8000/api/reset/'
 IMPORT_URL = 'http://localhost:8000/api/import/'
+PROBLEM_LIST_URL = 'http://localhost:8000/api/problems/'
+PROBLEM_POST_URL = 'http://localhost:8000/api/problems/'
 
 class User:
 
@@ -168,3 +170,25 @@ class User:
         )
         return response
 
+    def get_problem_list(self):
+        response = self.session.get(PROBLEM_LIST_URL)
+        return response
+    
+    def upload_problem(self, prob_data):
+        response = self.session.post(
+            url=PROBLEM_POST_URL,
+            json=prob_data,
+        )
+        return response
+    
+    def get_problem(self, id):
+        response = self.session.get(
+            url=f'http://localhost:8000/api/problems/{id}'
+        )
+        return response
+    
+    def delete_problem(self, id):
+        response = self.session.delete(
+            url=f'http://localhost:8000/api/problems/{id}'
+        )
+        return response
