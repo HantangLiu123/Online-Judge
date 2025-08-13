@@ -80,6 +80,14 @@ class User:
         )
         return response
     
+    def change_user_role(self, user_id: int, new_role: str) -> requests.Response:
+        CHANGE_ROLE_URL = f'http://localhost:8000/api/users/{user_id}/role'
+        response = self.session.put(
+            url=CHANGE_ROLE_URL,
+            json={'role': new_role},
+        )
+        return response
+    
     def add_change_language(
         self,
         name: str,

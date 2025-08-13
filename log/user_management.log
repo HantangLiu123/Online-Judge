@@ -43,3 +43,14 @@
 2025-08-12 13:30:21,592 - User admin (id: 1) logged in
 2025-08-12 13:30:21,597 - User test_user_1 (id: 2) logged off
 2025-08-12 13:30:21,598 - User admin (id: 1) logged off
+2025-08-13 15:07:41,325 - User admin (id: 1) logged in
+2025-08-13 15:07:41,633 - User test_user_1 (id: 2) logged in
+2025-08-13 15:07:41,635 - User test_user_1 (id: 2) logged off
+2025-08-13 15:15:01,978 - User admin (id: 1) logged in
+2025-08-13 15:15:01,988 - User 2's role is changed by admin admin (id: 1). The role is change to banned.
+2025-08-13 15:15:02,305 - User 2's role is changed by admin admin (id: 1). The role is change to user.
+2025-08-13 15:15:02,463 - User test_user_1 (id: 2) logged in
+2025-08-13 15:15:02,465 - User admin (id: 1) logged off
+2025-08-13 15:15:02,466 - User test_user_1 (id: 2) logged off
+2025-08-13 15:15:02,624 - User test_user_1 (id: 2) logged in
+2025-08-13 15:15:02,626 - User test_user_1 (id: 2) logged off
