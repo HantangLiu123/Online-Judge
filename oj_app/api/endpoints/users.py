@@ -169,7 +169,7 @@ async def change_role_of_user(
         request: Request,
         response: Response,
         user_id: int,
-        new_role: NewRole,
+        new_role_data: dict,
         background_tasks: BackgroundTasks
     ) -> dict:
 
@@ -185,29 +185,40 @@ async def change_role_of_user(
             'msg': 'user not logged in',
             'data': None,
         }
-    else:
-        if current_user['role'] != 'admin':
-            # the user is not an admin
-            response.status_code = status.HTTP_403_FORBIDDEN
-            return {
-                'code': status.HTTP_403_FORBIDDEN,
-                'msg': 'user has no authority',
-                'data': None,
-            }
-        else:
-            changed_id, changed_role = await userManager.change_user_role(user_id, new_role.role)
+    
+    if current_user['role'] != 'admin':
+        # the user is not an admin
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return {
+            'code': status.HTTP_403_FORBIDDEN,
+            'msg': 'user has no authority',
+            'data': None,
+        }
+    
+    try:
+        new_role = NewRole(**new_role_data)
+    except ValidationError:
+        # the request format is incorrect
+        response.status_code = status.HTTP_400_BAD_REQUEST
+        return {
+            'code': status.HTTP_400_BAD_REQUEST,
+            'msg': 'the format of the request is incorrect',
+            'data': None,
+        }
 
-            # log and return
-            message = f"User {changed_id}'s role is changed by admin {current_user['username']} (id: {current_user['user_id']}). The role is change to {changed_role}."
-            background_tasks.add_task(logs.write_user_management_log, message)
-            return {
-                'code': status.HTTP_200_OK,
-                'msg': 'role updated',
-                'data': {
-                    'user_id': changed_id,
-                    'role': changed_role,
-                },
-            }
+    changed_id, changed_role = await userManager.change_user_role(user_id, new_role.role)
+
+    # log and return
+    message = f"User {changed_id}'s role is changed by admin {current_user['username']} (id: {current_user['user_id']}). The role is change to {changed_role}."
+    background_tasks.add_task(logs.write_user_management_log, message)
+    return {
+        'code': status.HTTP_200_OK,
+        'msg': 'role updated',
+        'data': {
+            'user_id': changed_id,
+            'role': changed_role,
+        },
+    }
         
 @router.get('/')
 @cache(
