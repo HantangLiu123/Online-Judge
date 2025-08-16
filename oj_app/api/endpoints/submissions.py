@@ -162,7 +162,12 @@ async def get_submission_list(
     page_size: int = Query(default=20, ge=1),
 ):
     
-    """return the submission list according to the parameters"""
+    """return the submission list according to the parameters
+    
+    This endpoint returns the submission list according to the params.
+    The page_size should be 10, 20, 50, or 100. One of the user_id or problem_id 
+    should not be None
+    """
 
     try:
         current_user = common.get_current_user(request)
@@ -185,14 +190,33 @@ async def get_submission_list(
             'data': None,
         }
     
+    if (page_size != 10 and page_size != 20 and page_size != 50 and page_size != 100) \
+    or (user_id is None and problem_id is None):
+        # bad request
+        response.status_code = status.HTTP_400_BAD_REQUEST
+        return {
+            'code': status.HTTP_400_BAD_REQUEST,
+            'msg': 'the request format is incorrect',
+            'data': None,
+        }
+    
     # get the submission list
-    total, submissions = await submissionResultManager.get_submission_list(
-        user_id=user_id,
-        problem_id=problem_id,
-        status=submission_status,
-        page=page,
-        page_size=page_size,
-    )
+    try:
+        total, submissions = await submissionResultManager.get_submission_list(
+            user_id=user_id,
+            problem_id=problem_id,
+            status=submission_status,
+            page=page,
+            page_size=page_size,
+        )
+    except ValueError:
+        # the page exceeds the max page number
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return {
+            'code': status.HTTP_404_NOT_FOUND,
+            'msg': 'the page number is too large',
+            'data': None,
+        }
 
     # map the cache
     map_tasks = [
