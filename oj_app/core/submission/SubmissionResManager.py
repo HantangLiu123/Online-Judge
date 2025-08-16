@@ -93,6 +93,8 @@ class SubmissionResManager:
         submission = await self.get_submission_by_id(submission_id)
         if submission is None:
             raise ValueError('The submission does not exist')
+        user_id = submission['user_id']
+        problem_id = submission['problem_id']
         
         # update the submission
         async with aiosqlite.connect(self.db_path) as db:
@@ -106,6 +108,9 @@ class SubmissionResManager:
         # delete the related cache
         cache_deleter = cacheManager.task_funcs_map['submission_list'].deleter
         await cache_deleter(submission_id=submission_id)
+        # this is for deleting the cache with status code that is not 200,
+        # this should be a temporary solution
+        await cache_deleter(user_id=user_id, problem_id=problem_id)
 
     def where_clause_submission_list(
         self,
