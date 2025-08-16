@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Request, Response, status, BackgroundTasks
+from fastapi_cache import FastAPICache
 from oj_app.dependencies import common
 from oj_app.core.security.UserManager import userManager
 from oj_app.core.submission.ResolveManager import resolveManager
@@ -66,6 +67,9 @@ async def reset_data(
     await asyncio.gather(*rm_lan_tasks)
     rm_prob_tasks = [aiofiles.os.remove(os.path.join(PROBLEM_PATH, file)) for file in os.listdir(PROBLEM_PATH)]
     await asyncio.gather(*rm_prob_tasks)
+
+    # clear the cache
+    await FastAPICache.clear()
 
     # record who reset the data
     message = f"admin {current_user['username']} (id: {current_user['user_id']}) reset all data"

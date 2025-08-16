@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Request, Response, status, BackgroundTasks
+from fastapi_cache import FastAPICache
 from pydantic import ValidationError
 from oj_app.dependencies import common
 from oj_app.models.schemas import ImportData, BaseModel
@@ -77,6 +78,9 @@ async def import_data(
     await asyncio.gather(*lan_tasks)
     prob_tasks = [import_model(os.path.join(PROB_DIR, f'{prob.id}.json'), prob) for prob in data_imported.problems]
     await asyncio.gather(*prob_tasks)
+
+    # clear the cache
+    await FastAPICache.clear()
 
     # record this import 
     message = f"admin {current_user['username']} (id: {current_user['user_id']}) import data to the site"
