@@ -132,15 +132,19 @@ async def get_submission(request: Request, response: Response, submission_id: st
         return {
             'code': status.HTTP_200_OK,
             'msg': 'success',
-            'status': submission['status'],
-            'score': submission['score'],
-            'counts': submission['counts'],
+            'data': {
+                'status': submission['status'],
+                'score': submission['score'],
+                'counts': submission['counts'],
+            }
         }
     else:
         return {
             'code': status.HTTP_200_OK,
             'msg': 'success',
-            'status': submission['status']
+            'data': {
+                'status': submission['status']
+            }
         }
     
 @router.get('/')
