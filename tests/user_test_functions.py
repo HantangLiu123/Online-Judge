@@ -135,11 +135,15 @@ class User:
                 'code': code,
             },
         )
-        response_data = response.json()
-        if response_data['data']:
-            return response, response_data['data']['submission_id']
-        else:
-            return response, None
+        return response
+    
+    def rejudge_code(
+        self,
+        submission_id: str,
+    ):
+        REJUDGE_URL = f'http://localhost:8000/api/submissions/{submission_id}/rejudge'
+        response = self.session.put(REJUDGE_URL)
+        return response
     
     def get_submission(self, submission_id: str):
         response = self.session.get(
