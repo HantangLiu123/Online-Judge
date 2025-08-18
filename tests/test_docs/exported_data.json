@@ -1,0 +1,1429 @@
+{
+    "users": [
+        {
+            "id": 2,
+            "username": "test_user_1",
+            "password": "$2b$12$/O94fbHV3Ds7S7MH5Q15wukV5jy9qOc4bCsffHzQe0HUwbto6ODki",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 3,
+            "resolve_count": 1
+        },
+        {
+            "id": 3,
+            "username": "test_user_2",
+            "password": "$2b$12$LvYsGSuw72p9K/AHAP7SsuiECTXFCHRHQg/hpzzcdlVwNPeb83s/6",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 1,
+            "resolve_count": 1
+        },
+        {
+            "id": 4,
+            "username": "test_user_3",
+            "password": "$2b$12$vPhmcaljgNoh54fFHmRKjOH3oGc7NdcG9nU1YoAEzac4x22NoAXrW",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 2,
+            "resolve_count": 0
+        },
+        {
+            "id": 5,
+            "username": "test_user_4",
+            "password": "$2b$12$gCQ3voLx/FiGya2OiPvcLu1aS6cGNIDShxj12lOVvTzlDUunSZRuq",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 3,
+            "resolve_count": 0
+        },
+        {
+            "id": 6,
+            "username": "test_user_5",
+            "password": "$2b$12$tZVCd4B4bNhBvk92zhchCeCgia0pTTiS/h6RgAdTS3EP0xTLlvx4S",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 3,
+            "resolve_count": 1
+        },
+        {
+            "id": 7,
+            "username": "test_user_6",
+            "password": "$2b$12$Q6ehh7UKbbTo2jQ/l2dYMuDIf3hBU5RfDqvAuV3tqqBd8chM4V7hW",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 0,
+            "resolve_count": 0
+        },
+        {
+            "id": 8,
+            "username": "test_user_7",
+            "password": "$2b$12$3X/fiHzV/FJ2gUDacTaGm.2Gzw2gP2xuuZ0hZCYl6e2NYaIRbd8Nq",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 0,
+            "resolve_count": 0
+        },
+        {
+            "id": 9,
+            "username": "test_user_8",
+            "password": "$2b$12$VAjhZ2RYgGupuRmCcgAv0e.OnzHdISv8CD/0rQDWn9iqlV7G36J7.",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 0,
+            "resolve_count": 0
+        },
+        {
+            "id": 10,
+            "username": "test_user_9",
+            "password": "$2b$12$Xkp9yCNXTVHu.e7iFvyIWOw/KLZIc8nap96lQ5I7zBOqwZD7yb3Me",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 0,
+            "resolve_count": 0
+        },
+        {
+            "id": 11,
+            "username": "test_user_10",
+            "password": "$2b$12$HhSLGdL8QsZDu/og6syoUOQmjltjFk8m42z24jFrmWYfIf65QcEdW",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 0,
+            "resolve_count": 0
+        },
+        {
+            "id": 12,
+            "username": "test_user_11",
+            "password": "$2b$12$N1A9YrteAB5OtVGDh8xwGOvQAPNrbG2i.mesXpP029mQsw4fuYPV2",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 0,
+            "resolve_count": 0
+        },
+        {
+            "id": 13,
+            "username": "test_user_12",
+            "password": "$2b$12$f35vxmW8ikvHtnBY9C6.xO4jVF1le7OxNyb1cdjGvYqOQj30TYH1q",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 0,
+            "resolve_count": 0
+        },
+        {
+            "id": 14,
+            "username": "test_user_13",
+            "password": "$2b$12$XYqloXbCwx9/1gtiGDOZwOfTaxl8mdaKlhGRwOnhBJpfqNj4jkxYi",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 0,
+            "resolve_count": 0
+        },
+        {
+            "id": 15,
+            "username": "test_user_14",
+            "password": "$2b$12$VLsQzPjeLHBRs5GpcbEn8O.ewnSapYCvzeMXTIV5xjf/TgrOGnRc6",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 0,
+            "resolve_count": 0
+        },
+        {
+            "id": 16,
+            "username": "test_user_15",
+            "password": "$2b$12$zPpvVcaeB1vjVO7eaF37HOysP7A7nt8PmTjQ9D8X2BH9HDD61NfBq",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 0,
+            "resolve_count": 0
+        },
+        {
+            "id": 17,
+            "username": "test_user_16",
+            "password": "$2b$12$VtLP7I84GtfytKVhNsZcX.YHm0awSuQqsqSh56LpCM/2Jk47ZxOA2",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 0,
+            "resolve_count": 0
+        },
+        {
+            "id": 18,
+            "username": "test_user_17",
+            "password": "$2b$12$xJLhFpSY12jjFLV.oL9aNeSgwmeKnzcqTeE8V/nHk.jtKwM8SQGQu",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 0,
+            "resolve_count": 0
+        },
+        {
+            "id": 19,
+            "username": "test_user_18",
+            "password": "$2b$12$pmCnIrB0BPRppxyKlWyl7.zR2IZCx.8U7lqTp1ArNybXI1x2Vcu9y",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 0,
+            "resolve_count": 0
+        },
+        {
+            "id": 20,
+            "username": "test_user_19",
+            "password": "$2b$12$/KPZ7aMK8gU2J56vdaKfj.xUFzgECUrRNRrZdAHgeqX8Npp3pXvdi",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 0,
+            "resolve_count": 0
+        },
+        {
+            "id": 21,
+            "username": "test_user_20",
+            "password": "$2b$12$UIuEHDG3Vps2WTIg05t0JOoLgd6a5TUCbf5a9pkKPnvq9GZICftRW",
+            "role": "user",
+            "join_time": "2025-08-12",
+            "submit_count": 0,
+            "resolve_count": 0
+        },
+        {
+            "id": 22,
+            "username": "test_admin_1",
+            "password": "$2b$12$UrMNXfrK7Of.2W/NH42taezN9/7F.QByAUIc.YOG4xmXbe6lSdCAa",
+            "role": "admin",
+            "join_time": "2025-08-14",
+            "submit_count": 0,
+            "resolve_count": 0
+        },
+        {
+            "id": 23,
+            "username": "test_user_21",
+            "password": "$2b$12$B558PBNuL.GaU24TUCUdwu4KTnqaJvWHatJOn/6Wtby4kRs/mzGzS",
+            "role": "user",
+            "join_time": "2025-08-14",
+            "submit_count": 0,
+            "resolve_count": 0
+        }
+    ],
+    "submissions": [
+        {
+            "id": "32944341-d386-4430-872c-ddbfe0b14774",
+            "submission_time": "2025-08-16 19:43:24.996911",
+            "user_id": 4,
+            "problem_id": "p001",
+            "language": "python",
+            "status": "success",
+            "score": 0,
+            "counts": 20,
+            "code": "\nn = int(input())\nnums = list(map(int, input().split()))\ntarget = int(input())\n\n# Wrong logic - always returns first two indices\nfor i in range(n):\n    for j in range(i + 1, n):\n        if nums[i] + nums[j] == target:\n            print(i + 1, j + 1)  # Wrong: 1-indexed instead of 0-indexed\n            break\n    else:\n        continue\n    break\n",
+            "details": [
+                {
+                    "id": 1,
+                    "result": "WA",
+                    "time": 0.007420539855957031,
+                    "memory": 2
+                },
+                {
+                    "id": 2,
+                    "result": "WA",
+                    "time": 0.007172584533691406,
+                    "memory": 2
+                }
+            ]
+        },
+        {
+            "id": "3583c845-3e70-4a8a-96a8-c238c845f39c",
+            "submission_time": "2025-08-16 19:43:23.849627",
+            "user_id": 3,
+            "problem_id": "p001",
+            "language": "python",
+            "status": "success",
+            "score": 20,
+            "counts": 20,
+            "code": "\nn = int(input())\nnums = list(map(int, input().split()))\ntarget = int(input())\n\nnum_map = {}\nfor i, num in enumerate(nums):\n    complement = target - num\n    if complement in num_map:\n        print(num_map[complement], i)\n        break\n    num_map[num] = i\n",
+            "details": [
+                {
+                    "id": 1,
+                    "result": "AC",
+                    "time": 0.13969135284423828,
+                    "memory": 3
+                },
+                {
+                    "id": 2,
+                    "result": "AC",
+                    "time": 0.007411956787109375,
+                    "memory": 4
+                }
+            ]
+        },
+        {
+            "id": "54c2500f-5d83-4baa-baff-24b52021f662",
+            "submission_time": "2025-08-16 19:43:25.053980",
+            "user_id": 5,
+            "problem_id": "p001",
+            "language": "cpp",
+            "status": "success",
+            "score": 0,
+            "counts": 20,
+            "code": "\n#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    vector<int> nums(n);\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    int target;\n    cin >> target;\n    \n    // Will cause segmentation fault\n    int* ptr = nullptr;\n    *ptr = 42;  // Dereferencing null pointer\n    \n    for (int i = 0; i < n; i++) {\n        for (int j = i + 1; j < n; j++) {\n            if (nums[i] + nums[j] == target) {\n                cout << i << \" \" << j << endl;\n                return 0;\n            }\n        }\n    }\n    \n    return 0;\n}\n",
+            "details": [
+                {
+                    "id": 1,
+                    "result": "RE",
+                    "time": 0.00572657585144043,
+                    "memory": 1
+                },
+                {
+                    "id": 2,
+                    "result": "RE",
+                    "time": 0.005972623825073242,
+                    "memory": 1
+                }
+            ]
+        },
+        {
+            "id": "54e7139c-a275-4b8d-bd80-67d2d23ae9d5",
+            "submission_time": "2025-08-16 19:43:25.095345",
+            "user_id": 6,
+            "problem_id": "p001",
+            "language": "cpp",
+            "status": "success",
+            "score": 0,
+            "counts": 20,
+            "code": "\n#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    vector<int> nums(n);\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    int target;\n    cin >> target;\n    \n    // Wrong: returns 1-indexed instead of 0-indexed\n    for (int i = 0; i < n; i++) {\n        for (int j = i + 1; j < n; j++) {\n            if (nums[i] + nums[j] == target) {\n                cout << i + 1 << \" \" << j + 1 << endl;  // Wrong indexing\n                return 0;\n            }\n        }\n    }\n    \n    return 0;\n}\n",
+            "details": [
+                {
+                    "id": 1,
+                    "result": "WA",
+                    "time": 0.0021355152130126953,
+                    "memory": 2
+                },
+                {
+                    "id": 2,
+                    "result": "WA",
+                    "time": 0.0003304481506347656,
+                    "memory": 2
+                }
+            ]
+        },
+        {
+            "id": "5c9777dc-8b6d-4e32-9170-daec644d09dd",
+            "submission_time": "2025-08-16 19:43:25.042515",
+            "user_id": 5,
+            "problem_id": "p001",
+            "language": "cpp",
+            "status": "success",
+            "score": 0,
+            "counts": 20,
+            "code": "\n#include <iostream>\n#include <vector>\n#include <unordered_map>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    vector<int> nums(n);\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    int target;\n    cin >> target;\n    \n    // Allocate huge amount of memory to cause MLE\n    vector<vector<int>> huge_memory;\n    for (int i = 0; i < 10000000; i++) {\n        huge_memory.push_back(vector<int>(100, 0));\n    }\n    \n    unordered_map<int, int> numMap;\n    for (int i = 0; i < n; i++) {\n        int complement = target - nums[i];\n        if (numMap.find(complement) != numMap.end()) {\n            cout << numMap[complement] << \" \" << i << endl;\n            return 0;\n        }\n        numMap[nums[i]] = i;\n    }\n    \n    return 0;\n}\n",
+            "details": [
+                {
+                    "id": 1,
+                    "result": "MLE",
+                    "time": 0.21045780181884766,
+                    "memory": 293
+                },
+                {
+                    "id": 2,
+                    "result": "MLE",
+                    "time": 0.21066904067993164,
+                    "memory": 317
+                }
+            ]
+        },
+        {
+            "id": "6fccc4cf-7e86-409e-b29b-1b1e6bdd166b",
+            "submission_time": "2025-08-16 19:43:24.053408",
+            "user_id": 2,
+            "problem_id": "p001",
+            "language": "python",
+            "status": "success",
+            "score": 20,
+            "counts": 20,
+            "code": "\nn = int(input())\nnums = list(map(int, input().split()))\ntarget = int(input())\n\nnum_map = {}\nfor i, num in enumerate(nums):\n    complement = target - num\n    if complement in num_map:\n        print(num_map[complement], i)\n        break\n    num_map[num] = i\n",
+            "details": [
+                {
+                    "id": 1,
+                    "result": "AC",
+                    "time": 0.14614224433898926,
+                    "memory": 4
+                },
+                {
+                    "id": 2,
+                    "result": "AC",
+                    "time": 0.00785517692565918,
+                    "memory": 2
+                }
+            ]
+        },
+        {
+            "id": "90d43eec-1b9f-411f-9707-5412e01722c8",
+            "submission_time": "2025-08-16 19:43:25.107486",
+            "user_id": 6,
+            "problem_id": "p001",
+            "language": "cpp",
+            "status": "success",
+            "score": 20,
+            "counts": 20,
+            "code": "\n#include <iostream>\n#include <vector>\n#include <unordered_map>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    vector<int> nums(n);\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    int target;\n    cin >> target;\n    \n    unordered_map<int, int> numMap;\n    for (int i = 0; i < n; i++) {\n        int complement = target - nums[i];\n        if (numMap.find(complement) != numMap.end()) {\n            cout << numMap[complement] << \" \" << i << endl;\n            return 0;\n        }\n        numMap[nums[i]] = i;\n    }\n    \n    return 0;\n}\n",
+            "details": [
+                {
+                    "id": 1,
+                    "result": "AC",
+                    "time": 0.0004055500030517578,
+                    "memory": 2
+                },
+                {
+                    "id": 2,
+                    "result": "AC",
+                    "time": 0.0004260540008544922,
+                    "memory": 1
+                }
+            ]
+        },
+        {
+            "id": "af6b490b-f1a1-439e-b633-e6097a727df9",
+            "submission_time": "2025-08-16 19:43:24.026322",
+            "user_id": 2,
+            "problem_id": "p001",
+            "language": "python",
+            "status": "success",
+            "score": 0,
+            "counts": 20,
+            "code": "\nn = int(input())\nnums = list(map(int, input().split()))\ntarget = int(input())\n\n# Will cause index error when no solution exists\nfor i in range(n):\n    for j in range(i + 1, n):\n        if nums[i] + nums[j] == target:\n            print(i, j)\n            # if there is a solution, trigger RE\n            print(nums[n], nums[n + 1])\n            exit()\n\n# This will cause an error if we reach here\nprint(nums[n], nums[n + 1])  # Index out of bounds\n",
+            "details": [
+                {
+                    "id": 1,
+                    "result": "RE",
+                    "time": 0.1429309844970703,
+                    "memory": 2
+                },
+                {
+                    "id": 2,
+                    "result": "RE",
+                    "time": 0.14302325248718262,
+                    "memory": 1
+                }
+            ]
+        },
+        {
+            "id": "c136ae98-c426-4742-937e-3c1154273179",
+            "submission_time": "2025-08-16 19:43:25.030895",
+            "user_id": 5,
+            "problem_id": "p001",
+            "language": "cpp",
+            "status": "success",
+            "score": 0,
+            "counts": 20,
+            "code": "\n#include <iostream>\n#include <vector>\n#include <unordered_map>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    vector<int> nums(n);\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    int target;\n    cin >> target;\n    \n    unordered_map<int, int> numMap;\n    for (int i = 0; i < n; i++) {\n        int complement = target - nums[i];\n        if (numMap.find(complement) != numMap.end()) {\n            cout << numMap[complement] << \" \" << i << endl;\n            return 0;\n        }\n        numMap[nums[i]] = i;\n    // Missing closing brace for for loop - compilation error\n    \n    return 0;\n}\n",
+            "details": [
+                {
+                    "id": 1,
+                    "result": "CE",
+                    "time": 0.0,
+                    "memory": 0
+                },
+                {
+                    "id": 2,
+                    "result": "CE",
+                    "time": 0.0,
+                    "memory": 0
+                }
+            ]
+        },
+        {
+            "id": "ce73dbba-7f5a-4c3d-bfa5-c4d43d9a731d",
+            "submission_time": "2025-08-16 19:43:24.038980",
+            "user_id": 2,
+            "problem_id": "p001",
+            "language": "python",
+            "status": "success",
+            "score": 0,
+            "counts": 20,
+            "code": "\nimport time\n\nn = int(input())\nnums = list(map(int, input().split()))\ntarget = int(input())\n\n# Intentional delay to cause TLE\ntime.sleep(2)\n\nnum_map = {}\nfor i, num in enumerate(nums):\n    complement = target - num\n    if complement in num_map:\n        print(num_map[complement], i)\n        break\n    num_map[num] = i\n",
+            "details": [
+                {
+                    "id": 1,
+                    "result": "TLE",
+                    "time": 1.0000560283660889,
+                    "memory": 8
+                },
+                {
+                    "id": 2,
+                    "result": "TLE",
+                    "time": 1.0005183219909668,
+                    "memory": 8
+                }
+            ]
+        },
+        {
+            "id": "ef7241e9-2daf-412b-b15c-9657fdda9e2e",
+            "submission_time": "2025-08-16 19:43:25.083074",
+            "user_id": 6,
+            "problem_id": "p001",
+            "language": "cpp",
+            "status": "success",
+            "score": 0,
+            "counts": 20,
+            "code": "\n#include <iostream>\n#include <vector>\n#include <unordered_map>\n#include <chrono>\n#include <thread>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    \n    vector<int> nums(n);\n    for (int i = 0; i < n; i++) {\n        cin >> nums[i];\n    }\n    \n    int target;\n    cin >> target;\n    \n    // Intentional delay to cause TLE\n    this_thread::sleep_for(chrono::seconds(2));\n    \n    unordered_map<int, int> numMap;\n    for (int i = 0; i < n; i++) {\n        int complement = target - nums[i];\n        if (numMap.find(complement) != numMap.end()) {\n            cout << numMap[complement] << \" \" << i << endl;\n            return 0;\n        }\n        numMap[nums[i]] = i;\n    }\n    \n    return 0;\n}\n",
+            "details": [
+                {
+                    "id": 1,
+                    "result": "TLE",
+                    "time": 1.0006895065307617,
+                    "memory": 3
+                },
+                {
+                    "id": 2,
+                    "result": "TLE",
+                    "time": 1.0006842613220215,
+                    "memory": 3
+                }
+            ]
+        },
+        {
+            "id": "f89d1d24-5654-4212-abaf-44fe92a0c41a",
+            "submission_time": "2025-08-16 19:43:25.009959",
+            "user_id": 4,
+            "problem_id": "p001",
+            "language": "python",
+            "status": "success",
+            "score": 0,
+            "counts": 20,
+            "code": "\nn = int(input())\nnums = list(map(int, input().split()))\ntarget = int(input())\n\n# Create huge unnecessary data structure\nhuge_list = []\nfor i in range(10**7):  # Create 10M elements\n    huge_list.append([0] * 100)  # Each with 100 sub-elements\n\nnum_map = {}\nfor i, num in enumerate(nums):\n    complement = target - num\n    if complement in num_map:\n        print(num_map[complement], i)\n        break\n    num_map[num] = i\n",
+            "details": [
+                {
+                    "id": 1,
+                    "result": "MLE",
+                    "time": 0.3607139587402344,
+                    "memory": 297
+                },
+                {
+                    "id": 2,
+                    "result": "MLE",
+                    "time": 0.3100244998931885,
+                    "memory": 310
+                }
+            ]
+        }
+    ],
+    "resolves": [
+        {
+            "problem_id": "p001",
+            "user_id": 3,
+            "language": "python",
+            "resolved": 1
+        },
+        {
+            "problem_id": "p001",
+            "user_id": 2,
+            "language": "python",
+            "resolved": 1
+        },
+        {
+            "problem_id": "p001",
+            "user_id": 4,
+            "language": "python",
+            "resolved": 0
+        },
+        {
+            "problem_id": "p001",
+            "user_id": 5,
+            "language": "cpp",
+            "resolved": 0
+        },
+        {
+            "problem_id": "p001",
+            "user_id": 6,
+            "language": "cpp",
+            "resolved": 1
+        }
+    ],
+    "problems": [
+        {
+            "id": "p006",
+            "title": "Zigzag Conversion",
+            "description": "Convert the given string into a zigzag pattern on a given number of rows.",
+            "input_description": "The first line contains the string s. The second line contains the number of rows.",
+            "output_description": "The converted string read line by line.",
+            "samples": [
+                {
+                    "input": "PAYPALISHIRING\n3",
+                    "output": "PAHNAPLSIIGYIR"
+                },
+                {
+                    "input": "PAYPALISHIRING\n4",
+                    "output": "PINALSIGYAHRPI"
+                }
+            ],
+            "constraints": "1 <= s.length <= 1000\ns consists of English letters (lower-case and upper-case), ',' and '.'.\n1 <= numRows <= 1000",
+            "testcases": [
+                {
+                    "input": "PAYPALISHIRING\n3",
+                    "output": "PAHNAPLSIIGYIR"
+                },
+                {
+                    "input": "PAYPALISHIRING\n4",
+                    "output": "PINALSIGYAHRPI"
+                },
+                {
+                    "input": "A\n1",
+                    "output": "A"
+                }
+            ],
+            "hint": "Visit characters in the original string in the order they appear in the zigzag pattern.",
+            "source": "LeetCode",
+            "tags": [
+                "string"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "medium"
+        },
+        {
+            "id": "p005",
+            "title": "Longest Palindromic Substring",
+            "description": "Given a string s, return the longest palindromic substring in s.",
+            "input_description": "A single line containing the string s.",
+            "output_description": "The longest palindromic substring.",
+            "samples": [
+                {
+                    "input": "babad",
+                    "output": "bab"
+                },
+                {
+                    "input": "cbbd",
+                    "output": "bb"
+                }
+            ],
+            "constraints": "1 <= s.length <= 1000\ns consist of only digits and English letters.",
+            "testcases": [
+                {
+                    "input": "babad",
+                    "output": "bab"
+                },
+                {
+                    "input": "cbbd",
+                    "output": "bb"
+                },
+                {
+                    "input": "a",
+                    "output": "a"
+                },
+                {
+                    "input": "ac",
+                    "output": "a"
+                }
+            ],
+            "hint": "Expand around center for odd and even length palindromes.",
+            "source": "LeetCode",
+            "tags": [
+                "string",
+                "dynamic-programming"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "medium"
+        },
+        {
+            "id": "p017",
+            "title": "Remove Nth Node From End of List",
+            "description": "Given the head of a linked list, remove the nth node from the end of the list and return its head.",
+            "input_description": "The first line contains m, the number of elements in the linked list. The second line contains m space-separated integers. The third line contains n, the position from the end to remove.",
+            "output_description": "The linked list after removing the nth node from the end, as space-separated integers.",
+            "samples": [
+                {
+                    "input": "5\n1 2 3 4 5\n2",
+                    "output": "1 2 3 5"
+                },
+                {
+                    "input": "1\n1\n1",
+                    "output": ""
+                }
+            ],
+            "constraints": "The number of nodes in the list is sz.\n1 <= sz <= 30\n0 <= Node.val <= 100\n1 <= n <= sz",
+            "testcases": [
+                {
+                    "input": "5\n1 2 3 4 5\n2",
+                    "output": "1 2 3 5"
+                },
+                {
+                    "input": "1\n1\n1",
+                    "output": ""
+                },
+                {
+                    "input": "2\n1 2\n1",
+                    "output": "1"
+                }
+            ],
+            "hint": "Use two pointers with a gap of n nodes between them.",
+            "source": "LeetCode",
+            "tags": [
+                "linked-list",
+                "two-pointers"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "medium"
+        },
+        {
+            "id": "p018",
+            "title": "Valid Parentheses",
+            "description": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.",
+            "input_description": "A single line containing the string s.",
+            "output_description": "true if the string is valid, false otherwise.",
+            "samples": [
+                {
+                    "input": "()",
+                    "output": "true"
+                },
+                {
+                    "input": "()[]{}",
+                    "output": "true"
+                }
+            ],
+            "constraints": "1 <= s.length <= 10^4\ns consists of parentheses only '()[]{}'.",
+            "testcases": [
+                {
+                    "input": "()",
+                    "output": "true"
+                },
+                {
+                    "input": "()[]{}",
+                    "output": "true"
+                },
+                {
+                    "input": "(]",
+                    "output": "false"
+                },
+                {
+                    "input": "([)]",
+                    "output": "false"
+                }
+            ],
+            "hint": "Use a stack to keep track of opening brackets and ensure they're closed in the correct order.",
+            "source": "LeetCode",
+            "tags": [
+                "string",
+                "stack"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "easy"
+        },
+        {
+            "id": "p004",
+            "title": "Median of Two Sorted Arrays",
+            "description": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.",
+            "input_description": "The first line contains m, followed by m space-separated integers of nums1. The second line contains n, followed by n space-separated integers of nums2.",
+            "output_description": "The median of the two sorted arrays as a float.",
+            "samples": [
+                {
+                    "input": "2\n1 3\n1\n2",
+                    "output": "2.0"
+                },
+                {
+                    "input": "2\n1 2\n2\n3 4",
+                    "output": "2.5"
+                }
+            ],
+            "constraints": "nums1.length == m\nnums2.length == n\n0 <= m <= 1000\n0 <= n <= 1000\n1 <= m + n <= 2000\n-10^6 <= nums1[i], nums2[i] <= 10^6",
+            "testcases": [
+                {
+                    "input": "2\n1 3\n1\n2",
+                    "output": "2.0"
+                },
+                {
+                    "input": "2\n1 2\n2\n3 4",
+                    "output": "2.5"
+                },
+                {
+                    "input": "0\n\n1\n1",
+                    "output": "1.0"
+                }
+            ],
+            "hint": "The overall run time complexity should be O(log (m+n)). Consider binary search approach.",
+            "source": "LeetCode",
+            "tags": [
+                "array",
+                "binary-search",
+                "divide-and-conquer"
+            ],
+            "time_limit": 2.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "hard"
+        },
+        {
+            "id": "p001",
+            "title": "Two Sum",
+            "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.",
+            "input_description": "The first line contains an integer n, the size of the array. The second line contains n space-separated integers. The third line contains the target integer.",
+            "output_description": "Output two space-separated integers representing the indices of the two numbers.",
+            "samples": [
+                {
+                    "input": "4\n2 7 11 15\n9",
+                    "output": "0 1"
+                },
+                {
+                    "input": "3\n3 2 4\n6",
+                    "output": "1 2"
+                }
+            ],
+            "constraints": "2 <= nums.length <= 10^4\n-10^9 <= nums[i] <= 10^9\n-10^9 <= target <= 10^9",
+            "testcases": [
+                {
+                    "input": "4\n2 7 11 15\n9",
+                    "output": "0 1"
+                },
+                {
+                    "input": "3\n3 2 4\n6",
+                    "output": "1 2"
+                },
+                {
+                    "input": "2\n3 3\n6",
+                    "output": "0 1"
+                }
+            ],
+            "hint": "You may want to use a hash map to store values and their indices.",
+            "source": "LeetCode",
+            "tags": [
+                "array",
+                "hash-table"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "easy"
+        },
+        {
+            "id": "p019",
+            "title": "Merge Two Sorted Lists",
+            "description": "Merge two sorted linked lists and return it as a sorted list.",
+            "input_description": "The first line contains m, followed by m space-separated integers of the first list. The second line contains n, followed by n space-separated integers of the second list.",
+            "output_description": "The merged sorted linked list as space-separated integers.",
+            "samples": [
+                {
+                    "input": "3\n1 2 4\n3\n1 3 4",
+                    "output": "1 1 2 3 4 4"
+                },
+                {
+                    "input": "0\n\n0\n",
+                    "output": ""
+                }
+            ],
+            "constraints": "The number of nodes in both lists is in the range [0, 50].\n-100 <= Node.val <= 100\nBoth list1 and list2 are sorted in non-decreasing order.",
+            "testcases": [
+                {
+                    "input": "3\n1 2 4\n3\n1 3 4",
+                    "output": "1 1 2 3 4 4"
+                },
+                {
+                    "input": "0\n\n0\n",
+                    "output": ""
+                },
+                {
+                    "input": "1\n0\n1\n1",
+                    "output": "0 1"
+                }
+            ],
+            "hint": "Use a dummy node to build the merged list and compare nodes from both lists.",
+            "source": "LeetCode",
+            "tags": [
+                "linked-list"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "easy"
+        },
+        {
+            "id": "p016",
+            "title": "Letter Combinations of a Phone Number",
+            "description": "Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.",
+            "input_description": "A single line containing the digits string.",
+            "output_description": "All possible letter combinations, each on a separate line.",
+            "samples": [
+                {
+                    "input": "23",
+                    "output": "ad\nbd\ncd\nae\nbe\nce\naf\nbf\ncf"
+                },
+                {
+                    "input": "",
+                    "output": ""
+                }
+            ],
+            "constraints": "0 <= digits.length <= 4\ndigits[i] is a digit in the range ['2', '9'].",
+            "testcases": [
+                {
+                    "input": "23",
+                    "output": "ad\nbd\ncd\nae\nbe\nce\naf\nbf\ncf"
+                },
+                {
+                    "input": "",
+                    "output": ""
+                },
+                {
+                    "input": "2",
+                    "output": "a\nb\nc"
+                }
+            ],
+            "hint": "Use backtracking to generate all possible combinations recursively.",
+            "source": "LeetCode",
+            "tags": [
+                "string",
+                "backtracking"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "medium"
+        },
+        {
+            "id": "p003",
+            "title": "Longest Substring Without Repeating Characters",
+            "description": "Given a string s, find the length of the longest substring without repeating characters.",
+            "input_description": "A single line containing the string s.",
+            "output_description": "An integer representing the length of the longest substring without repeating characters.",
+            "samples": [
+                {
+                    "input": "abcabcbb",
+                    "output": "3"
+                },
+                {
+                    "input": "bbbbb",
+                    "output": "1"
+                }
+            ],
+            "constraints": "0 <= s.length <= 5 * 10^4\ns consists of English letters, digits, symbols and spaces.",
+            "testcases": [
+                {
+                    "input": "abcabcbb",
+                    "output": "3"
+                },
+                {
+                    "input": "bbbbb",
+                    "output": "1"
+                },
+                {
+                    "input": "pwwkew",
+                    "output": "3"
+                },
+                {
+                    "input": "",
+                    "output": "0"
+                }
+            ],
+            "hint": "Use a sliding window approach with a hash set to track characters in the current window.",
+            "source": "LeetCode",
+            "tags": [
+                "string",
+                "sliding-window"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "medium"
+        },
+        {
+            "id": "p002",
+            "title": "Add Two Numbers",
+            "description": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.",
+            "input_description": "The first line contains n, the number of elements in the first linked list. The second line contains n space-separated digits. The third line contains m, the number of elements in the second linked list. The fourth line contains m space-separated digits.",
+            "output_description": "Output the resulting linked list as space-separated digits in reverse order.",
+            "samples": [
+                {
+                    "input": "3\n2 4 3\n3\n5 6 4",
+                    "output": "7 0 8"
+                },
+                {
+                    "input": "1\n0\n1\n0",
+                    "output": "0"
+                }
+            ],
+            "constraints": "The number of nodes in each linked list is in the range [1, 100].\n0 <= Node.val <= 9\nIt is guaranteed that the list represents a number that does not have leading zeros.",
+            "testcases": [
+                {
+                    "input": "3\n2 4 3\n3\n5 6 4",
+                    "output": "7 0 8"
+                },
+                {
+                    "input": "1\n0\n1\n0",
+                    "output": "0"
+                },
+                {
+                    "input": "7\n9 9 9 9 9 9 9\n4\n9 9 9 9",
+                    "output": "8 9 9 9 0 0 0 1"
+                }
+            ],
+            "hint": "Initialize a dummy node to build the result list and handle carry carefully.",
+            "source": "LeetCode",
+            "tags": [
+                "linked-list",
+                "math"
+            ],
+            "time_limit": 2.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "medium"
+        },
+        {
+            "id": "p013",
+            "title": "Roman to Integer",
+            "description": "Given a roman numeral, convert it to an integer.",
+            "input_description": "A single line containing the roman numeral s.",
+            "output_description": "The integer representation of the roman numeral.",
+            "samples": [
+                {
+                    "input": "III",
+                    "output": "3"
+                },
+                {
+                    "input": "LVIII",
+                    "output": "58"
+                }
+            ],
+            "constraints": "1 <= s.length <= 15\ns contains only the characters ('I', 'V', 'X', 'L', 'C', 'D', 'M').\nIt is guaranteed that s is a valid roman numeral in the range [1, 3999].",
+            "testcases": [
+                {
+                    "input": "III",
+                    "output": "3"
+                },
+                {
+                    "input": "LVIII",
+                    "output": "58"
+                },
+                {
+                    "input": "MCMXCIV",
+                    "output": "1994"
+                },
+                {
+                    "input": "I",
+                    "output": "1"
+                }
+            ],
+            "hint": "Iterate through the string and add values, subtracting when a smaller value precedes a larger one.",
+            "source": "LeetCode",
+            "tags": [
+                "hash-table",
+                "math",
+                "string"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "easy"
+        },
+        {
+            "id": "p009",
+            "title": "Palindrome Number",
+            "description": "Given an integer x, return true if x is a palindrome, and false otherwise.",
+            "input_description": "A single integer x.",
+            "output_description": "true or false.",
+            "samples": [
+                {
+                    "input": "121",
+                    "output": "true"
+                },
+                {
+                    "input": "-121",
+                    "output": "false"
+                }
+            ],
+            "constraints": "-2^31 <= x <= 2^31 - 1",
+            "testcases": [
+                {
+                    "input": "121",
+                    "output": "true"
+                },
+                {
+                    "input": "-121",
+                    "output": "false"
+                },
+                {
+                    "input": "10",
+                    "output": "false"
+                },
+                {
+                    "input": "-101",
+                    "output": "false"
+                }
+            ],
+            "hint": "Convert the integer to a string and check if it reads the same forwards and backwards.",
+            "source": "LeetCode",
+            "tags": [
+                "math"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "easy"
+        },
+        {
+            "id": "p014",
+            "title": "Longest Common Prefix",
+            "description": "Find the longest common prefix string amongst an array of strings.",
+            "input_description": "The first line contains n, the number of strings. The next n lines each contain a string.",
+            "output_description": "The longest common prefix string.",
+            "samples": [
+                {
+                    "input": "3\nflower\nflow\nflight",
+                    "output": "fl"
+                },
+                {
+                    "input": "3\ndog\nracecar\ncar",
+                    "output": ""
+                }
+            ],
+            "constraints": "1 <= strs.length <= 200\n0 <= strs[i].length <= 200\nstrs[i] consists of only lowercase English letters.",
+            "testcases": [
+                {
+                    "input": "3\nflower\nflow\nflight",
+                    "output": "fl"
+                },
+                {
+                    "input": "3\ndog\nracecar\ncar",
+                    "output": ""
+                },
+                {
+                    "input": "1\na",
+                    "output": "a"
+                }
+            ],
+            "hint": "Compare characters from the beginning of each string until a mismatch is found.",
+            "source": "LeetCode",
+            "tags": [
+                "string"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "easy"
+        },
+        {
+            "id": "p015",
+            "title": "3Sum",
+            "description": "Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j != k and nums[i] + nums[j] + nums[k] == 0.",
+            "input_description": "The first line contains n, followed by n space-separated integers.",
+            "output_description": "All unique triplets that sum to zero, each on a separate line as space-separated integers.",
+            "samples": [
+                {
+                    "input": "6\n-1 0 1 2 -1 -4",
+                    "output": "-1 -1 2\n-1 0 1"
+                },
+                {
+                    "input": "1\n0",
+                    "output": ""
+                }
+            ],
+            "constraints": "0 <= nums.length <= 3000\n-10^5 <= nums[i] <= 10^5",
+            "testcases": [
+                {
+                    "input": "6\n-1 0 1 2 -1 -4",
+                    "output": "-1 -1 2\n-1 0 1"
+                },
+                {
+                    "input": "1\n0",
+                    "output": ""
+                },
+                {
+                    "input": "3\n0 0 0",
+                    "output": "0 0 0"
+                }
+            ],
+            "hint": "Sort the array first, then use a combination of iteration and two-pointer technique.",
+            "source": "LeetCode",
+            "tags": [
+                "array",
+                "two-pointers"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "medium"
+        },
+        {
+            "id": "p008",
+            "title": "String to Integer (atoi)",
+            "description": "Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer.",
+            "input_description": "A single line containing the string s.",
+            "output_description": "The converted 32-bit signed integer.",
+            "samples": [
+                {
+                    "input": "42",
+                    "output": "42"
+                },
+                {
+                    "input": "   -42",
+                    "output": "-42"
+                }
+            ],
+            "constraints": "0 <= s.length <= 200\ns consists of English letters (lower-case and upper-case), digits (0-9), ' ', '+', '-', and '.'.",
+            "testcases": [
+                {
+                    "input": "42",
+                    "output": "42"
+                },
+                {
+                    "input": "   -42",
+                    "output": "-42"
+                },
+                {
+                    "input": "4193 with words",
+                    "output": "4193"
+                },
+                {
+                    "input": "words and 987",
+                    "output": "0"
+                }
+            ],
+            "hint": "Carefully handle leading whitespace, optional sign, and overflow/underflow.",
+            "source": "LeetCode",
+            "tags": [
+                "string"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "medium"
+        },
+        {
+            "id": "p007",
+            "title": "Reverse Integer",
+            "description": "Given a signed 32-bit integer x, return x with its digits reversed.",
+            "input_description": "A single integer x.",
+            "output_description": "The reversed integer. Return 0 if the reversed integer overflows.",
+            "samples": [
+                {
+                    "input": "123",
+                    "output": "321"
+                },
+                {
+                    "input": "-123",
+                    "output": "-321"
+                }
+            ],
+            "constraints": "-2^31 <= x <= 2^31 - 1",
+            "testcases": [
+                {
+                    "input": "123",
+                    "output": "321"
+                },
+                {
+                    "input": "-123",
+                    "output": "-321"
+                },
+                {
+                    "input": "120",
+                    "output": "21"
+                },
+                {
+                    "input": "1534236469",
+                    "output": "0"
+                }
+            ],
+            "hint": "Handle overflow by checking if the reversed number exceeds 32-bit range before returning.",
+            "source": "LeetCode",
+            "tags": [
+                "math"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "easy"
+        },
+        {
+            "id": "p020",
+            "title": "Generate Parentheses",
+            "description": "Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.",
+            "input_description": "A single integer n.",
+            "output_description": "All combinations of well-formed parentheses, each on a separate line.",
+            "samples": [
+                {
+                    "input": "3",
+                    "output": "((()))\n(()())\n(())()\n()(())\n()()()"
+                },
+                {
+                    "input": "1",
+                    "output": "()"
+                }
+            ],
+            "constraints": "1 <= n <= 8",
+            "testcases": [
+                {
+                    "input": "3",
+                    "output": "((()))\n(()())\n(())()\n()(())\n()()()"
+                },
+                {
+                    "input": "1",
+                    "output": "()"
+                },
+                {
+                    "input": "2",
+                    "output": "(()) \n()()"
+                }
+            ],
+            "hint": "Use backtracking to generate valid combinations, keeping track of open and close counts.",
+            "source": "LeetCode",
+            "tags": [
+                "string",
+                "backtracking"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "medium"
+        },
+        {
+            "id": "p012",
+            "title": "Integer to Roman",
+            "description": "Given an integer, convert it to a roman numeral.",
+            "input_description": "A single integer num.",
+            "output_description": "The roman numeral representation of num.",
+            "samples": [
+                {
+                    "input": "3",
+                    "output": "III"
+                },
+                {
+                    "input": "58",
+                    "output": "LVIII"
+                }
+            ],
+            "constraints": "1 <= num <= 3999",
+            "testcases": [
+                {
+                    "input": "3",
+                    "output": "III"
+                },
+                {
+                    "input": "58",
+                    "output": "LVIII"
+                },
+                {
+                    "input": "1994",
+                    "output": "MCMXCIV"
+                },
+                {
+                    "input": "1",
+                    "output": "I"
+                }
+            ],
+            "hint": "Create a list of value-symbol pairs in descending order and greedily subtract the largest possible values.",
+            "source": "LeetCode",
+            "tags": [
+                "hash-table",
+                "math",
+                "string"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "medium"
+        },
+        {
+            "id": "p011",
+            "title": "Container With Most Water",
+            "description": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
+            "input_description": "The first line contains n, followed by n space-separated integers representing the height of each bar.",
+            "output_description": "An integer representing the maximum amount of water that can be trapped.",
+            "samples": [
+                {
+                    "input": "9\n1 8 6 2 5 4 8 3 7",
+                    "output": "49"
+                },
+                {
+                    "input": "4\n1 2 1 2",
+                    "output": "2"
+                }
+            ],
+            "constraints": "n == height.length\n2 <= n <= 10^5\n0 <= height[i] <= 10^4",
+            "testcases": [
+                {
+                    "input": "9\n1 8 6 2 5 4 8 3 7",
+                    "output": "49"
+                },
+                {
+                    "input": "4\n1 2 1 2",
+                    "output": "2"
+                },
+                {
+                    "input": "2\n1 1",
+                    "output": "1"
+                }
+            ],
+            "hint": "Use two pointers approach starting from both ends and move the pointer pointing to the shorter line inward.",
+            "source": "LeetCode",
+            "tags": [
+                "array",
+                "two-pointers"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "medium"
+        },
+        {
+            "id": "p010",
+            "title": "Regular Expression Matching",
+            "description": "Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*'.",
+            "input_description": "The first line contains the string s. The second line contains the pattern p.",
+            "output_description": "true if the pattern matches the entire input string, false otherwise.",
+            "samples": [
+                {
+                    "input": "aa\na",
+                    "output": "false"
+                },
+                {
+                    "input": "aa\na*",
+                    "output": "true"
+                }
+            ],
+            "constraints": "1 <= s.length <= 20\n1 <= p.length <= 30\ns contains only lowercase English letters.\np contains only lowercase English letters, '.', and '*'.",
+            "testcases": [
+                {
+                    "input": "aa\na",
+                    "output": "false"
+                },
+                {
+                    "input": "aa\na*",
+                    "output": "true"
+                },
+                {
+                    "input": "ab\n.*",
+                    "output": "true"
+                },
+                {
+                    "input": "aab\nc*a*b",
+                    "output": "true"
+                }
+            ],
+            "hint": "Use dynamic programming to handle the complex pattern matching cases.",
+            "source": "LeetCode",
+            "tags": [
+                "string",
+                "dynamic-programming"
+            ],
+            "time_limit": 1.0,
+            "memory_limit": 256,
+            "author": "LeetCode",
+            "difficulty": "hard"
+        }
+    ],
+    "languages": [
+        {
+            "name": "cpp",
+            "file_ext": "cpp",
+            "compile_cmd": "g++ {src} -o {exe}",
+            "run_cmd": "{exe}",
+            "time_limit": 1.0,
+            "memory_limit": 128
+        },
+        {
+            "name": "python",
+            "file_ext": "py",
+            "compile_cmd": null,
+            "run_cmd": "/home/chris/miniconda3/envs/OJ_Judging/bin/python {src}",
+            "time_limit": 1.0,
+            "memory_limit": 128
+        }
+    ]
+}
