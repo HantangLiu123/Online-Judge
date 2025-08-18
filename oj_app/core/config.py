@@ -1,6 +1,8 @@
 from dotenv import load_dotenv
 import os
 import logging
+from datetime import date
+import shutil
 
 class Settings:
 
@@ -18,6 +20,7 @@ class Settings:
         self.session_https_only = os.getenv("SESSION_HTTPS_ONLY", "False").lower() == "true"
         self.database_path = os.getenv("DATABASE_PATH", os.path.join(os.pardir, "db.sqlite3"))
         self.log_path = os.getenv("LOG_PATH", os.path.join(os.pardir, "log"))
+        self.archive_path = os.getenv("ARCHIVE_PATH", os.path.join(os.pardir, "archive"))
         self.redis_url = os.getenv("REDIS_URL", "redis://localhost:6379/0")
         self.max_workers = int(os.getenv("MAX_WORKERS", 5))
 
@@ -29,6 +32,7 @@ settings = Settings()
 class Logs:
     def __init__(self) -> None:
         self.LOG_DIR = settings.log_path
+        self.ARCHIVE_DIR = settings.archive_path
 
         # log about user management
         self.user_management_logger = logging.getLogger('user_management')
@@ -105,6 +109,26 @@ class Logs:
         """use for background tasks"""
 
         self.data_logger.info(message)
+
+    def archive_logs(self) -> None:
+
+        """archive all logs"""
+
+        # create the archive path with the year if not exists
+        today = date.today()
+        this_archive_path = os.path.join(self.ARCHIVE_DIR, str(today.year))
+        if not os.path.exists(this_archive_path):
+            for file_name in os.listdir(self.LOG_DIR):
+                dir_name = file_name[:len(file_name) - len('.log')]
+                os.makedirs(os.path.join(this_archive_path, dir_name))
+
+        for file in os.listdir(self.LOG_DIR):
+            file_name = file[:len(file) - len('.log')]
+            archive_name = f'{file_name}{today}.log'
+            shutil.copy(
+                os.path.join(self.LOG_DIR, file),
+                os.path.join(this_archive_path, file_name, archive_name),
+            )
 
     def remove_all_log(self) -> None:
         for file in os.listdir(self.LOG_DIR):

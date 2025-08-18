@@ -59,7 +59,8 @@ async def reset_data(
         role='admin',
     ))
 
-    # remove the logs
+    # archive and remove the logs
+    logs.archive_logs()
     logs.remove_all_log()
 
     # remove languages and problems
