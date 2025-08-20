@@ -221,6 +221,10 @@ async def run_with_limit(
     try:
         # activate the monitor tasks and the subprocess
         monitor_task = asyncio.create_task(monitor_memory())
+        if input == "":
+            input = '\n'
+        elif input[-1] == '\n':
+            input += '\n'
         stdout, stderr = await asyncio.wait_for(
             judge_process.communicate(input.encode()),
             timeout=time_limit, # this will control the time and see if the code exceeds time limit
@@ -263,14 +267,14 @@ async def judge_code(
 
     # get the problem
     problem = await get_problem(problem_id)
-    samples: list[dict] = problem['samples']
+    testcases: list[dict] = problem['testcases']
 
     # compile the code
     compile_retuncode = await compile(submission_id, lan_config)
     if compile_retuncode != 0:
         # compile error, remove the source file
         os.remove(os.path.join(TMP_JUDGE_DIR, file_name))
-        return [('CE', 0.0, 0)] * len(samples)
+        return [('CE', 0.0, 0)] * len(testcases)
     
     # judge the code
     if problem.get('time_limit') is not None:
@@ -282,13 +286,13 @@ async def judge_code(
     else:
         memory_limit = languages['memory_limit']
     status_list = []
-    for sample in samples:
+    for case in testcases:
         status = await run_with_limit(
             submission_id=submission_id,
             language=language,
             lan_config=lan_config,
-            input=sample['input'],
-            output=sample['output'],
+            input=case['input'],
+            output=case['output'],
             time_limit=time_limit,
             memory_limit=memory_limit,
         )
