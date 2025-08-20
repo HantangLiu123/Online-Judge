@@ -1,4 +1,5 @@
-n, *nums = map(int, input().split())
+n = int(input())
+nums = [int(num) for num in input().split()]
 
 nums.sort()
 res = []
@@ -25,3 +26,5 @@ for i in range(len(nums)):
 
 for triplet in res:
     print(' '.join(map(str, triplet)))
+if res == []:
+    print('')

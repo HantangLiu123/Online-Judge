@@ -26,7 +26,7 @@
         },
         {
             "input": "2",
-            "output": "(()) \n()()"
+            "output": "(())\n()()"
         }
     ],
     "hint": "Use backtracking to generate valid combinations, keeping track of open and close counts.",

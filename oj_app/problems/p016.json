@@ -7,7 +7,7 @@
     "samples": [
         {
             "input": "23",
-            "output": "ad\nbd\ncd\nae\nbe\nce\naf\nbf\ncf"
+            "output": "ad\nae\naf\nbd\nbe\nbf\ncd\nce\ncf"
         },
         {
             "input": "",
@@ -18,7 +18,7 @@
     "testcases": [
         {
             "input": "23",
-            "output": "ad\nbd\ncd\nae\nbe\nce\naf\nbf\ncf"
+            "output": "ad\nae\naf\nbd\nbe\nbf\ncd\nce\ncf"
         },
         {
             "input": "",

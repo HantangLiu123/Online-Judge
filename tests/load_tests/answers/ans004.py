@@ -1,30 +1,45 @@
-m, *nums1 = map(int, input().split())
-n, *nums2 = map(int, input().split())
-
-A, B = nums1, nums2
-if len(A) > len(B):
-    A, B = B, A
-
-total = len(A) + len(B)
-half = total // 2
-
-left, right = 0, len(A) - 1
-while True:
-    i = (left + right) // 2
-    j = half - i - 2
+def findMedianSortedArrays(nums1, nums2):
+    if len(nums1) > len(nums2):
+        nums1, nums2 = nums2, nums1
     
-    Aleft = A[i] if i >= 0 else float('-inf')
-    Aright = A[i+1] if (i+1) < len(A) else float('inf')
-    Bleft = B[j] if j >= 0 else float('-inf')
-    Bright = B[j+1] if (j+1) < len(B) else float('inf')
+    m, n = len(nums1), len(nums2)
+    total = m + n
+    half = total // 2
     
-    if Aleft <= Bright and Bleft <= Aright:
-        if total % 2:
-            print(float(min(Aright, Bright)))
+    left, right = 0, m
+    
+    while left <= right:
+        i = (left + right) // 2
+        j = half - i
+        
+        left1 = nums1[i-1] if i > 0 else float('-inf')
+        right1 = nums1[i] if i < m else float('inf')
+        left2 = nums2[j-1] if j > 0 else float('-inf')
+        right2 = nums2[j] if j < n else float('inf')
+        
+        if left1 <= right2 and left2 <= right1:
+            if total % 2 == 1:
+                return float(min(right1, right2))
+            else:
+                return (max(left1, left2) + min(right1, right2)) / 2.0
+        elif left1 > right2:
+            right = i - 1
         else:
-            print((max(Aleft, Bleft) + min(Aright, Bright)) / 2)
-        break
-    elif Aleft > Bright:
-        right = i - 1
-    else:
-        left = i + 1
+            left = i + 1
+
+m = int(input().strip())
+if m > 0:
+    nums1 = list(map(int, input().split()))
+else:
+    input()
+    nums1 = []
+
+n = int(input().strip())
+if n > 0:
+    nums2 = list(map(int, input().split()))
+else:
+    input()
+    nums2 = []
+
+result = findMedianSortedArrays(nums1, nums2)
+print(result)

@@ -1,14 +1,18 @@
-n, *heights = map(int, input().split())
+n  = int(input())
+height = [int(num) for num in input().split()]
 
-left, right = 0, len(heights) - 1
+left, right = 0, len(height) - 1
 max_area = 0
 
 while left < right:
+    # Calculate current area
     width = right - left
-    height = min(heights[left], heights[right])
-    max_area = max(max_area, width * height)
+    current_height = min(height[left], height[right])
+    current_area = width * current_height
+    max_area = max(max_area, current_area)
     
-    if heights[left] < heights[right]:
+    # Move the pointer with smaller height
+    if height[left] < height[right]:
         left += 1
     else:
         right -= 1

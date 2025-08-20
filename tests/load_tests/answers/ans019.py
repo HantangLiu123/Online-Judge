@@ -3,8 +3,18 @@ class ListNode:
         self.val = val
         self.next = next
 
-m, *list1 = map(int, input().split())
-n, *list2 = map(int, input().split())
+m = int(input())
+if m > 0:
+    list1 = map(int, input().split())
+else:
+    input()
+    list1 = []
+n = int(input())
+if n > 0:
+    list2 = map(int, input().split())
+else:
+    input()
+    list2 = []
 
 def create_list(elements):
     dummy = ListNode()
