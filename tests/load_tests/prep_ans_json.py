@@ -30,10 +30,10 @@ def prep_json():
         prob_id = f"p{file[len('ans'):len(file) - len('.py')]}"
         with open(os.path.join(ANS_DIR, file), 'r', encoding='utf-8') as f:
             ac_ans = f.read()
-        wa_ans = ac_ans + WA_SEGMENT
-        re_ans = ac_ans + RE_SEGMENT
-        mle_ans = ac_ans + MLE_SEGMENT
-        tle_ans = ac_ans + TLE_SEGMENT
+        wa_ans = WA_SEGMENT + ac_ans
+        re_ans = RE_SEGMENT + ac_ans
+        mle_ans = MLE_SEGMENT + ac_ans
+        tle_ans = TLE_SEGMENT + ac_ans
         ans_dict = {
             'AC': ac_ans,
             'WA': wa_ans,
