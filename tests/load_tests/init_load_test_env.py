@@ -23,3 +23,4 @@ if __name__ == "__main__":
             username=f'test_user_{i}',
             password=f'test_user_{i}',
         ))
+    admin.logout()
