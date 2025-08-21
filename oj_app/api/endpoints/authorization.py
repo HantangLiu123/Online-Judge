@@ -40,7 +40,7 @@ async def user_login(request: Request, response: Response, user: dict, backgroun
             }
         
         # check the username and password exist and correct
-        if not userManager.match_password(
+        if not await userManager.match_password(
             password=user_to_login.password,
             hashed_password=user_logging_in['password']
         ):

@@ -1,3 +1,4 @@
+from fastapi.concurrency import run_in_threadpool
 import aiosqlite
 from ..config import settings
 from .CacheManager import cacheManager
@@ -67,7 +68,7 @@ class UserManager:
 
         return user_dict
 
-    def match_password(
+    async def match_password(
         self,
         password: str,
         hashed_password: str,
@@ -75,7 +76,11 @@ class UserManager:
 
         """check if the username and the password matched"""
 
-        return bcrypt.checkpw(password=password.encode(), hashed_password=hashed_password.encode())
+        return await run_in_threadpool(
+            bcrypt.checkpw,
+            password.encode(),
+            hashed_password.encode()
+        )
 
     async def create_user(self, new_user: User) -> int | None:
 
