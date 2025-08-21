@@ -24,17 +24,6 @@ async def user_login(request: Request, response: Response, user: dict, backgroun
             'data': None,
         }
     else:
-        # check the username and password exist and correct
-        if not await userManager.username_match_password(
-            username=user_to_login.username,
-            password=user_to_login.password,
-        ):
-            # the username or password is incorrect
-            response.status_code = status.HTTP_401_UNAUTHORIZED
-            return {
-                'code': status.HTTP_401_UNAUTHORIZED,
-                'msg': 'the username or password is incorrect',
-            }
         
         # get the user info
         user_logging_in = await userManager.get_user_by_username(
@@ -42,14 +31,34 @@ async def user_login(request: Request, response: Response, user: dict, backgroun
         )
 
         if not user_logging_in:
-            raise common.UnexpectedError
+            # the user does not exist
+            response.status_code = status.HTTP_401_UNAUTHORIZED
+            return {
+                'code': status.HTTP_401_UNAUTHORIZED,
+                'msg': 'the username or password is incorrect',
+                'data': None,
+            }
+        
+        # check the username and password exist and correct
+        if not userManager.match_password(
+            password=user_to_login.password,
+            hashed_password=user_logging_in['password']
+        ):
+            # the password is incorrect
+            response.status_code = status.HTTP_401_UNAUTHORIZED
+            return {
+                'code': status.HTTP_401_UNAUTHORIZED,
+                'msg': 'the username or password is incorrect',
+                'data': None,
+            }
 
         if user_logging_in['role'] == 'banned':
             # deny the log in request since the user is banned
             response.status_code = status.HTTP_403_FORBIDDEN
             return {
                 'code': status.HTTP_403_FORBIDDEN,
-                'msg': 'user is banned'
+                'msg': 'user is banned',
+                'data': None,
             }
         
         # create the session

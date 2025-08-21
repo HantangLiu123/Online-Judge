@@ -67,14 +67,15 @@ class UserManager:
 
         return user_dict
 
-    async def username_match_password(self, username: str, password: str) -> bool:
+    def match_password(
+        self,
+        password: str,
+        hashed_password: str,
+    ) -> bool:
 
         """check if the username and the password matched"""
 
-        user = await self.get_user_by_username(username)
-        if user is None:
-            return False
-        return bcrypt.checkpw(password=password.encode(), hashed_password=user['password'].encode())
+        return bcrypt.checkpw(password=password.encode(), hashed_password=hashed_password.encode())
 
     async def create_user(self, new_user: User) -> int | None:
 
