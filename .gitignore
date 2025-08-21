@@ -9,3 +9,6 @@ archive/
 
 log/
 *.log
+
+tests/
+*.html
