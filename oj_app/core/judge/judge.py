@@ -225,10 +225,18 @@ async def run_with_limit(
             input = '\n'
         elif input[-1] == '\n':
             input += '\n'
-        stdout, stderr = await asyncio.wait_for(
-            judge_process.communicate(input.encode()),
-            timeout=time_limit, # this will control the time and see if the code exceeds time limit
-        )
+        if judge_process.returncode is None:
+            # only communicate with input when the process is still alive
+            stdout, stderr = await asyncio.wait_for(
+                judge_process.communicate(input.encode()),
+                timeout=time_limit, # this will control the time and see if the code exceeds time limit
+            )
+        else:
+            # just get the stdout and stderr
+            stdout, stderr = await asyncio.wait_for(
+                judge_process.communicate(),
+                timeout=time_limit,
+            )
         duration = time.time() - start_time
         returncode = await judge_process.wait()
         monitor_task.cancel()
