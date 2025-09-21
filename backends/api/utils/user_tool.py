@@ -6,6 +6,7 @@ from fastapi.concurrency import run_in_threadpool
 from shared.models import User
 from shared.schemas import UserCredentials, UserToCreate
 from shared.utils import oj_cache
+from shared.db import user_db
 
 async def convert_user_info(
     user_credentials: UserCredentials,
@@ -63,3 +64,17 @@ async def user_list_paginated(current_user: User, page: int, page_size: int) -> 
 
     return total, total_pages, users
 
+async def create_default_admin():
+
+    """create the default admin"""
+
+    admin = await convert_user_info(
+        UserCredentials(
+            username='admin',
+            password='admin',
+        ),
+        'admin',
+    )
+    admin_id = await user_db.create_user_in_db(admin)
+    if admin_id is None:
+        print('the default admin is already created')

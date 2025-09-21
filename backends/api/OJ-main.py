@@ -9,8 +9,9 @@ from arq import create_pool
 from arq.connections import RedisSettings
 from shared.settings import TORTOISE_ORM
 from shared.db import language_db
-from .core.config import settings
+from .core.config import settings, setup_logging
 from .router.api_router import oj_router
+from .utils import user_tool
 
 # set the redis for the api and arq
 redis_settings = RedisSettings(host=settings.redis_host)
@@ -34,6 +35,12 @@ async def lifespan(app: FastAPI):
 
     # record the start up time of the api
     app.state.start_up_time = datetime.now()
+
+    # set up the log
+    setup_logging()
+
+    # create the default admin
+    await user_tool.create_default_admin()
 
     yield
 
