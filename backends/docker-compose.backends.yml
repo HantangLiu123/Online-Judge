@@ -1,0 +1,50 @@
+services:
+  postgresql:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    volumes:
+      - oj-postgresql-data:/var/lib/postgresql/data
+    environment:
+      DB_PASSWORD: oj_password
+    networks:
+      - backend
+
+  api:
+    build:
+      context: ./
+      target: api
+    ports:
+      - 8000:8000
+    env_file:
+      - .env
+    depends_on:
+      - worker
+    develop:
+      watch:
+        - path: ./api
+          action: sync
+          target: /usr/local/app/backend/api
+        - path: ./shared
+          action: rebuild
+        - path: ./environment.yml
+          action: rebuild
+    networks:
+      - backend
+
+  worker:
+    build:
+      context: ./
+      target: worker
+    depends_on:
+      - postgresql
+    networks:
+      - backend
+
+networks:
+  frontend:
+  backend:
+
+
+volumes:
+  oj-postgresql-data:

@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 import logging.config
 
 class Settings:
@@ -7,9 +6,7 @@ class Settings:
     """a class for extracting the settings from the environment variable"""
 
     def __init__(self) -> None:
-        load_dotenv()
-
-        # getting all the settings either from dotenv or using a default value
+        # getting all the settings either from env or using a default value
         self.app_name = os.getenv("APP_NAME", "api")
         self.debug = os.getenv("DEBUG", "False").lower() == "true"
         self.secret_key = os.getenv("SECRET_KEY")
