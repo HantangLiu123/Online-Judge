@@ -1,8 +1,0 @@
-{
-    "name": "python",
-    "file_ext": "py",
-    "compile_cmd": null,
-    "run_cmd": "/home/chris/miniconda3/envs/OJ_Judging/bin/python {src}",
-    "time_limit": 1.0,
-    "memory_limit": 128
-}
