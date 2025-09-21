@@ -6,7 +6,7 @@ from starlette.requests import Request
 from starlette.responses import Response
 from typing import Callable, Any, Optional, Tuple, Dict
 from arq.connections import ArqRedis
-from ..schemas import User
+from ..models import User
 
 async def store_info_key_map(
     item_type: str,
@@ -78,7 +78,7 @@ def user_list_key(
 
     prefix = FastAPICache.get_prefix()
     cache_key = hashlib.md5(
-        f'user_list:{page}:{page_size}:{current_user.user_id}:{current_user.role}'.encode()
+        f'user_list:{page}:{page_size}:{current_user.id}:{current_user.role}'.encode()
     ).hexdigest()
     return f'{prefix}:{cache_key}'
 
@@ -115,7 +115,7 @@ def submission_list_key(
 
     prefix = FastAPICache.get_prefix()
     cache_key = hashlib.md5(
-        f'submission_list:{user_id_filter}:{problem_id_filter}:{status_filter}:{page}:{page_size}:{current_user.user_id}:{current_user.role}'.encode()
+        f'submission_list:{user_id_filter}:{problem_id_filter}:{status_filter}:{page}:{page_size}:{current_user.id}:{current_user.role}'.encode()
     ).hexdigest()
     return f'{prefix}:{cache_key}'
 
