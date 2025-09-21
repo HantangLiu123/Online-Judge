@@ -1,10 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from fastapi_cache.decorator import cache
 from api.core.security import auth
 from api.utils import user_tool
 from shared.schemas import UserCredentials, Role
 from shared.db import user_db
 from shared.models import User, UserRole
+from shared.utils import oj_cache
 
 router = APIRouter(prefix='/users')
 
@@ -57,9 +58,9 @@ async def create_admin(
     if admin_id is None:
         # the username already exists
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
+            status_code=status.HTTP_400_BAD_REQUEST,
             detail={
-                'code': status.HTTP_403_FORBIDDEN,
+                'code': status.HTTP_400_BAD_REQUEST,
                 'msg': 'the username already exists',
                 'data': None,
             }
@@ -168,3 +169,38 @@ async def change_user_role(
     
     # change the role
     await user_db.change_user_role(user, UserRole(new_role.role))
+
+@router.get('/')
+@cache(
+    expire=120,
+    key_builder=oj_cache.user_list_key_builder,
+)
+async def get_user_list(
+    current_user: User = Depends(auth.get_current_user),
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=1, ge=20),
+):
+    
+    """returns the user list, only an admin can do this"""
+
+    if current_user.role != UserRole.ADMIN:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={
+                'code': status.HTTP_403_FORBIDDEN,
+                'msg': 'the user is forbiddened',
+                'data': None,
+            }
+        )
+    
+    # get the list
+    total, total_page, users = await user_tool.user_list_paginated(current_user, page, page_size)
+    return {
+        'code': status.HTTP_200_OK,
+        'msg': 'success',
+        'data': {
+            'total': total,
+            'total_page': total_page,
+            'users': users,
+        }
+    }
