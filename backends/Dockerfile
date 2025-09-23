@@ -11,8 +11,9 @@ RUN /opt/conda/envs/Online_Judge/bin/aerich init -t shared.settings.TORTOISE_ORM
 FROM base AS api 
 
 COPY api ./api
+RUN chmod +x ./api/run.sh
 
-CMD ["/opt/conda/envs/Online_Judge/bin/uvicorn", "api.OJ-main:app", "--no-access-log"]
+CMD ["./api/run.sh"]
 
 FROM base AS worker
 
