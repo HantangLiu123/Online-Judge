@@ -66,7 +66,7 @@ async def user_login(
         key=auth.COOKIE_NAME,
         value=access_token,
         httponly=settings.token_http_only,
-        secure=True,
+        secure=settings.secure,
         samesite=settings.same_site, # type: ignore
         max_age=settings.token_max_age,
     )

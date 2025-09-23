@@ -15,6 +15,7 @@ class Settings:
         self.token_http_only = os.getenv("TOKEN_HTTP_ONLY", "False").lower() == "true"
         self.redis_url = os.getenv("REDIS_URL", "redis://redis:6379/0")
         self.redis_host = os.getenv("REDIS_HOTS", "redis")
+        self.secure = os.getenv("SECURE", "False").lower == "true"
 
         if not self.secret_key:
             raise ValueError("Please set your jwt secret key")
@@ -31,7 +32,7 @@ LOGGING_CONFIG = {
             "format": "%(asctime)s - %(levelname)s - %(name)s - %(message)s",
         },
         "access": {
-            "format": "%(asctime)s - %(levelname)s - %(client_addr)s - %(request_line)s - status=%(status_code)s",
+            "format": "%(asctime)s - %(levelname)s - %(message)s",
         },
         "user_access": {
             "format": "%(asctime)s - %(levelname)s - %(message)s", 
