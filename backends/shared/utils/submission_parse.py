@@ -11,7 +11,7 @@ def parse_submission_to_data(submission: Submission):
     for test in tests:
         test_details.append(
             SubmissionTestDetail(
-                id=test.id, 
+                id=test.test_id, 
                 result=test.result,
                 time=test.time,
                 memory=test.memory,
@@ -54,7 +54,7 @@ def parse_data_to_submission(submission_data: SubmissionData) -> tuple[Submissio
     for test in submission_data.details:
         tests.append(
             Test(
-                id=test.id,
+                test_id=test.id,
                 submission=submission,
                 result=test.result,
                 time=test.time,

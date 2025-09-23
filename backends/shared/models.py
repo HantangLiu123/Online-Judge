@@ -1,4 +1,5 @@
 from enum import Enum
+from datetime import date
 from tortoise import fields, models
 
 class UserRole(str, Enum):
@@ -9,6 +10,9 @@ class UserRole(str, Enum):
     ADMIN = 'admin'
     BANNED = 'banned'
 
+def get_current_date():
+    return date.today()
+
 class User(models.Model):
 
     """a model for a user"""
@@ -17,7 +21,7 @@ class User(models.Model):
     username = fields.CharField(max_length=40, null=False, unique=True)
     password = fields.CharField(max_length=200, null=False)
     role = fields.CharEnumField(UserRole, default=UserRole.USER, null=False)
-    join_time = fields.DateField(auto_now_add=True)
+    join_time = fields.DateField(default=get_current_date)
     submit_count = fields.IntField(default=0)
     resolve_count = fields.IntField(default=0)
     submissions = fields.ReverseRelation['Submission']
@@ -103,7 +107,7 @@ class Test(models.Model):
 
     """a model for a testcase of a submission"""
 
-    id = fields.IntField(null=False)
+    test_id = fields.IntField(null=False)
     submission = fields.ForeignKeyField(
         model_name='models.Submission',
         related_name='tests',
