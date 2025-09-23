@@ -19,7 +19,9 @@ TORTOISE_ORM = {
         }
     },
     'apps': {
-        'models': ['shared.models', 'aerich.models'],
-        'default_connection': 'default'
+        'models': {  
+            'models': ['shared.models', 'aerich.models'],  
+            'default_connection': 'default'
+        }
     }
 }
