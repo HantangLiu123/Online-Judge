@@ -9,6 +9,7 @@ from arq import create_pool
 from arq.connections import RedisSettings
 from shared.settings import TORTOISE_ORM
 from shared.db import language_db
+from .core import middleware
 from .core.config import settings, setup_logging
 from .router.api_router import oj_router
 from .utils import user_tool
@@ -67,3 +68,6 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
             'data': None
         }
     )
+
+# add the middleware of logging
+app.middleware('http')(middleware.log_middleware)
