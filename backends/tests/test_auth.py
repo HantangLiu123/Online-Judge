@@ -28,7 +28,7 @@ class TestAuthEndpoints(unittest.IsolatedAsyncioTestCase):
         await utils.user_factory(UserCredentials(
             username=test_user.username,
             password=test_user.password,
-        ), 'banned')
+        ), 'banned', test_user.id)
 
         # incorrect format -> bad request
         response = test_user_wrong_format.login()
@@ -63,7 +63,7 @@ class TestAuthEndpoints(unittest.IsolatedAsyncioTestCase):
         await utils.user_factory(UserCredentials(
             username=test_user.username,
             password=test_user.password,
-        ), 'user')
+        ), 'user', test_user.id)
 
         # has not logged in -> unauthorized
         response = test_user.logout()

@@ -16,13 +16,16 @@ async def test_init():
     ]
     convert_tasks = [user_tool.convert_user_info(credential, 'user') for credential in user_credentials]
     users = await asyncio.gather(*convert_tasks)
+    user_id = 2
     for user in users:
         # use the for loop to ensure the id and the username and passwords are corresponding
         await User.create(
+            id=user_id,
             username=user.username,
             password=user.hashed_password,
             role=user.role,
         )
+        user_id += 1
 
 async def delete_all_users():
 
@@ -30,12 +33,13 @@ async def delete_all_users():
 
     await User.filter(username__not='admin').delete()
 
-async def user_factory(user_credential: UserCredentials, role: Literal['user', 'admin', 'banned']):
+async def user_factory(user_credential: UserCredentials, role: Literal['user', 'admin', 'banned'], user_id: int):
 
     """create a user"""
 
     user_to_create = await user_tool.convert_user_info(user_credential, role)
     await User.create(
+        id=user_id,
         username=user_to_create.username,
         password=user_to_create.hashed_password,
         role=user_to_create.role,
