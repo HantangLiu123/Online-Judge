@@ -4,7 +4,7 @@ from shared.models import User, UserRole
 from shared.schemas import UserCredentials
 from api.utils import user_tool
 
-async def test_init():
+async def test_init_large():
 
     """adding 200 users for tests"""
 
@@ -13,6 +13,29 @@ async def test_init():
             username=f'test_user_{i}',
             password=f'test_user_{i}',
         ) for i in range(1, 201)
+    ]
+    convert_tasks = [user_tool.convert_user_info(credential, 'user') for credential in user_credentials]
+    users = await asyncio.gather(*convert_tasks)
+    user_id = 2
+    for user in users:
+        # use the for loop to ensure the id and the username and passwords are corresponding
+        await User.create(
+            id=user_id,
+            username=user.username,
+            password=user.hashed_password,
+            role=user.role,
+        )
+        user_id += 1
+
+async def test_init_small():
+
+    """adding 10 users for tests"""
+
+    user_credentials = [
+        UserCredentials(
+            username=f'test_user_{i}',
+            password=f'test_user_{i}',
+        ) for i in range(1, 11)
     ]
     convert_tasks = [user_tool.convert_user_info(credential, 'user') for credential in user_credentials]
     users = await asyncio.gather(*convert_tasks)

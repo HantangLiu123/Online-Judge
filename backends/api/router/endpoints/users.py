@@ -169,6 +169,14 @@ async def change_user_role(
     
     # change the role
     await user_db.change_user_role(user, UserRole(new_role.role))
+    return {
+        'code': status.HTTP_200_OK,
+        'msg': 'role updates',
+        'data': {
+            'user_id': user_id,
+            'role': new_role.role,
+        }
+    }
 
 @router.get('/')
 @cache(
@@ -178,7 +186,7 @@ async def change_user_role(
 async def get_user_list(
     current_user: User = Depends(auth.get_current_user),
     page: int = Query(default=1, ge=1),
-    page_size: int = Query(default=1, ge=20),
+    page_size: int = Query(default=20, ge=1),
 ):
     
     """returns the user list, only an admin can do this"""

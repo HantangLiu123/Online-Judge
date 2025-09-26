@@ -47,13 +47,15 @@ async def _delete_cache_by_pattern(key_pattern: str):
         )
         keys_to_delete.extend(keys)
         # delete the keys that has been scanned
-        await redis.delete(*keys)
+        if keys is not None and len(keys) > 0:
+            await redis.delete(*keys)
         if cursor == 0:
             break
 
     # delete cache according to the keys
     decoded_keys = [key.decode() for key in keys_to_delete]
-    await redis.delete(*decoded_keys)
+    if decoded_keys is not None and len(decoded_keys) > 0:
+        await redis.delete(*decoded_keys)
 
 async def delete_cache(
     item_type: str,
