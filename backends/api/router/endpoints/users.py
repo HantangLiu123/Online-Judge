@@ -36,22 +36,11 @@ async def user_sign_in(user_credentials: UserCredentials):
 @router.post('/admin')
 async def create_admin(
     admin_credentials: UserCredentials,
-    current_user: User = Depends(auth.get_current_user),
+    current_user: User = Depends(auth.get_current_user_factory(True)),
 ):
     
     """signing in new admin, only an admin can do this"""
 
-    if current_user.role != UserRole.ADMIN:
-        # forbidden
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail={
-                'code': status.HTTP_403_FORBIDDEN,
-                'msg': 'current user is forbiddened',
-                'data': None,
-            }
-        )
-    
     # create the new admin
     new_admin = await user_tool.convert_user_info(admin_credentials, 'admin')
     admin_id = await user_db.create_user_in_db(new_admin)
@@ -76,12 +65,17 @@ async def create_admin(
     }
 
 @router.get('/{user_id}')
-async def get_user_info(user_id: int, current_user: User = Depends(auth.get_current_user)):
+async def get_user_info(
+    user_id: int,
+    current_user: User = Depends(auth.get_current_user_factory(False))
+):
 
     """get the user's info according to the id
     
     This endpoint returns the user info according to the user id, 
-    only an admin can check other users' info
+    only an admin can check other users' info. In this function, 
+    the get_current_user_factory is set to false since the user 
+    should be able to get his/her own info.
     """
 
     if user_id == current_user.id:
@@ -139,20 +133,10 @@ async def get_user_info(user_id: int, current_user: User = Depends(auth.get_curr
 async def change_user_role(
     user_id: int,
     new_role: Role, 
-    current_user: User = Depends(auth.get_current_user),
+    current_user: User = Depends(auth.get_current_user_factory(True)),
 ):
     
     """change the role of a user, only an admin is allowed"""
-
-    if current_user.role != UserRole.ADMIN:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail={
-                'code': status.HTTP_403_FORBIDDEN,
-                'msg': 'the user is forbiddened',
-                'data': None,
-            }
-        )
     
     # get the user to change the role
     user = await user_db.get_user_by_id(user_id)
@@ -184,22 +168,12 @@ async def change_user_role(
     key_builder=oj_cache.user_list_key_builder,
 )
 async def get_user_list(
-    current_user: User = Depends(auth.get_current_user),
+    current_user: User = Depends(auth.get_current_user_factory(True)),
     page: int = Query(default=1, ge=1),
     page_size: int = Query(default=20, ge=1),
 ):
     
     """returns the user list, only an admin can do this"""
-
-    if current_user.role != UserRole.ADMIN:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail={
-                'code': status.HTTP_403_FORBIDDEN,
-                'msg': 'the user is forbiddened',
-                'data': None,
-            }
-        )
     
     # get the list
     total, total_page, users = await user_tool.user_list_paginated(current_user, page, page_size)

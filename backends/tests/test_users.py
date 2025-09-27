@@ -63,17 +63,17 @@ class TestUserEndpoints(unittest.IsolatedAsyncioTestCase):
         response = users[0].create_admin(new_admin_wrong_format.username, new_admin_wrong_format.password)
         self.assertEqual(response.status_code, requests.codes.unauthorized)
 
-        # wrong format -> bad request
-        users[0].login()
-        response = users[0].create_admin(new_admin_wrong_format.username, new_admin_wrong_format.password)
-        self.assertEqual(response.status_code, requests.codes.bad_request)
-
         # not an admin -> forbidden
+        users[0].login()
         response = users[0].create_admin(new_admin.username, new_admin.password)
         self.assertEqual(response.status_code, requests.codes.forbidden)
 
-        # correct format and user -> ok
+        # wrong format -> bad request
         default_admin.login()
+        response = default_admin.create_admin(new_admin_wrong_format.username, new_admin_wrong_format.password)
+        self.assertEqual(response.status_code, requests.codes.bad_request)
+
+        # correct format and user -> ok
         response = default_admin.create_admin(new_admin.username, new_admin.password)
         self.assertEqual(response.status_code, requests.codes.ok)
 
@@ -138,17 +138,17 @@ class TestUserEndpoints(unittest.IsolatedAsyncioTestCase):
         response = users[0].change_user_role(50, 'qwer')
         self.assertEqual(response.status_code, requests.codes.unauthorized)
 
-        # wrong format -> bad request
-        users[0].login()
-        response = users[0].change_user_role(50, 'qwer')
-        self.assertEqual(response.status_code, requests.codes.bad_request)
-
         # not an admin -> forbidden
+        users[0].login()
         response = users[0].change_user_role(50, 'banned')
         self.assertEqual(response.status_code, requests.codes.forbidden)
 
-        # cannot find the target user -> not found
+        # wrong format -> bad request
         default_admin.login()
+        response = default_admin.change_user_role(50, 'qwer')
+        self.assertEqual(response.status_code, requests.codes.bad_request)
+
+        # cannot find the target user -> not found
         response = default_admin.change_user_role(50, 'banned')
         self.assertEqual(response.status_code, requests.codes.not_found)
 
@@ -174,17 +174,17 @@ class TestUserEndpoints(unittest.IsolatedAsyncioTestCase):
         response = users[0].get_user_list(2, 20)
         self.assertEqual(response.status_code, requests.codes.unauthorized)
 
-        # wrong format -> bad request
-        users[0].login()
-        response = users[0].get_user_list(-1, -1)
-        self.assertEqual(response.status_code, requests.codes.bad_request)
-
         # not an admin -> forbidden
+        users[0].login()
         response = users[0].get_user_list(2, 20)
         self.assertEqual(response.status_code, requests.codes.forbidden)
 
-        # the page number is too large -> not found
+        # wrong format -> bad request
         default_admin.login()
+        response = default_admin.get_user_list(-1, -1)
+        self.assertEqual(response.status_code, requests.codes.bad_request)
+
+        # the page number is too large -> not found
         response = default_admin.get_user_list(2, 20)
         self.assertEqual(response.status_code, requests.codes.not_found)
 

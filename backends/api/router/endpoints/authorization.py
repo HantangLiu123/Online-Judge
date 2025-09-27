@@ -82,7 +82,10 @@ async def user_login(
     }
 
 @router.post('/logout')
-async def logout_user(response: Response, current_user: User = Depends(auth.get_current_user)):
+async def logout_user(
+    response: Response,
+    current_user: User = Depends(auth.get_current_user_factory(False))
+):
 
     """log out the user if the user is logged in"""
 

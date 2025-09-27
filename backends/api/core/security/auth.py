@@ -4,7 +4,7 @@ from fastapi import Request, HTTPException, status
 from fastapi.concurrency import run_in_threadpool
 from jose import jwt, JWTError
 from shared.schemas import UserCredentials
-from shared.models import User
+from shared.models import User, UserRole
 from shared.db import user_db
 from ..config import settings
 
@@ -48,45 +48,62 @@ def create_access_token(data: dict):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, ALGORITHM)
     return encoded_jwt
 
-async def get_current_user(request: Request) -> User:
+def get_current_user_factory(admin_only: bool):
 
-    """get the user reaching the protected endpoint"""
+    """factor the get_current_user function"""
 
-    credential_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail={
-            'code': status.HTTP_401_UNAUTHORIZED,
-            'msg': 'the user has not logged in',
-            'data': None,
-        },
-    )
+    async def get_current_user(request: Request) -> User:
 
-    # get the token
-    token = request.cookies.get(COOKIE_NAME)
-    if token is None:
-        raise credential_exception
+        """get the user reaching the protected endpoint"""
 
-    # check the info in the token
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str | None = payload.get('sub')
-        if username is None:
-            # the token isn't valid
+        credential_exception = HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={
+                'code': status.HTTP_401_UNAUTHORIZED,
+                'msg': 'the user has not logged in',
+                'data': None,
+            },
+        )
+
+        # get the token
+        token = request.cookies.get(COOKIE_NAME)
+        if token is None:
             raise credential_exception
-    except JWTError:
-        # there's something wrong with the token
-        raise credential_exception
+
+        # check the info in the token
+        try:
+            payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+            username: str | None = payload.get('sub')
+            if username is None:
+                # the token isn't valid
+                raise credential_exception
+        except JWTError:
+            # there's something wrong with the token
+            raise credential_exception
+        
+        # check if the info in the token is the same as that in the database
+        user = await user_db.get_user_by_username(username)
+        if user is None or user.role != payload.get('role'):
+            raise credential_exception
+        
+        # check if the token is given before the last start up time
+        token_time = datetime.fromisoformat(payload['time'])
+        if token_time < request.app.state.start_up_time:
+            raise credential_exception
+        
+        # if admin_only is true, and the user is not an admin, raise 403
+        if admin_only and user.role != UserRole.ADMIN:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail={
+                    'code': status.HTTP_403_FORBIDDEN,
+                    'msg': 'the user is forbiddened',
+                    'data': None,
+                }
+            )
+        return user
     
-    # check if the info in the token is the same as that in the database
-    user = await user_db.get_user_by_username(username)
-    if user is None or user.role != payload.get('role'):
-        raise credential_exception
-    
-    # check if the token is given before the last start up time
-    token_time = datetime.fromisoformat(payload['time'])
-    if token_time < request.app.state.start_up_time:
-        raise credential_exception
-    return user
+    return get_current_user
 
 async def get_current_user_login(request: Request) -> User | None:
 
