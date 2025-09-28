@@ -1,0 +1,43 @@
+{
+    "id": "p004",
+    "title": "Median of Two Sorted Arrays",
+    "description": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.",
+    "input_description": "The first line contains m, followed by m space-separated integers of nums1. The second line contains n, followed by n space-separated integers of nums2.",
+    "output_description": "The median of the two sorted arrays as a float.",
+    "samples": [
+        {
+            "input": "2\n1 3\n1\n2",
+            "output": "2.0"
+        },
+        {
+            "input": "2\n1 2\n2\n3 4",
+            "output": "2.5"
+        }
+    ],
+    "constraints": "nums1.length == m\nnums2.length == n\n0 <= m <= 1000\n0 <= n <= 1000\n1 <= m + n <= 2000\n-10^6 <= nums1[i], nums2[i] <= 10^6",
+    "testcases": [
+        {
+            "input": "2\n1 3\n1\n2",
+            "output": "2.0"
+        },
+        {
+            "input": "2\n1 2\n2\n3 4",
+            "output": "2.5"
+        },
+        {
+            "input": "0\n\n1\n1",
+            "output": "1.0"
+        }
+    ],
+    "hint": "The overall run time complexity should be O(log (m+n)). Consider binary search approach.",
+    "source": "LeetCode",
+    "tags": [
+        "array",
+        "binary-search",
+        "divide-and-conquer"
+    ],
+    "time_limit": 2.0,
+    "memory_limit": 256,
+    "author": "LeetCode",
+    "difficulty": "hard"
+}

@@ -1,0 +1,42 @@
+{
+    "id": "p011",
+    "title": "Container With Most Water",
+    "description": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
+    "input_description": "The first line contains n, followed by n space-separated integers representing the height of each bar.",
+    "output_description": "An integer representing the maximum amount of water that can be trapped.",
+    "samples": [
+        {
+            "input": "9\n1 8 6 2 5 4 8 3 7",
+            "output": "49"
+        },
+        {
+            "input": "4\n1 2 1 2",
+            "output": "4"
+        }
+    ],
+    "constraints": "n == height.length\n2 <= n <= 10^5\n0 <= height[i] <= 10^4",
+    "testcases": [
+        {
+            "input": "9\n1 8 6 2 5 4 8 3 7",
+            "output": "49"
+        },
+        {
+            "input": "4\n1 2 1 2",
+            "output": "4"
+        },
+        {
+            "input": "2\n1 1",
+            "output": "1"
+        }
+    ],
+    "hint": "Use two pointers approach starting from both ends and move the pointer pointing to the shorter line inward.",
+    "source": "LeetCode",
+    "tags": [
+        "array",
+        "two-pointers"
+    ],
+    "time_limit": 1.0,
+    "memory_limit": 256,
+    "author": "LeetCode",
+    "difficulty": "medium"
+}

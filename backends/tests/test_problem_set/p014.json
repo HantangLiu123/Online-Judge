@@ -1,0 +1,41 @@
+{
+    "id": "p014",
+    "title": "Longest Common Prefix",
+    "description": "Find the longest common prefix string amongst an array of strings.",
+    "input_description": "The first line contains n, the number of strings. The next n lines each contain a string.",
+    "output_description": "The longest common prefix string.",
+    "samples": [
+        {
+            "input": "3\nflower\nflow\nflight",
+            "output": "fl"
+        },
+        {
+            "input": "3\ndog\nracecar\ncar",
+            "output": ""
+        }
+    ],
+    "constraints": "1 <= strs.length <= 200\n0 <= strs[i].length <= 200\nstrs[i] consists of only lowercase English letters.",
+    "testcases": [
+        {
+            "input": "3\nflower\nflow\nflight",
+            "output": "fl"
+        },
+        {
+            "input": "3\ndog\nracecar\ncar",
+            "output": ""
+        },
+        {
+            "input": "1\na",
+            "output": "a"
+        }
+    ],
+    "hint": "Compare characters from the beginning of each string until a mismatch is found.",
+    "source": "LeetCode",
+    "tags": [
+        "string"
+    ],
+    "time_limit": 1.0,
+    "memory_limit": 256,
+    "author": "LeetCode",
+    "difficulty": "easy"
+}

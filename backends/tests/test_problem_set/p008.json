@@ -1,0 +1,45 @@
+{
+    "id": "p008",
+    "title": "String to Integer (atoi)",
+    "description": "Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer.",
+    "input_description": "A single line containing the string s.",
+    "output_description": "The converted 32-bit signed integer.",
+    "samples": [
+        {
+            "input": "42",
+            "output": "42"
+        },
+        {
+            "input": "   -42",
+            "output": "-42"
+        }
+    ],
+    "constraints": "0 <= s.length <= 200\ns consists of English letters (lower-case and upper-case), digits (0-9), ' ', '+', '-', and '.'.",
+    "testcases": [
+        {
+            "input": "42",
+            "output": "42"
+        },
+        {
+            "input": "   -42",
+            "output": "-42"
+        },
+        {
+            "input": "4193 with words",
+            "output": "4193"
+        },
+        {
+            "input": "words and 987",
+            "output": "0"
+        }
+    ],
+    "hint": "Carefully handle leading whitespace, optional sign, and overflow/underflow.",
+    "source": "LeetCode",
+    "tags": [
+        "string"
+    ],
+    "time_limit": 1.0,
+    "memory_limit": 256,
+    "author": "LeetCode",
+    "difficulty": "medium"
+}
