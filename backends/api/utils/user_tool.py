@@ -1,8 +1,8 @@
 import asyncio
 import bcrypt
 from typing import Literal
-from fastapi import HTTPException, status
 from fastapi.concurrency import run_in_threadpool
+from . import shared_tool
 from shared.models import User
 from shared.schemas import UserCredentials, UserToCreate
 from shared.utils import oj_cache
@@ -31,26 +31,11 @@ async def user_list_paginated(current_user: User, page: int, page_size: int) -> 
 
     """get the total number of users, the max page, and the corresponding page"""
 
-    total = await User.all().count()
-    if total == 0:
-        # returns a blank list
-        return 0, 0, []
-    
-    total_pages = (total + page_size - 1) // page_size
-    if page > total_pages:
-        # the page does not exist
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail={
-                'code': status.HTTP_404_NOT_FOUND,
-                'msg': 'the page does not exist',
-                'data': None,
-            }
-        )
-    
-    offset = (page - 1) * page_size
-    users = await User.all().offset(offset).limit(page_size).values(
-        'id', 'username', 'role', 'join_time', 'submit_count', 'resolve_count'
+    total, total_pages, users = await shared_tool.get_list_paginated(
+        type=User,
+        page=page,
+        page_size=page_size,
+        needed_info=['id', 'username', 'role', 'join_time', 'submit_count', 'resolve_count'],
     )
 
     # store the cache map
