@@ -37,7 +37,7 @@ async def delete_problem_in_db(problem: Problem):
 
     """delete the corresponding problem"""
 
-    await oj_cache.delete_cache(item_type='problem', problem_id = problem.id)
+    await oj_cache.delete_cache(item_type='problem', problem_id=problem.id)
     await problem.delete()
 
 async def reset_problem_table():
