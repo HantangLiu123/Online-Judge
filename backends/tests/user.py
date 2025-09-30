@@ -69,3 +69,32 @@ class User:
             }
         )
         return response
+
+    def get_problem_list(self, page: int, page_size: int, hardness: str | None = None):
+        request_params = {
+            'page': page,
+            'page_size': page_size,
+            'hardness': hardness,
+        }
+        if hardness is None:
+            del request_params['hardness']
+        response = self.session.get(
+            url='http://localhost:8000/api/problems/',
+            params=request_params,
+        )
+        return response
+    
+    def get_problem(self, problem_id: str):
+        response = self.session.get(f'http://localhost:8000/api/problems/{problem_id}')
+        return response
+    
+    def create_problem(self, problem_dict: dict):
+        response = self.session.post(
+            url='http://localhost:8000/api/problems/',
+            json=problem_dict,
+        )
+        return response
+    
+    def delete_problem(self, problem_id: str):
+        response = self.session.delete(f'http://localhost:8000/api/problems/{problem_id}')
+        return response

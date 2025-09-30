@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Literal, Optional
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from fastapi_cache.decorator import cache
 from api.core.security import auth
@@ -15,7 +15,7 @@ router = APIRouter(prefix='/problems')
 async def get_problems_list(
     page: int = Query(default=1, ge=1),
     page_size: int = Query(default=20, ge=1),
-    hardness: Literal['easy', 'medium', 'hard'] | None = Query(...),
+    hardness: Optional[Literal['easy', 'medium', 'hard']] = Query(default=None),
 ):
     
     """returns the problem list according to the page, page size, and hardness"""

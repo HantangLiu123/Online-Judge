@@ -1,7 +1,10 @@
 import asyncio
+import os
+import json
 from typing import Literal
-from shared.models import User, UserRole
-from shared.schemas import UserCredentials
+from shared.models import User, UserRole, Problem
+from shared.schemas import UserCredentials, ProblemSchema
+from shared.utils import problem_parse
 from api.utils import user_tool
 
 async def test_init_large():
@@ -82,3 +85,43 @@ async def change_user_role(username: str, role: str):
     user = await User.get(username=username)
     user.role = UserRole(role)
     await user.save()
+
+async def init_problems():
+
+    """initialize the 20 problems for testing"""
+
+    init_tasks = [add_problem(f'p{i:03d}.json') for i in range(1, 21)]
+    await asyncio.gather(*init_tasks)
+
+async def add_problem(file_name: str):
+
+    """add a problem into the database"""
+
+    problem_dict = get_problem_dict(file_name)
+    problem_schema = ProblemSchema(**problem_dict)
+    problem = problem_parse.problem_schema_to_problem(problem_schema)
+    await problem.save()
+
+def get_problem_dict(file_name: str):
+
+    """returns the problem dict in the corresponding file"""
+
+    PROBLEM_PATH = os.path.join(os.curdir, 'tests', 'test_problem_set')
+    with open(os.path.join(PROBLEM_PATH, file_name), 'r', encoding='utf-8') as f:
+        content = f.read()
+    return json.loads(content)
+
+async def clear_problems():
+
+    """clear all problems in the database"""
+
+    await Problem.all().delete()
+
+async def problem_exist(problem_id: str):
+
+    """returns true if the problem exists in the database"""
+
+    problem = await Problem.get_or_none(id=problem_id)
+    if problem:
+        return True
+    return False
