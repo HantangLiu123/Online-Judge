@@ -80,7 +80,7 @@ async def export_user_table():
 
     """export all users"""
 
-    return await User.all()
+    return await User.all().order_by('id')
 
 async def import_user_in_db(users: list[User]):
 

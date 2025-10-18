@@ -15,11 +15,12 @@ async def problem_list_paginated(
     if hardness:
         # if there is hardness filter, tells the function
         total, total_page, problems = await shared_tool.get_list_paginated(
-        type=Problem,
-        page=page,
-        page_size=page_size,
-        needed_info=['id', 'title'],
-        hardness=hardness,
+            type=Problem,
+            page=page,
+            page_size=page_size,
+            needed_info=['id', 'title'],
+            order_term='id',
+            hardness=hardness,
         )
     else:
         # if not, 
@@ -27,6 +28,7 @@ async def problem_list_paginated(
             type=Problem,
             page=page,
             page_size=page_size,
+            order_term='id',
             needed_info=['id', 'title'],
         )
 

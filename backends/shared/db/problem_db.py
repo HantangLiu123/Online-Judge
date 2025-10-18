@@ -50,7 +50,7 @@ async def export_problem_table():
 
     """export all problems"""
 
-    return await Problem.all()
+    return await Problem.all().order_by('id')
 
 async def import_problem_in_db(problems: list[Problem]):
 

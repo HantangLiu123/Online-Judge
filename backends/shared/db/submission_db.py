@@ -48,7 +48,11 @@ async def get_submission_in_db(submission_id: str):
 
     """get the submission by id"""
 
-    return await Submission.get_or_none(submission_id=submission_id)
+    submission = await Submission.get_or_none(submission_id=submission_id)
+    if submission is None:
+        return None, None
+    tests = await submission.tests.order_by('test_id').all() # pyright: ignore[reportArgumentType]
+    return submission, tests
 
 async def update_submission_in_db(
     submission: Submission,

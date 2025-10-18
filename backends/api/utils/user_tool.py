@@ -35,6 +35,7 @@ async def user_list_paginated(current_user: User, page: int, page_size: int) -> 
         type=User,
         page=page,
         page_size=page_size,
+        order_term='id',
         needed_info=['id', 'username', 'role', 'join_time', 'submit_count', 'resolve_count'],
     )
 

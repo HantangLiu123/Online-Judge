@@ -7,6 +7,7 @@ async def get_list_paginated(
     page: int,
     page_size: int,
     needed_info: list[str],
+    order_term: str,
     **kwargs,
 ) -> tuple[int, int, list[dict]]:
     
@@ -36,11 +37,11 @@ async def get_list_paginated(
     
     offset = (page - 1) * page_size
     if kwargs:
-        return_list = await type.filter(**kwargs).offset(offset).limit(page_size).values(
+        return_list = await type.filter(**kwargs).offset(offset).limit(page_size).order_by(order_term).values(
             *needed_info
         )
     else:
-        return_list = await type.all().offset(offset).limit(page_size).values(
+        return_list = await type.all().offset(offset).limit(page_size).order_by(order_term).values(
             *needed_info
         )
 
