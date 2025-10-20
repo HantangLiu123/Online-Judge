@@ -19,4 +19,5 @@ def language_to_language_schema(language: Language) -> LanguageSchema:
         run_cmd=language.run_cmd,
         time_limit=language.time_limit,
         memory_limit=language.memory_limit,
+        image_name=language.image_name,
     )

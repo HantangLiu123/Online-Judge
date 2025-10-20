@@ -144,3 +144,4 @@ class Language(models.Model):
     run_cmd = fields.CharField(max_length=20, null=False)
     time_limit = fields.FloatField(null=False)
     memory_limit = fields.IntField(null=False)
+    image_name = fields.CharField(max_length=50, null=False)

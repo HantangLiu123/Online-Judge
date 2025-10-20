@@ -79,6 +79,7 @@ class LanguageSchema(BaseModel):
     run_cmd: str = Field(min_length=1)
     time_limit: float = Field(default=1.0, ge=0)
     memory_limit: int = Field(default=128, ge=0)
+    image_name: str = Field(min_length=1)
 
 class SubmissionPostModel(BaseModel):
 
