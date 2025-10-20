@@ -1,12 +1,12 @@
 import asyncio
 import json
-from arq.connections import ArqRedis
+from redis.asyncio import Redis as AioRedis
 from tortoise.exceptions import IntegrityError
 from ..models import Language
 from ..schemas import LanguageSchema
 from ..utils import language_parse
 
-async def get_language(lan_name: str, redis: ArqRedis) -> LanguageSchema | None:
+async def get_language(lan_name: str, redis: AioRedis) -> LanguageSchema | None:
 
     """returns the corresponding language schema"""
 
@@ -23,7 +23,7 @@ async def get_language(lan_name: str, redis: ArqRedis) -> LanguageSchema | None:
     language = LanguageSchema(**lan_dict)
     return language
 
-async def get_all_languages(redis: ArqRedis) -> list[LanguageSchema]:
+async def get_all_languages(redis: AioRedis) -> list[LanguageSchema]:
 
     """returns all language dict in a list"""
 
@@ -47,7 +47,7 @@ async def get_all_languages(redis: ArqRedis) -> list[LanguageSchema]:
     lan_sche = await asyncio.gather(*get_tasks)
     return lan_sche # type: ignore since there must be value saved for existed keys
 
-async def create_language_in_db(lan: LanguageSchema, redis: ArqRedis) -> bool:
+async def create_language_in_db(lan: LanguageSchema, redis: AioRedis) -> bool:
 
     """create the language in the database
     
@@ -65,7 +65,7 @@ async def create_language_in_db(lan: LanguageSchema, redis: ArqRedis) -> bool:
     await redis.set(f'language:{lan.name}', lan.model_dump_json())
     return True
 
-async def init_lan_in_redis(redis: ArqRedis):
+async def init_lan_in_redis(redis: AioRedis):
 
     """put all languages in the database into redis"""
 
@@ -74,7 +74,7 @@ async def init_lan_in_redis(redis: ArqRedis):
     init_tasks = [redis.set(f'language:{lan.name}', lan.model_dump_json()) for lan in lans]
     await asyncio.gather(*init_tasks)
 
-async def reset_language_table(redis: ArqRedis):
+async def reset_language_table(redis: AioRedis):
 
     """reset the language table and the redis"""
 
