@@ -1,4 +1,5 @@
 from typing import Type
+import aiodocker
 from tortoise import models
 from fastapi import HTTPException, status
 
@@ -46,3 +47,14 @@ async def get_list_paginated(
         )
 
     return total, total_pages, return_list
+
+async def image_exists(image_name: str) -> bool:
+
+    """check if an image exists in local"""
+
+    async with aiodocker.Docker() as docker:
+        try:
+            await docker.images.get(image_name)
+            return True
+        except Exception:
+            return False
