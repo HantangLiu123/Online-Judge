@@ -1,4 +1,5 @@
 import requests
+from shared.schemas import LanguageSchema
 
 class User:
 
@@ -97,4 +98,15 @@ class User:
     
     def delete_problem(self, problem_id: str):
         response = self.session.delete(f'http://localhost:8000/api/problems/{problem_id}')
+        return response
+    
+    def add_language(self, **kwargs):
+        response = self.session.post(
+            url='http://localhost:8000/api/languages/',
+            json=kwargs,
+        )
+        return response
+
+    def get_all_languages(self):
+        response = self.session.get('http://localhost:8000/api/languages/')
         return response

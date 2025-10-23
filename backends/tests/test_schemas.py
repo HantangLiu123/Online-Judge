@@ -96,3 +96,9 @@ class ProblemSchemaUser(BaseModel):
     memory_limit: int | None = Field(default=None, ge=0)
     author: str = ""
     difficulty: str = 'medium'
+
+class LanList(BaseModel):
+
+    """the format of a language name list"""
+
+    name: list[str]

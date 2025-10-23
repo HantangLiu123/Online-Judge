@@ -8,7 +8,7 @@ from shared.schemas import LanguageSchema
 from shared.models import User
 from shared.db import language_db
 
-router = APIRouter(prefix='/langauges')
+router = APIRouter(prefix='/languages')
 
 @router.post('/')
 async def add_new_language(

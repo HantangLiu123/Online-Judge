@@ -2,9 +2,10 @@ import asyncio
 import os
 import json
 from typing import Literal
-from shared.models import User, UserRole, Problem
-from shared.schemas import UserCredentials, ProblemSchema
-from shared.utils import problem_parse
+from redis.asyncio import Redis as AioRedis
+from shared.models import User, UserRole, Problem, Language
+from shared.schemas import UserCredentials, ProblemSchema, LanguageSchema
+from shared.utils import problem_parse, language_parse
 from api.utils import user_tool
 
 async def test_init_large():
@@ -125,3 +126,63 @@ async def problem_exist(problem_id: str):
     if problem:
         return True
     return False
+
+async def language_factory(lan: LanguageSchema, redis: AioRedis):
+
+    """create a language in the database"""
+
+    language = language_parse.language_schema_to_language(lan)
+    await language.save()
+
+    await redis.set(f'language:{lan.name}', lan.model_dump_json())
+
+async def init_languages(redis: AioRedis):
+
+    """create two supported languages in the database"""
+
+    await language_factory(
+        LanguageSchema(
+            name='python',
+            file_ext='py',
+            compile_cmd=None,
+            run_cmd='python {src}',
+            image_name='python:3.12-slim',
+        ),
+        redis,
+    )
+    await language_factory(
+        LanguageSchema(
+            name='cpp',
+            file_ext='cpp',
+            compile_cmd='g++ {src} -o {exe}',
+            run_cmd='{exe}',
+            image_name='gcc:14.3.0',
+        ),
+        redis,
+    )
+
+async def clear_languages(redis: AioRedis):
+
+    """clear all languages in the database and redis"""
+
+    await Language.all().delete()
+    await clear_redis_keys('language:*', redis)
+
+async def clear_redis_keys(prefix: str, redis: AioRedis):
+
+    """clear all keys with the prefix"""
+
+    cursor = 0
+    redis_keys = []
+    while True:
+        cursor, keys = await redis.scan(
+            cursor=cursor,
+            match=prefix,
+            count=1000,
+        )
+        redis_keys.extend(keys)
+        if cursor == 0:
+            break
+
+    if redis_keys != []:
+        await redis.delete(*redis_keys)
