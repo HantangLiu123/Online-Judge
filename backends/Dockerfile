@@ -6,7 +6,6 @@ COPY environment.yml ./
 COPY shared ./shared
 
 RUN conda env create -f environment.yml
-RUN /opt/conda/envs/Online_Judge/bin/aerich init -t shared.settings.TORTOISE_ORM
 
 FROM base AS api 
 
@@ -18,3 +17,6 @@ CMD ["./api/run.sh"]
 FROM base AS worker
 
 COPY worker ./worker
+RUN chmod +x ./worker/run.sh
+
+CMD ["./worker/run.sh"]

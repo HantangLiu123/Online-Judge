@@ -28,6 +28,8 @@ services:
     build:
       context: ./
       target: api
+    volumes:
+      - ./migrations:/usr/local/app/migrations
     ports:
       - 8000:8000
     env_file:
@@ -38,7 +40,7 @@ services:
       watch:
         - path: ./api
           action: sync
-          target: /usr/local/app/backend/api
+          target: /usr/local/app/api
         - path: ./shared
           action: rebuild
         - path: ./environment.yml
@@ -50,10 +52,24 @@ services:
     build:
       context: ./
       target: worker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./migrations:/usr/local/app/migrations
+      - ./dbconfig:/usr/local/app/dbconfig
     depends_on:
       - ojdb
+      - redis
     networks:
       - backend
+    develop:
+      watch:
+        - path: ./worker
+          action: sync
+          target: /usr/local/app/worker
+        - path: ./shared
+          action: rebuild
+        - path: ./environment.yml
+          action: rebuild
 
 networks:
   frontend:
