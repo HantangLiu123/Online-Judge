@@ -1,6 +1,7 @@
 from fastapi import status, APIRouter, Depends, HTTPException
 from fastapi_cache import FastAPICache
 from redis.asyncio import Redis as AioRedis
+from arq.connections import ArqRedis
 from api.core.security import auth
 from shared.schemas import LanguageSchema
 from shared.models import User
@@ -17,8 +18,11 @@ async def add_new_language(
     """add a new language to the system"""
 
     # get the redis client
-    redis: AioRedis = FastAPICache.get_backend().redis # type: ignore
+    redis: ArqRedis = FastAPICache.get_backend().redis # type: ignore
     if await language_db.create_language_in_db(language, redis):
+        # adding success, pull the image
+        await redis.set(f'download:image:{language.image_name}', 0)
+        await redis.enqueue_job('pull_image', language.image_name)
         return {
             'code': status.HTTP_200_OK,
             'msg': 'langauge registered',
