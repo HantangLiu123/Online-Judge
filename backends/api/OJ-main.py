@@ -46,6 +46,7 @@ async def lifespan(app: FastAPI):
     yield
 
     print('shutting down')
+    await Tortoise.close_connections()
 
 def create_app() -> FastAPI:
 
