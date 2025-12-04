@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
+from typing import Optional
 import bcrypt
-from fastapi import Request, HTTPException, status
+from fastapi import Request, HTTPException, status, Depends
 from fastapi.concurrency import run_in_threadpool
 from jose import jwt, JWTError
 from shared.schemas import UserCredentials
@@ -48,70 +49,9 @@ def create_access_token(data: dict):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, ALGORITHM)
     return encoded_jwt
 
-def get_current_user_factory(admin_only: bool):
+async def get_current_user(request: Request) -> User | None:
 
-    """factor the get_current_user function"""
-
-    async def get_current_user(request: Request) -> User:
-
-        """get the user reaching the protected endpoint"""
-
-        credential_exception = HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail={
-                'code': status.HTTP_401_UNAUTHORIZED,
-                'msg': 'the user has not logged in',
-                'data': None,
-            },
-        )
-
-        # get the token
-        token = request.cookies.get(COOKIE_NAME)
-        if token is None:
-            raise credential_exception
-
-        # check the info in the token
-        try:
-            payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-            username: str | None = payload.get('sub')
-            if username is None:
-                # the token isn't valid
-                raise credential_exception
-        except JWTError:
-            # there's something wrong with the token
-            raise credential_exception
-        
-        # check if the info in the token is the same as that in the database
-        user = await user_db.get_user_by_username(username)
-        if user is None or user.role != payload.get('role'):
-            raise credential_exception
-        
-        # check if the token is given before the last start up time
-        token_time = datetime.fromisoformat(payload['time'])
-        if token_time < request.app.state.start_up_time:
-            raise credential_exception
-        
-        # if admin_only is true, and the user is not an admin, raise 403
-        if admin_only and user.role != UserRole.ADMIN:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail={
-                    'code': status.HTTP_403_FORBIDDEN,
-                    'msg': 'the user is forbiddened',
-                    'data': None,
-                }
-            )
-        return user
-    
-    return get_current_user
-
-async def get_current_user_login(request: Request) -> User | None:
-
-    """this is the get current user for the login endpoint
-    
-    When the user has not logged in, it will return None instead of
-    raising a unauthorized code
-    """
+    """get the current user from the request"""
 
     # get the token
     token = request.cookies.get(COOKIE_NAME)
@@ -139,3 +79,33 @@ async def get_current_user_login(request: Request) -> User | None:
     if token_time < request.app.state.start_up_time:
         return None
     return user
+
+async def get_current_user_protected(current_user: Optional[User] = Depends(get_current_user)) -> User:
+
+    """raise unauthorized if the user has not logged in"""
+
+    if current_user is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail={
+                'code': status.HTTP_401_UNAUTHORIZED,
+                'msg': 'the user has not logged in',
+                'data': None,
+            },
+        )
+    return current_user
+
+async def get_current_user_admin_only(current_user: User = Depends(get_current_user_protected)) -> User:
+
+    """raise forbidden if current user is not an admin"""
+
+    if current_user.role != UserRole.ADMIN:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={
+                'code': status.HTTP_403_FORBIDDEN,
+                'msg': 'the user is forbiddened',
+                'data': None,
+            }
+        )
+    return current_user

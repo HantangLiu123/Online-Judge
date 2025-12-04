@@ -38,7 +38,7 @@ async def get_problems_list(
 @router.post('/')
 async def create_problem(
     problem: ProblemSchema,
-    current_user: User = Depends(auth.get_current_user_factory(False)),
+    current_user: User = Depends(auth.get_current_user_protected),
 ):
     
     """the endpoint for uploading a problem"""
@@ -63,7 +63,7 @@ async def create_problem(
 @router.get('/{problem_id}')
 async def get_problem(
     problem_id: str,
-    current_user: User | None = Depends(auth.get_current_user_login)   # use this since getting a problem does not require to be logged in
+    current_user: User | None = Depends(auth.get_current_user)   # use this since getting a problem does not require to be logged in
 ):
 
     """get a problem by its id
@@ -100,7 +100,7 @@ async def get_problem(
 @router.delete('/{problem_id}')
 async def delete_problem(
     problem_id: str,
-    current_user: User = Depends(auth.get_current_user_factory(True)),
+    current_user: User = Depends(auth.get_current_user_admin_only),
 ):
     
     """delete a problem according to the problem id"""

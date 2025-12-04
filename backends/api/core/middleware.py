@@ -9,11 +9,11 @@ async def log_middleware(request: Request, call_next):
 
     """middleware for user access log (from chatgpt 5)"""
 
-    try:
-        user = await auth.get_current_user_factory(False)(request)
+    user = await auth.get_current_user(request)
+    if user is None:
+        username = 'anonymous'
+    else:
         username = user.username
-    except Exception:
-        username = "anonymous"
 
     response: Response = await call_next(request)
 

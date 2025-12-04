@@ -11,7 +11,7 @@ router = APIRouter(prefix='/auth')
 async def user_login(
     response: Response,
     login_info: UserCredentials,
-    current_user: User | None = Depends(auth.get_current_user_login),
+    current_user: User | None = Depends(auth.get_current_user),
 ):
 
     """login the user if the credentials can be verified
@@ -84,7 +84,7 @@ async def user_login(
 @router.post('/logout')
 async def logout_user(
     response: Response,
-    current_user: User = Depends(auth.get_current_user_factory(False))
+    current_user: User = Depends(auth.get_current_user_protected)
 ):
 
     """log out the user if the user is logged in"""

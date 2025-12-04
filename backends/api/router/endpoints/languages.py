@@ -13,7 +13,7 @@ router = APIRouter(prefix='/languages')
 @router.post('/')
 async def add_new_language(
     language: LanguageSchema,
-    current_user: User = Depends(auth.get_current_user_factory(True)),
+    current_user: User = Depends(auth.get_current_user_admin_only),
 ):
     
     """add a new language to the system"""

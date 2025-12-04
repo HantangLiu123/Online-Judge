@@ -36,7 +36,7 @@ async def user_sign_in(user_credentials: UserCredentials):
 @router.post('/admin')
 async def create_admin(
     admin_credentials: UserCredentials,
-    current_user: User = Depends(auth.get_current_user_factory(True)),
+    current_user: User = Depends(auth.get_current_user_admin_only),
 ):
     
     """signing in new admin, only an admin can do this"""
@@ -67,7 +67,7 @@ async def create_admin(
 @router.get('/{user_id}')
 async def get_user_info(
     user_id: int,
-    current_user: User = Depends(auth.get_current_user_factory(False))
+    current_user: User = Depends(auth.get_current_user_protected)
 ):
 
     """get the user's info according to the id
@@ -133,7 +133,7 @@ async def get_user_info(
 async def change_user_role(
     user_id: int,
     new_role: Role, 
-    current_user: User = Depends(auth.get_current_user_factory(True)),
+    current_user: User = Depends(auth.get_current_user_admin_only),
 ):
     
     """change the role of a user, only an admin is allowed"""
@@ -168,7 +168,7 @@ async def change_user_role(
     key_builder=oj_cache.user_list_key_builder,
 )
 async def get_user_list(
-    current_user: User = Depends(auth.get_current_user_factory(True)),
+    current_user: User = Depends(auth.get_current_user_admin_only),
     page: int = Query(default=1, ge=1),
     page_size: int = Query(default=20, ge=1),
 ):
