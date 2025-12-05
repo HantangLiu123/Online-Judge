@@ -5,6 +5,7 @@ channels:
 dependencies:
   - _libgcc_mutex=0.1
   - _openmp_mutex=4.5
+  - aiofiles=25.1.0
   - aiosqlite=0.21.0
   - annotated-types=0.7.0
   - anyio=4.10.0
@@ -13,8 +14,8 @@ dependencies:
   - asyncpg=0.30.0
   - bcrypt=4.3.0
   - bzip2=1.0.8
-  - ca-certificates=2025.10.5
-  - certifi=2025.10.5
+  - ca-certificates=2025.11.12
+  - certifi=2025.11.12
   - click=8.2.1
   - dnspython=2.7.0
   - email-validator=2.2.0
@@ -53,7 +54,7 @@ dependencies:
   - markupsafe=3.0.2
   - mdurl=0.1.2
   - ncurses=6.5
-  - openssl=3.5.4
+  - openssl=3.6.0
   - pendulum=3.1.0
   - pip=25.2
   - psutil=7.1.0
