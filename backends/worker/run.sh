@@ -12,3 +12,4 @@ else
 fi
 
 /opt/conda/envs/Online_Judge/bin/arq worker.worker-main.DownloadImageSettings --watch /usr/local/app/worker/utils
+/opt/conda/envs/Online_Judge/bin/arq worker.worker-main.JudgeSettings --watch /usr/local/app/worker/utils
