@@ -57,9 +57,9 @@ async def get_submission_in_db(submission_id: str):
 async def update_submission_in_db(
     submission: Submission,
     status: SubmissionStatus,
-    score: int | None,
-    counts: int | None,
-    tests: list[SubmissionTestDetail] | None,
+    score: int | None = None,
+    counts: int | None = None,
+    tests: list[SubmissionTestDetail] | None = None,
 ):
     
     """update the submission in the database
