@@ -345,12 +345,11 @@ async def judge_task(
     """judge/rejudge the code"""
 
     # get the submission
-    submission, tests = await submission_db.get_submission_in_db(submission_id)
+    submission = await submission_db.get_submission_in_db(submission_id)
     if submission is None:
         # the submission does not exist
         judge_logger.error(f'the submission {submission_id} does not exist')
         return
-    assert tests is not None
 
     # judge the code
     try:

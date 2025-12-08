@@ -48,6 +48,12 @@ async def get_submission_in_db(submission_id: str):
 
     """get the submission by id"""
 
+    return await Submission.get_or_none(submission_id=submission_id)
+
+async def get_submission_log_in_db(submission_id: str):
+
+    """get the submission log by id"""
+
     submission = await Submission.get_or_none(submission_id=submission_id)
     if submission is None:
         return None, None

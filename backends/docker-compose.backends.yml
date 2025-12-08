@@ -57,6 +57,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./migrations:/usr/local/app/migrations
       - ./dbconfig:/usr/local/app/dbconfig
+      - /tmp/judge:/judge
     env_file:
       - .env
     depends_on:
