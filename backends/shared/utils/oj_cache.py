@@ -29,12 +29,11 @@ async def store_info_key_map(
     ] # using uuid to minimize the possibility of duplicating item_keys due to multiple checks
     await asyncio.gather(*map_to_store)
 
-async def _delete_cache_by_pattern(key_pattern: str):
+async def _delete_cache_by_pattern(key_pattern: str, redis: ArqRedis):
 
     """find and delete the cache according to the key pattern"""
 
     prefix = FastAPICache.get_prefix()
-    redis: ArqRedis = FastAPICache.get_backend().redis # type: ignore
     cursor = 0
     keys_to_delete: list[bytes] = []
 
@@ -52,11 +51,6 @@ async def _delete_cache_by_pattern(key_pattern: str):
         if cursor == 0:
             break
 
-    # delete cache according to the keys
-    decoded_keys = [key.decode() for key in keys_to_delete]
-    if decoded_keys is not None and len(decoded_keys) > 0:
-        await redis.delete(*decoded_keys)
-
 async def delete_cache(
     item_type: str,
     **kwargs,
@@ -67,8 +61,11 @@ async def delete_cache(
     key_patterns = [
         hashlib.md5(f'{item_type}:{item[0]}:{item[1]}'.encode()).hexdigest() for item in kwargs.items()
     ]
-    delete_tasks = [_delete_cache_by_pattern(pattern) for pattern in key_patterns]
+    redis: ArqRedis = FastAPICache.get_backend().redis # type: ignore
+    delete_tasks = [_delete_cache_by_pattern(pattern, redis) for pattern in key_patterns]
     await asyncio.gather(*delete_tasks)
+    patterns_to_delete = [pattern.encode() for pattern in key_patterns]
+    await redis.delete(*patterns_to_delete)
 
 def user_list_key(
     current_user: User,
