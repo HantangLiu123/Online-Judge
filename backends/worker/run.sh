@@ -11,5 +11,4 @@ else
     /opt/conda/envs/Online_Judge/bin/aerich -c ./dbconfig/pyproject.toml init-db
 fi
 
-/opt/conda/envs/Online_Judge/bin/arq worker.worker-main.DownloadImageSettings --watch /usr/local/app/worker/utils
-/opt/conda/envs/Online_Judge/bin/arq worker.worker-main.JudgeSettings --watch /usr/local/app/worker/utils
+/opt/conda/envs/Online_Judge/bin/arq worker.worker-main.OJSettings --watch /usr/local/app/worker/utils
