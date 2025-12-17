@@ -20,16 +20,13 @@ async def test_init_large():
     ]
     convert_tasks = [user_tool.convert_user_info(credential, 'user') for credential in user_credentials]
     users = await asyncio.gather(*convert_tasks)
-    user_id = 2
-    for user in users:
-        # use the for loop to ensure the id and the username and passwords are corresponding
-        await User.create(
-            id=user_id,
-            username=user.username,
-            password=user.hashed_password,
-            role=user.role,
-        )
-        user_id += 1
+    user_to_create = [User(
+        id=i + 2,
+        username=user.username,
+        password=user.hashed_password,
+        role=user.role,
+    ) for i, user in enumerate(users)]
+    await User.bulk_create(user_to_create)
 
 async def test_init_small():
 
@@ -43,16 +40,13 @@ async def test_init_small():
     ]
     convert_tasks = [user_tool.convert_user_info(credential, 'user') for credential in user_credentials]
     users = await asyncio.gather(*convert_tasks)
-    user_id = 2
-    for user in users:
-        # use the for loop to ensure the id and the username and passwords are corresponding
-        await User.create(
-            id=user_id,
-            username=user.username,
-            password=user.hashed_password,
-            role=user.role,
-        )
-        user_id += 1
+    user_to_create = [User(
+        id=i + 2,
+        username=user.username,
+        password=user.hashed_password,
+        role=user.role,
+    ) for i, user in enumerate(users)]
+    await User.bulk_create(user_to_create)
 
 async def delete_all_users():
 

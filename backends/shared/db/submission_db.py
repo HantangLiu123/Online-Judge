@@ -1,4 +1,4 @@
-import asyncio
+from itertools import chain
 import logging
 from datetime import datetime
 from tortoise.exceptions import IntegrityError, OperationalError
@@ -124,11 +124,8 @@ async def import_submission_to_db(submission_data: list[SubmissionData]):
 
     """import submissions into the database"""
 
-    submissions: list[Submission] = []
-    tests: list[Test] = []
-    for data in submission_data:
-        submission, tests_of_submission = submission_parse.parse_data_to_submission(data)
-        submissions.append(submission)
-        tests.extend(tests_of_submission)
-    await Submission.bulk_create(submissions, ignore_conflicts=True)
-    await Test.bulk_create(tests, ignore_conflicts=True)
+    results = map(submission_parse.parse_data_to_submission, submission_data)
+    submissions, tests_lists = zip(*results) if submission_data else ([], [])
+    tests = list(chain.from_iterable(tests_lists))
+    await Submission.bulk_create(submissions)
+    await Test.bulk_create(tests)
