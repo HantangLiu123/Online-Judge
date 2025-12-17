@@ -11,7 +11,7 @@ def within_a_minute(now: datetime, past: bytes | None) -> bool:
     """check if now is within a minute from past"""
 
     if past is None:
-        return False
+        return True
     return now - datetime.fromisoformat(past.decode()) < timedelta(minutes=1)
 
 async def allow_to_submit(redis: aioredis, user_id: int) -> bool:
@@ -47,8 +47,8 @@ async def submission_list_paginated(
         type=Submission,
         page=page,
         page_size=page_size,
-        needed_info=['submission_id', 'status', 'score', 'counts'],
-        order_term='submission_id',
+        needed_info=['id', 'status', 'score', 'counts'],
+        order_term='id',
         **kwargs,
     )
     
