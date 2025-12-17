@@ -105,7 +105,7 @@ class SubmissionTestDetail(BaseModel):
 
     """a model for recording a test detail"""
 
-    id: int
+    test_id: int
     result: str
     time: float
     memory: int
