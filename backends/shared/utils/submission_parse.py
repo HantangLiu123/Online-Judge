@@ -6,7 +6,7 @@ async def parse_submission_to_data(submission: Submission):
     """parse the submission model into the submissiondata schema"""
 
     # create the test details
-    tests: list[Test] = await submission.tests.all() # type: ignore
+    tests: list[Test] = await submission.tests.order_by('test_id').all() # type: ignore
     test_details = [SubmissionTestDetail(
         test_id=test.test_id, 
         result=test.result,
