@@ -35,7 +35,6 @@ async def _delete_cache_by_pattern(key_pattern: str, redis: ArqRedis):
 
     prefix = FastAPICache.get_prefix()
     cursor = 0
-    keys_to_delete: list[bytes] = []
 
     # scan to find the keys to delete
     while True:
@@ -44,7 +43,6 @@ async def _delete_cache_by_pattern(key_pattern: str, redis: ArqRedis):
             match=f'{prefix}:{key_pattern}:*',
             count=1000,
         )
-        keys_to_delete.extend(keys)
         # delete the keys that has been scanned
         if keys is not None and len(keys) > 0:
             await redis.delete(*keys)
@@ -64,8 +62,10 @@ async def delete_cache(
     redis: ArqRedis = FastAPICache.get_backend().redis # type: ignore
     delete_tasks = [_delete_cache_by_pattern(pattern, redis) for pattern in key_patterns]
     await asyncio.gather(*delete_tasks)
+    print('cache keys deleted')
     patterns_to_delete = [pattern.encode() for pattern in key_patterns]
     await redis.delete(*patterns_to_delete)
+    print('index keys deleted')
 
 def user_list_key(
     current_user: User,
