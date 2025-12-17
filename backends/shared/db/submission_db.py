@@ -118,7 +118,7 @@ async def export_submission_table():
 
     """export the submission table from db"""
 
-    return await Submission.all()
+    return await Submission.all().order_by('id')
 
 async def import_submission_to_db(submission_data: list[SubmissionData]):
 
