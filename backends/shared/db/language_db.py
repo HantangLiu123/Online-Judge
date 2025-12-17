@@ -94,7 +94,7 @@ async def export_language_table():
 
     """export all languages in the table"""
 
-    return Language.all()
+    return await Language.all()
 
 async def import_language_in_db(languages: list[Language]):
 
