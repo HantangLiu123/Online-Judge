@@ -1,9 +1,12 @@
 import asyncio
+import logging
 from datetime import datetime
-from tortoise.exceptions import IntegrityError
+from tortoise.exceptions import IntegrityError, OperationalError
 from ..models import Submission, SubmissionStatus, Test
 from ..schemas import SubmissionPostModel, SubmissionData, SubmissionTestDetail
 from ..utils import submission_parse, oj_cache
+
+logger = logging.getLogger('debug')
 
 async def create_submission_in_db(
     submission: SubmissionPostModel,
@@ -22,8 +25,9 @@ async def create_submission_in_db(
     """
 
     try:
+        logger.debug('try to create submission')
         await Submission.create(
-            submission_id=submission_id,
+            id=submission_id,
             user_id=user_id,
             problem_id=submission.problem_id,
             submission_time=submission_time,
@@ -34,31 +38,42 @@ async def create_submission_in_db(
             code=submission.code,
         )
     except IntegrityError:
+        logger.debug('submission creation failed')
         return False
     
+    logger.debug('submission creation success')
     # delete the cache
     await oj_cache.delete_cache(
         item_type='submission',
         user_id=user_id,
         problem_id=submission.problem_id,
     )
+    logger.debug('cache deleted')
     return True
 
 async def get_submission_in_db(submission_id: str):
 
     """get the submission by id"""
 
-    return await Submission.get_or_none(submission_id=submission_id)
+    try:
+        submission = await Submission.get_or_none(id=submission_id)
+        return submission
+    except OperationalError:
+        # the submission id param is not an uuid
+        return None
 
 async def get_submission_log_in_db(submission_id: str):
 
     """get the submission log by id"""
 
-    submission = await Submission.get_or_none(submission_id=submission_id)
-    if submission is None:
+    try:
+        submission = await Submission.get_or_none(id=submission_id)
+        if submission is None:
+            return None, None
+        tests = await submission.tests.order_by('test_id').all().values('test_id', 'result', 'time', 'memory') # pyright: ignore[reportArgumentType]
+        return submission, tests
+    except OperationalError:
         return None, None
-    tests = await submission.tests.order_by('test_id').all() # pyright: ignore[reportArgumentType]
-    return submission, tests
 
 async def update_submission_in_db(
     submission: Submission,
@@ -78,18 +93,20 @@ async def update_submission_in_db(
     submission.status = status
     submission.score = score # type: ignore
     submission.counts = counts # type: ignore
+    await submission.tests.all().delete() # type: ignore
+    await submission.save()
     if tests is not None:
-        await submission.tests.all().delete() # type: ignore
-        insert_tasks = [submission.tests.create(    # type: ignore
-            id=test.id,
+        tests_to_add = [Test(
+            test_id=test.test_id,
+            submission_id=submission.id,
             result=test.result,
             time=test.time,
             memory=test.memory,
         ) for test in tests]
-        await asyncio.gather(*insert_tasks)
+        await Test.bulk_create(tests_to_add)
 
     # delete the cache
-    await oj_cache.delete_cache(item_type='submission', submission_id=submission.submission_id)
+    await oj_cache.delete_cache(item_type='submission', submission_id=submission.id)
 
 async def reset_submission_table():
 

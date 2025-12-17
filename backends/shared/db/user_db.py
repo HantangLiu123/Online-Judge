@@ -1,7 +1,10 @@
+import logging
 from tortoise.exceptions import IntegrityError
 from ..models import User, UserRole
 from ..schemas import UserToCreate
 from ..utils import oj_cache
+
+logger = logging.getLogger('debug')
 
 async def get_user_by_id(user_id: int):
 
@@ -30,6 +33,7 @@ async def create_user_in_db(user_to_create: UserToCreate) -> int | None:
             role=user_to_create.role,
         )
     except IntegrityError:
+        logger.debug('failed to create new user')
         return None
     
     # remove the corresponding cache
