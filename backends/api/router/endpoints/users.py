@@ -1,3 +1,4 @@
+import logging
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from fastapi_cache.decorator import cache
 from api.core.security import auth
@@ -8,6 +9,8 @@ from shared.models import User, UserRole
 from shared.utils import oj_cache
 
 router = APIRouter(prefix='/users')
+
+logger = logging.getLogger('debug')
 
 @router.post('/')
 async def user_sign_in(user_credentials: UserCredentials):
@@ -46,6 +49,7 @@ async def create_admin(
     admin_id = await user_db.create_user_in_db(new_admin)
     if admin_id is None:
         # the username already exists
+        logger.debug('failed to create new admin')
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail={
