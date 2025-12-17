@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Literal
-from shared.schemas import ProbCase
+from shared.schemas import ProbCase, SubmissionTestDetail
 
 class LoginResponse(BaseModel):
 
@@ -102,3 +102,42 @@ class LanList(BaseModel):
     """the format of a language name list"""
 
     name: list[str]
+
+class SubmissionResponse(BaseModel):
+
+    """the format for a response after a submission/rejudge"""
+
+    submission_id: str
+    status: Literal['pending', 'success', 'error']
+
+class GetSubmissionResponse(BaseModel):
+
+    """the format of a get submission response"""
+
+    score: int
+    counts: int
+
+class SubmissionSnippet(BaseModel):
+
+    """the format for a submission in the submission list"""
+
+    id: str
+    status: Literal['pending', 'success', 'error']
+    score: int
+    counts: int
+
+class SubmissionList(BaseModel):
+
+    """format of a submission list"""
+
+    total: int
+    total_page: int
+    submissions: list[SubmissionSnippet]
+
+class SubmissionLogResponse(BaseModel):
+
+    """format of a submission log"""
+
+    details: list[SubmissionTestDetail]
+    score: int | None
+    counts: int | None

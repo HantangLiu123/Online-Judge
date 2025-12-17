@@ -3,9 +3,9 @@ import os
 import json
 from typing import Literal
 from redis.asyncio import Redis as AioRedis
-from shared.models import User, UserRole, Problem, Language
-from shared.schemas import UserCredentials, ProblemSchema, LanguageSchema
-from shared.utils import problem_parse, language_parse
+from shared.models import User, UserRole, Problem, Language, Test
+from shared.schemas import UserCredentials, ProblemSchema, LanguageSchema, SubmissionData
+from shared.utils import problem_parse, language_parse, submission_parse
 from api.utils import user_tool
 
 async def test_init_large():
@@ -168,6 +168,12 @@ async def clear_languages(redis: AioRedis):
     await Language.all().delete()
     await clear_redis_keys('language:*', redis)
 
+async def clear_user_submission_timestamp(redis: AioRedis):
+    
+    """clear all user submission timestamps"""
+
+    await clear_redis_keys('user_submission_timestamp:*', redis)
+
 async def clear_redis_keys(prefix: str, redis: AioRedis):
 
     """clear all keys with the prefix"""
@@ -186,3 +192,11 @@ async def clear_redis_keys(prefix: str, redis: AioRedis):
 
     if redis_keys != []:
         await redis.delete(*redis_keys)
+
+async def submission_factory(submission_data: SubmissionData):
+
+    """create a submission"""
+
+    submission, tests = submission_parse.parse_data_to_submission(submission_data)
+    await submission.save()
+    await Test.bulk_create(tests)

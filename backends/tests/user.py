@@ -110,3 +110,35 @@ class User:
     def get_all_languages(self):
         response = self.session.get('http://localhost:8000/api/languages/')
         return response
+    
+    def submit_code(self, **kwargs):
+        response = self.session.post(
+            url='http://localhost:8000/api/submissions/',
+            json=kwargs,
+        )
+        return response
+    
+    def get_submission(self, submission_id: str):
+        response = self.session.get(
+            url=f'http://localhost:8000/api/submissions/{submission_id}',
+        )
+        return response
+    
+    def get_submission_list(self, **kwargs):
+        response = self.session.get(
+            url='http://localhost:8000/api/submissions/',
+            params=kwargs,
+        )
+        return response
+    
+    def rejudge_code(self, submission_id: str):
+        response = self.session.put(
+            url=f'http://localhost:8000/api/submissions/{submission_id}/rejudge',
+        )
+        return response
+    
+    def get_submission_log(self, submission_id: str):
+        response = self.session.get(
+            url=f'http://localhost:8000/api/submissions/{submission_id}/log',
+        )
+        return response
