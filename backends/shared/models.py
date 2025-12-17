@@ -71,8 +71,7 @@ class Submission(models.Model):
 
     """a model for a submission"""
 
-    id = fields.IntField(primary_key=True)
-    submission_id = fields.UUIDField(unique=True)
+    id = fields.UUIDField(primary_key=True)
     user = fields.ForeignKeyField(
         model_name='models.User',
         related_name='submissions',
