@@ -55,9 +55,9 @@ async def compile_code(
         "AttachStdout": False,
         "AttachStderr": False,
         "HostConfig": {
-            "Binds": [f"/judge/submission{submission_id}:/workspace"],
+            "Binds": [f"/tmp/judge/submission{submission_id}:/workspace"],
             "Memory": 128 * 1024 ** 2,
-            "MemorySwap": 128 * 1024 ** 2,
+            "MemorySwap": 256 * 1024 ** 2,
             "NanoCpus": 2_000_000_000,
             "LogConfig": {
                 "Type": "none",
@@ -87,7 +87,7 @@ async def analyze_run_result(
     
     """analyze the run result"""
 
-    SIG_SUCCESS = 0
+    SIG_SUCCESS = 0 
 
     if tle:
         return TestResult.TLE
@@ -95,6 +95,7 @@ async def analyze_run_result(
     # if tle is false, the result should not be none
     assert result is not None
     return_code = result['StatusCode']
+    judge_logger.debug(f'return code of submission{submission_id} is {return_code}')
     if return_code > 128:
         return_code -= 128
     if return_code == SIG_SUCCESS:
@@ -133,15 +134,15 @@ async def run_code(
 
     RUN_CONFIG = {
         "Image": image_name,
-        "Cmd": run_cmd.split(),
+        "Cmd": ["sh", "-c", f"{run_cmd} > /workspace/out.txt 2> /workspace/err.txt"],
         "OpenStdin": True,
         "AttachStdin": True,
         "AttachStdout": False,
         "AttachStderr": False,
         "HostConfig": {
-            "Binds": [f"/judge/submission{submission_id}:/workspace"],
+            "Binds": [f"/tmp/judge/submission{submission_id}:/workspace"],
             "Memory": memory_limit * 1024 ** 2,
-            "MemorySwap": 128 * 1024 ** 2,
+            "MemorySwap": memory_limit * 2 * 1024 ** 2,
             "NanoCpus": 1_000_000_000,
             "LogConfig": {
                 "Type": "none",
@@ -197,7 +198,7 @@ async def run_code(
     start_time = time.time()
 
     try:
-        result = await asyncio.wait_for(run_container.wait(), timeout=5)
+        result = await asyncio.wait_for(run_container.wait(), timeout=time_limit)
         time_used = time.time() - start_time
     except asyncio.TimeoutError:
         tle = True
@@ -209,7 +210,6 @@ async def run_code(
         
         status = await analyze_run_result(output, tle, result, submission_id)
         await run_container.delete(force=True)
-        await docker.close()
 
     return status, time_used, max_memory
 
@@ -234,12 +234,14 @@ async def judge_code(
     ext = lan_config.file_ext
     file_name = f'code.{ext}'
     submission_path = os.path.join(JUDGE_DIR, f'submission{submission_id}')
+    if not os.path.exists(submission_path):
+        os.mkdir(submission_path)
     async with aiofiles.open(os.path.join(submission_path, file_name), 'w', encoding='utf-8') as f:
         await f.write(code)
 
     prob = problem_parse.problem_to_problem_schema(problem)
-    src = f'./code.{ext}'
-    exe = './code'
+    src = f'/workspace/code.{ext}'
+    exe = '/workspace/code'
     if lan_config.compile_cmd is not None:
         compile_cmd = lan_config.compile_cmd.format(src=src, exe=exe)
         cmp_success = await compile_code(
@@ -290,7 +292,7 @@ def get_score_counts_logs(results: list[tuple[TestResult, float, int]]) -> tuple
     for i in range(len(results)):
         submission_logs.append(
             SubmissionTestDetail(
-                id=i + 1,
+                test_id=i + 1,
                 result=results[i][0],
                 time=results[i][1],
                 memory=results[i][2],
@@ -350,13 +352,16 @@ async def judge_task(
         # the submission does not exist
         judge_logger.error(f'the submission {submission_id} does not exist')
         return
+    
+    submission_path = os.path.join(JUDGE_DIR, f'submission{submission_id}')
 
     # judge the code
     try:
+        problem = await submission.problem.first()
         results = await judge_code(
             submission_id=submission_id,
             language=submission.language,
-            problem=submission.problem,
+            problem=problem,
             code=submission.code,
             docker=ctx['docker_client'],
             redis=ctx['redis'],
@@ -381,12 +386,18 @@ async def judge_task(
             submission=submission,
             status=SubmissionStatus.ERROR,
         )
+        if os.path.exists(submission_path):
+            shutil.rmtree(submission_path)
         judge_logger.error(f'judge of submission {submission_id} failed due to database error')
+        tb_str = traceback.format_exc()
+        judge_logger.debug(f'Traceback: {tb_str}')
     except Exception as e:
         judge_logger.error(f'judge of submission {submission_id} failed due to unknown error')
         await submission_db.update_submission_in_db(
             submission=submission,
             status=SubmissionStatus.ERROR,
         )
+        if os.path.exists(submission_path):
+            shutil.rmtree(submission_path)
         tb_str = traceback.format_exc()
         judge_logger.debug(f'Catching the exception: {str(e)} when judging submission{submission_id}. Traceback: {tb_str}')
