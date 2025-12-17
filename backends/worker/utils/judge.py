@@ -20,6 +20,7 @@ from shared.settings import TORTOISE_ORM
 from shared.db import language_db, submission_db, resolve_db, user_db
 from shared.utils import problem_parse
 
+logging.basicConfig(level=logging.DEBUG)
 judge_logger = logging.getLogger('judge')
 JUDGE_DIR = '/judge'
 
@@ -374,7 +375,7 @@ async def judge_task(
             counts=counts,
             tests=submission_logs,
         )
-        update_resolve_relation(
+        await update_resolve_relation(
             problem_id=submission.problem_id, #type: ignore
             user_id=submission.user_id, #type: ignore
             language=submission.language,
