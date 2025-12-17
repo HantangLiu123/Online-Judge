@@ -37,6 +37,9 @@ LOGGING_CONFIG = {
         "user_access": {
             "format": "%(asctime)s - %(levelname)s - %(message)s", 
         },
+        "debug": {
+            "format": "%(asctime)s - %(levelname)s - %(message)s",
+        }
     },
 
     "handlers": {
@@ -55,6 +58,11 @@ LOGGING_CONFIG = {
             "formatter": "user_access",
             "stream": "ext://sys.stdout",
         },
+        "debug": {
+            "class": "logging.StreamHandler",
+            "formatter": "debug",
+            "stream": "ext://sys.stdout",
+        }
     },
 
     "loggers": {
@@ -73,9 +81,13 @@ LOGGING_CONFIG = {
             "handlers": ["user_access"],
             "propagate": False,
         },
+        "debug": {
+            "level": "DEBUG",
+            "handlers": ["debug"],
+            "propagate": False,
+        }
     },
 }
 
 def setup_logging():
     logging.config.dictConfig(LOGGING_CONFIG)
-
