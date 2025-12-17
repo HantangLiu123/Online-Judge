@@ -13,7 +13,7 @@ async def insert_relation_in_db(
         problem_id=problem_id,
         user_id=user_id,
         language=language,
-        status=status,
+        resolved=status,
     )
 
 async def get_relation_in_db(
