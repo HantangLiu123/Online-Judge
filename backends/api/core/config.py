@@ -16,6 +16,7 @@ class Settings:
         self.redis_url = os.getenv("REDIS_URL", "redis://redis:6379/0")
         self.redis_host = os.getenv("REDIS_HOTS", "redis")
         self.secure = os.getenv("SECURE", "False").lower == "true"
+        self.frontend_url = os.getenv("FRONTEND_URL", "http://127.0.0.1:5173")
 
         if not self.secret_key:
             raise ValueError("Please set your jwt secret key")
