@@ -1,7 +1,10 @@
 from typing import Type
+import logging
 import aiodocker
 from tortoise import models
 from fastapi import HTTPException, status
+
+logger = logging.getLogger('debug')
 
 async def get_list_paginated(
     type: Type[models.Model],
@@ -13,6 +16,8 @@ async def get_list_paginated(
 ) -> tuple[int, int, list[dict]]:
     
     """get the paginated list according to the params"""
+
+    logger.debug(f'getting paginated list for {type} with params: page={page}, page_size={page_size}, needed_info={needed_info}, order_term={order_term}, filters={kwargs}')
 
     # get the total number
     if kwargs:

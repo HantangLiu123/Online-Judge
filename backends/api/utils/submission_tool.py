@@ -47,12 +47,28 @@ async def submission_list_paginated(
         type=Submission,
         page=page,
         page_size=page_size,
-        needed_info=['id', 'status', 'score', 'counts'],
-        order_term='id',
+        needed_info=['id', 'submission_time', 'status', 'score', 'counts'],
+        order_term='-submission_time',
         **kwargs,
     )
     
     # store the cache map
+    if total == 0:
+        await oj_cache.store_info_key_map(
+            item_type='submission',
+            cache_key=oj_cache.submission_list_key(
+                current_user=current_user,
+                user_id_filter=kwargs.get('user_id'), # pyright: ignore[reportArgumentType]
+                problem_id_filter=kwargs.get('problem_id'), # pyright: ignore[reportArgumentType]
+                status_filter=kwargs.get('status'), # pyright: ignore[reportArgumentType]
+                page=page,
+                page_size=page_size,
+            ), 
+            expire=120,
+            submission_id=None,
+        )
+        return total, total_page, submissions
+
     map_tasks = [oj_cache.store_info_key_map(
         item_type='submission',
         cache_key=oj_cache.submission_list_key(
@@ -64,7 +80,8 @@ async def submission_list_paginated(
             page_size=page_size,
         ),
         expire=120,
+        submission_id=submission['id'],
         **kwargs,
-    )]
+    ) for submission in submissions]
     await asyncio.gather(*map_tasks)
     return total, total_page, submissions
