@@ -1,10 +1,12 @@
 import asyncio
 import os
 import json
+import uuid
+from datetime import datetime
 from typing import Literal
 from redis.asyncio import Redis as AioRedis
 from shared.models import User, UserRole, Problem, Language, Test
-from shared.schemas import UserCredentials, ProblemSchema, LanguageSchema, SubmissionData
+from shared.schemas import UserCredentials, ProblemSchema, LanguageSchema, SubmissionData, SubmissionTestDetail
 from shared.utils import problem_parse, language_parse, submission_parse
 from api.utils import user_tool
 
@@ -194,3 +196,28 @@ async def submission_factory(submission_data: SubmissionData):
     submission, tests = submission_parse.parse_data_to_submission(submission_data)
     await submission.save()
     await Test.bulk_create(tests)
+
+async def bulk_submission_factory():
+
+    """create 50 submissions for testing"""
+
+    submission_tasks = []
+    for i in range(1, 51):
+        submission_data = SubmissionData(
+            submission_id=str(uuid.uuid4()),
+            user_id=2,
+            problem_id='p001',
+            language='python' if i % 2 == 0 else 'cpp',
+            code='print("Hello, World!")' if i % 2 == 0 else '#include <iostream>\nint main() { std::cout << "Hello, World!"; return 0; }',
+            status='success',
+            score=30,
+            counts=0,
+            submission_time=datetime.now(),
+            details=[
+                SubmissionTestDetail(test_id=1, result='RE', time=0, memory=0),
+                SubmissionTestDetail(test_id=2, result='RE', time=0, memory=0),
+                SubmissionTestDetail(test_id=3, result='RE', time=0, memory=0),
+            ],
+        )
+        submission_tasks.append(submission_factory(submission_data))
+    await asyncio.gather(*submission_tasks)
