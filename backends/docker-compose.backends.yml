@@ -4,7 +4,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - oj-postgresql-data:/var/lib/postgresql/data
+      - oj-postgresql-data:/var/lib/postgresql
     environment:
       POSTGRES_DB: oj_app
       POSTGRES_USER: oj_user
@@ -12,6 +12,11 @@ services:
       POSTGRES_PORT: 5432
     networks:
       - backend
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U oj_user -d oj_app" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:latest
@@ -36,7 +41,12 @@ services:
     env_file:
       - .env
     depends_on:
-      - worker
+      ojdb:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      worker:
+        condition: service_started
     develop:
       watch:
         - path: ./api
@@ -53,6 +63,7 @@ services:
     build:
       context: ./
       target: worker
+    pid: "host"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./migrations:/usr/local/app/migrations
@@ -61,8 +72,10 @@ services:
     env_file:
       - .env
     depends_on:
-      - ojdb
-      - redis
+      ojdb:
+        condition: service_healthy
+      redis:
+        condition: service_started
     networks:
       - backend
     develop:
@@ -78,7 +91,6 @@ services:
 networks:
   frontend:
   backend:
-
 
 volumes:
   oj-postgresql-data:
