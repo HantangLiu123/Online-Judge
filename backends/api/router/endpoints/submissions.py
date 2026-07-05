@@ -9,7 +9,7 @@ from api.core.security import auth
 from api.utils import submission_tool
 from shared.models import User, SubmissionStatus, UserRole
 from shared.schemas import SubmissionPostModel
-from shared.db import problem_db, language_db, submission_db
+from shared.db import problem_db, language_db, submission_db, user_db
 from shared.utils import oj_cache
 import uuid
 
@@ -79,6 +79,7 @@ async def submit_code(
             status=SubmissionStatus.PENDING,
         )
     await submission_tool.record_submission(redis, current_user.id, submission_time)
+    await user_db.add_submit_count(current_user)
     await redis.enqueue_job('judge_task', submission_id)
     return {
         'code': status.HTTP_200_OK,
@@ -120,8 +121,11 @@ async def get_submission(
         'code': status.HTTP_200_OK,
         'msg': 'success',
         'data': {
+            'status': submission.status,
             'score': submission.score,
             'counts': submission.counts,
+            'code': submission.code,
+            'language': submission.language,
         }
     }
 
