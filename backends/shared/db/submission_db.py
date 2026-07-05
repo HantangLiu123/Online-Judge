@@ -47,6 +47,7 @@ async def create_submission_in_db(
         item_type='submission',
         user_id=user_id,
         problem_id=submission.problem_id,
+        submission_id=None,
     )
     logger.debug('cache deleted')
     return True
@@ -106,7 +107,7 @@ async def update_submission_in_db(
         await Test.bulk_create(tests_to_add)
 
     # delete the cache
-    await oj_cache.delete_cache(item_type='submission', submission_id=submission.id)
+    await oj_cache.delete_cache(item_type='submission', submission_id=str(submission.id))
 
 async def reset_submission_table():
 

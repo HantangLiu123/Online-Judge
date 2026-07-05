@@ -27,6 +27,7 @@ async def create_problem_in_db(prob: ProblemSchema) -> bool:
     prev_problem = await Problem.filter(id__lt=prob.id).order_by('-id').first()
     next_problem = await Problem.filter(id__gt=prob.id).order_by('id').first()
 
+    await oj_cache.delete_cache(item_type='problem', problem_id=None)
     if prev_problem is not None:
         await oj_cache.delete_cache(item_type='problem', problem_id=prev_problem.id)
     if next_problem is not None:

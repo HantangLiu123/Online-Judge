@@ -32,8 +32,9 @@ async def create_user_in_db(user_to_create: UserToCreate) -> int | None:
             password=user_to_create.hashed_password,
             role=user_to_create.role,
         )
-    except IntegrityError:
+    except IntegrityError as e:
         logger.debug('failed to create new user')
+        logger.debug(e)
         return None
     
     # remove the corresponding cache
