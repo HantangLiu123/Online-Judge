@@ -1,6 +1,7 @@
 from datetime import datetime
 from fastapi import FastAPI, Request, HTTPException, status
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from tortoise import Tortoise
@@ -70,5 +71,13 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         }
     )
 
+app.middleware('http')(middleware.disable_http_cache)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[settings.frontend_url],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # add the middleware of logging
 app.middleware('http')(middleware.log_middleware)
