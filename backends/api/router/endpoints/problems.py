@@ -15,15 +15,15 @@ router = APIRouter(prefix='/problems')
 async def get_problems_list(
     page: int = Query(default=1, ge=1),
     page_size: int = Query(default=20, ge=1),
-    hardness: Optional[Literal['easy', 'medium', 'hard']] = Query(default=None),
+    difficulty: Optional[Literal['easy', 'medium', 'hard']] = Query(default=None),
 ):
-    
-    """returns the problem list according to the page, page size, and hardness"""
+
+    """returns the problem list according to the page, page size, and difficulty"""
 
     total, total_page, problems = await problem_tool.problem_list_paginated(
         page=page,
         page_size=page_size,
-        hardness=hardness,
+        difficulty=difficulty,
     )
     return {
         'code': status.HTTP_200_OK,
