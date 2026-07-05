@@ -30,7 +30,7 @@ async def startup(ctx: dict[Any, Any]):
 
     ctx['docker_client'] = aiodocker.Docker()
     await Tortoise.init(TORTOISE_ORM)
-    FastAPICache.init(RedisBackend(ctx['redis']), prefix='fastapi_cache')
+    FastAPICache.init(RedisBackend(ctx['redis']), prefix='fastapi-cache')
 
 async def shutdown(ctx: dict[Any, Any]):
 
@@ -186,9 +186,9 @@ async def run_code(
                 children = process.children()
                 if children:
                     target = children[0]
-                    current_memory = target.memory_info().rss / 1024 ** 2
+                    current_memory = target.memory_info().rss // 1024 ** 2
                 else:
-                    current_memory = process.memory_info().rss / 1024 ** 2
+                    current_memory = process.memory_info().rss // 1024 ** 2
                 max_memory = max(max_memory, current_memory)
                 await asyncio.sleep(0.05)
         except psutil.NoSuchProcess:
