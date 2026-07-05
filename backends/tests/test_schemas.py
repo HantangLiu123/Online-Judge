@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Literal
+from datetime import datetime
 from shared.schemas import ProbCase, SubmissionTestDetail
 
 class LoginResponse(BaseModel):
@@ -66,6 +67,7 @@ class ProblemSnippet(BaseModel):
 
     id: str
     title: str
+    difficulty: Literal['easy', 'medium', 'hard']
 
 class ProblemList(BaseModel):
 
@@ -116,12 +118,16 @@ class GetSubmissionResponse(BaseModel):
 
     score: int
     counts: int
+    status: Literal['pending', 'success', 'error']
+    code: str
+    language: str
 
 class SubmissionSnippet(BaseModel):
 
     """the format for a submission in the submission list"""
 
     id: str
+    submission_time: datetime
     status: Literal['pending', 'success', 'error']
     score: int
     counts: int
