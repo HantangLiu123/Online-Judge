@@ -1,3 +1,4 @@
+import logging
 import hashlib
 import asyncio
 import uuid
@@ -7,6 +8,8 @@ from starlette.responses import Response
 from typing import Callable, Any, Optional, Tuple, Dict
 from arq.connections import ArqRedis
 from ..models import User
+
+logger = logging.getLogger('debug')
 
 async def store_info_key_map(
     item_type: str,
@@ -27,7 +30,32 @@ async def store_info_key_map(
     map_to_store = [
         backend.set(f'{prefix}:{key}:{uuid.uuid4()}', cache_key.encode(), expire) for key in items_keys
     ] # using uuid to minimize the possibility of duplicating item_keys due to multiple checks
+    logger.debug(f'item keys: {items_keys}, cache key: {cache_key}')
     await asyncio.gather(*map_to_store)
+
+async def _delete_value_keys(keys: list[bytes], redis: ArqRedis):
+
+    """delete a list of keys from redis"""
+
+    if keys is None or len(keys) == 0:
+        return
+    
+    pipe = redis.pipeline()
+    for key in keys:
+        pipe.get(key)
+
+    values = await pipe.execute()
+
+    value_keys = {v for v in values if v is not None}
+    if not value_keys:
+        return
+    
+    logger.debug(f'deleting value keys: {value_keys}')
+    pipe = redis.pipeline()
+    for key in value_keys:
+        pipe.delete(key)
+    results = await pipe.execute()
+    logger.debug(f'number of value keys deleted: {sum(results)}')
 
 async def _delete_cache_by_pattern(key_pattern: str, redis: ArqRedis):
 
@@ -35,7 +63,7 @@ async def _delete_cache_by_pattern(key_pattern: str, redis: ArqRedis):
 
     prefix = FastAPICache.get_prefix()
     cursor = 0
-
+    scanned_keys = []
     # scan to find the keys to delete
     while True:
         cursor, keys = await redis.scan(
@@ -44,10 +72,14 @@ async def _delete_cache_by_pattern(key_pattern: str, redis: ArqRedis):
             count=1000,
         )
         # delete the keys that has been scanned
-        if keys is not None and len(keys) > 0:
-            await redis.delete(*keys)
+        logger.debug(f'deleting keys: {keys}')
+        scanned_keys.extend(keys)
         if cursor == 0:
             break
+
+    if scanned_keys:
+        await _delete_value_keys(scanned_keys, redis)
+        await redis.delete(*scanned_keys)
 
 async def delete_cache(
     item_type: str,
@@ -59,13 +91,11 @@ async def delete_cache(
     key_patterns = [
         hashlib.md5(f'{item_type}:{item[0]}:{item[1]}'.encode()).hexdigest() for item in kwargs.items()
     ]
+    logger.debug(f'deleting cache for {item_type} with patterns: {key_patterns}')
     redis: ArqRedis = FastAPICache.get_backend().redis # type: ignore
     delete_tasks = [_delete_cache_by_pattern(pattern, redis) for pattern in key_patterns]
     await asyncio.gather(*delete_tasks)
-    print('cache keys deleted')
-    patterns_to_delete = [pattern.encode() for pattern in key_patterns]
-    await redis.delete(*patterns_to_delete)
-    print('index keys deleted')
+    logger.debug(f'cache deleted for {item_type} with {kwargs}')
 
 def user_list_key(
     current_user: User,
@@ -151,16 +181,16 @@ def submission_list_key_builder(
 def problem_list_key(
     page: int,
     page_size: int,
-    hardness: Optional[str],
+    difficulty: Optional[str],
 ) -> str:
     
     """create the cache key for the problem list"""
 
     prefix = FastAPICache.get_prefix()
     cache_key = hashlib.md5(
-        f'problem_list:{page}:{page_size}:{hardness}'.encode()
+        f'problem_list:{page}:{page_size}:{difficulty}'.encode()
     ).hexdigest()
-    return cache_key
+    return f'{prefix}:{cache_key}'
 
 def problem_list_key_builder(
     func: Callable[..., Any],
@@ -177,10 +207,10 @@ def problem_list_key_builder(
     # getting information
     page = kwargs['page']
     page_size = kwargs['page_size']
-    hardness = kwargs.get('hardness')
+    difficulty = kwargs.get('difficulty')
 
     # create the key
-    return problem_list_key(page, page_size, hardness)
+    return problem_list_key(page, page_size, difficulty)
 
 async def clear_cache():
 
