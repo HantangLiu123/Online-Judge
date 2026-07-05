@@ -71,14 +71,14 @@ class User:
         )
         return response
 
-    def get_problem_list(self, page: int, page_size: int, hardness: str | None = None):
+    def get_problem_list(self, page: int, page_size: int, difficulty: str | None = None):
         request_params = {
             'page': page,
             'page_size': page_size,
-            'hardness': hardness,
+            'difficulty': difficulty,
         }
-        if hardness is None:
-            del request_params['hardness']
+        if difficulty is None:
+            del request_params['difficulty']
         response = self.session.get(
             url='http://localhost:8000/api/problems/',
             params=request_params,
