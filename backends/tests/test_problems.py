@@ -31,6 +31,7 @@ class TestProblemEndpoints(unittest.IsolatedAsyncioTestCase):
             user_id=test_user_1.id
         )
         await utils.init_problems()
+        await utils.reset_user_sequence()
 
     async def asyncTearDown(self) -> None:
         
@@ -38,6 +39,7 @@ class TestProblemEndpoints(unittest.IsolatedAsyncioTestCase):
 
         await utils.clear_problems()
         await utils.delete_all_users()
+        await utils.reset_user_sequence()
         await Tortoise.close_connections()
 
     def test_problem_list(self):

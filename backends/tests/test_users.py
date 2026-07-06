@@ -21,9 +21,11 @@ class TestUserEndpoints(unittest.IsolatedAsyncioTestCase):
 
         # add 10 users for test
         await utils.test_init_small()
+        await utils.reset_user_sequence()
 
     async def asyncTearDown(self) -> None:
         await utils.delete_all_users()
+        await utils.reset_user_sequence()
         await Tortoise.close_connections()
 
     def test_sign_in(self):

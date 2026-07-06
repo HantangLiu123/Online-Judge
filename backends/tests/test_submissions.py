@@ -136,6 +136,7 @@ class TestSubmissionEndpoints(unittest.IsolatedAsyncioTestCase):
             2,
         )
         await utils.init_problems()
+        await utils.reset_user_sequence()
 
     async def asyncTearDown(self) -> None:
         
@@ -148,6 +149,7 @@ class TestSubmissionEndpoints(unittest.IsolatedAsyncioTestCase):
         await utils.clear_problems()
         await utils.delete_all_users()
         await utils.clear_user_submission_timestamp(self.redis)
+        await utils.reset_user_sequence()
         await self.redis.close()
         await self.redis.connection_pool.disconnect() # type: ignore
         await Tortoise.close_connections()

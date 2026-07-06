@@ -4,6 +4,7 @@ import json
 import uuid
 from datetime import datetime
 from typing import Literal
+from tortoise import Tortoise
 from redis.asyncio import Redis as AioRedis
 from shared.models import User, UserRole, Problem, Language, Test
 from shared.schemas import UserCredentials, ProblemSchema, LanguageSchema, SubmissionData, SubmissionTestDetail
@@ -221,3 +222,13 @@ async def bulk_submission_factory():
         )
         submission_tasks.append(submission_factory(submission_data))
     await asyncio.gather(*submission_tasks)
+
+async def reset_user_sequence():
+    conn = Tortoise.get_connection("default")
+    await conn.execute_query('''
+        SELECT setval(
+            pg_get_serial_sequence('"user"', 'id'), 
+            COALESCE(MAX(id), 0) + 1, 
+            false
+        ) FROM "user";
+    ''')

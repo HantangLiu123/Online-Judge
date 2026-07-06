@@ -19,6 +19,7 @@ class TestAuthEndpoints(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self) -> None:
         await Tortoise.init(TORTOISE_ORM)
         await utils.delete_all_users()
+        await utils.reset_user_sequence()
 
     async def test_login(self):
 

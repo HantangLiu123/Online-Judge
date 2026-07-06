@@ -16,6 +16,7 @@ async def init_db():
     await utils.init_problems()
     await utils.test_init_small()
     await utils.init_languages(redis)
+    await utils.reset_user_sequence()
     await redis.close()
     await redis.connection_pool.disconnect()  # type: ignore
     await Tortoise.close_connections()
@@ -29,6 +30,7 @@ async def clear_db():
     await utils.delete_all_users()
     await utils.clear_problems()
     await utils.clear_languages(redis)
+    await utils.reset_user_sequence()
     await redis.close()
     await redis.connection_pool.disconnect()  # type: ignore
     await Tortoise.close_connections()
